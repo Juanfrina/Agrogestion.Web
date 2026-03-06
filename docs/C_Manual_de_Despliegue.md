@@ -325,6 +325,9 @@ Este comando descargará todas las dependencias definidas en `package.json`. Pue
 | @supabase/supabase-js  | Cliente para comunicar con Supabase.          |
 | tailwindcss            | Framework CSS de utilidades.                  |
 | @tailwindcss/vite      | Plugin de TailwindCSS para Vite.              |
+| react-router-dom       | Enrutamiento y navegación SPA.                |
+| i18next, react-i18next | Internacionalización (español/inglés).        |
+| zustand                | Gestión de estado global ligera.              |
 | dotenv                 | Gestión de variables de entorno.              |
 | vite                   | Herramienta de build y servidor de desarrollo.|
 | typescript             | Compilador TypeScript.                        |

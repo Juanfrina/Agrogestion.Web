@@ -74,18 +74,19 @@ Agrogestión utiliza una arquitectura **cliente-servidor desacoplada**:
 
 #### 2.1.1. Tecnologías usadas
 
-| Tecnología               | Versión   | Descripción                                                       |
-|--------------------------|-----------|-------------------------------------------------------------------|
-| React                    | 19.2.0    | Librería para construir interfaces de usuario declarativas.       |
-| TypeScript               | 5.9.3     | Superset de JavaScript con tipado estático.                       |
-| Vite                     | 7.2.4     | Herramienta de build ultrarrápida para proyectos frontend.        |
-| TailwindCSS              | 4.1.18    | Framework de utilidades CSS para diseño responsive.               |
-| @vitejs/plugin-react-swc | 4.2.2     | Plugin de Vite que usa SWC para compilar React (más rápido).      |
-| React Router             | —         | Librería de enrutamiento para navegación SPA.                     |
-| i18next / react-i18next  | —         | Librería de internacionalización (i18n) para soporte multi-idioma.|
-| dotenv                   | 17.2.3    | Gestión de variables de entorno.                                  |
-| ESLint                   | 9.39.1    | Herramienta de análisis estático para detectar errores en JS/TS.  |
-| typescript-eslint        | 8.46.4    | Plugin de ESLint para soporte de TypeScript.                      |
+| Tecnología               | Versión        | Descripción                                                       |
+|--------------------------|----------------|-------------------------------------------------------------------|
+| React                    | 19.2.0         | Librería para construir interfaces de usuario declarativas.       |
+| TypeScript               | 5.9.3          | Superset de JavaScript con tipado estático.                       |
+| Vite                     | 7.2.4          | Herramienta de build ultrarrápida para proyectos frontend.        |
+| TailwindCSS              | 4.1.18         | Framework de utilidades CSS para diseño responsive.               |
+| @vitejs/plugin-react-swc | 4.2.2          | Plugin de Vite que usa SWC para compilar React (más rápido).      |
+| React Router             | 7.13.1         | Librería de enrutamiento para navegación SPA.                     |
+| i18next / react-i18next  |25.8.14 / 16.5.4| Librería de internacionalización (i18n) para soporte multi-idioma.|
+| Zustand                  | 5.0.11         | Gestión de estado global ligera y sencilla.                       |
+| dotenv                   | 17.2.3         | Gestión de variables de entorno.                                  |
+| ESLint                   | 9.39.1         | Herramienta de análisis estático para detectar errores en JS/TS.  |
+| typescript-eslint        | 8.46.4         | Plugin de ESLint para soporte de TypeScript.                      |
 
 #### 2.1.2. Entorno de desarrollo
 
@@ -115,7 +116,7 @@ Agrogestión utiliza una arquitectura **cliente-servidor desacoplada**:
 
 | Componente              | Detalle                                                        |
 |-------------------------|----------------------------------------------------------------|
-| Plataforma              | Supabase Cloud (<https://supabase.com>)                          |
+| Plataforma              | Supabase Cloud (<https://supabase.com>)                        |
 | Base de datos           | PostgreSQL gestionado en la nube de Supabase                   |
 | Panel de administración | Dashboard web de Supabase para configuración de tablas y RLS   |
 | Variables de entorno    | VITE_SUPABASE_URL y VITE_SUPABASE_ANON_KEY en archivo .env     |
@@ -632,7 +633,8 @@ VITE_SUPABASE_ANON_KEY=tu_clave_anon_publica
 | Patrón Repository                    | Capa de abstracción para acceso a datos con implementaciones Supabase.                                    |
 | Internacionalización (i18n)          | Soporte multi-idioma (español e inglés) con i18next.                                                      |
 | Recuperación de contraseña           | Flujo de restablecimiento de contraseña con Supabase Auth.                                                |
-| Store de estado global               | Gestión centralizada del estado de autenticación con store.                                               |
+| Store de estado global (Zustand)     | Gestión centralizada del estado de autenticación con Zustand.                                             |
+| Gráficos mensuales                   | Componente `MensualChart` para visualización de datos con gráficos de barras mensuales.                   |
 
 ### 5.2. Mejoras propuestas para futuras versiones
 
@@ -642,7 +644,7 @@ VITE_SUPABASE_ANON_KEY=tu_clave_anon_publica
 | Exportación de informes en PDF   | Generar informes de tareas y terrenos en formato PDF.                  |
 | Geolocalización de terrenos      |Integrar un mapa interactivo (Leaflet/Google Maps) para ubicar terrenos.|
 | Sistema de comentarios en tareas | Permitir que capataces y trabajadores añadan comentarios.              |
-| Dashboard con estadísticas       | Panel con gráficos de tareas completadas, pendientes, etc.             |
+| Dashboard con estadísticas       | Ampliar el panel de gráficos con más métricas y filtros avanzados.     |
 | Modo offline con Service Worker  | Cachear datos para poder consultar información sin conexión.           |
 | Tests automatizados              | Implementar testing con Vitest y React Testing Library.                |
 | Carga de imágenes                | Subir fotos de terrenos o tareas usando Supabase Storage.              |

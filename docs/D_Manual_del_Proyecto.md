@@ -274,10 +274,13 @@ Se evaluaron varias alternativas antes de elegir las tecnologías definitivas:
 ```
 src/
 ├── @types/         → Declaraciones de tipos globales (i18next.d.ts)
+├── assets/         → Recursos estáticos (imágenes, iconos, fuentes, etc.)
+│
 ├── components/     → Componentes reutilizables organizados por dominio
 │   ├── admin/      → Componentes del panel de administración
 │   ├── capataz/    → Componentes del panel de capataz
 │   ├── cards/      → Componentes de tarjetas
+│   ├── charts/     → Componentes de gráficos y visualización de datos
 │   ├── common/     → Componentes comunes (Header, Footer, Layout, Sidebar, etc.)
 │   ├── forms/      → Componentes de formularios (Login, Registro, Reset, etc.)
 │   ├── gerente/    → Componentes del panel de gerente
@@ -324,6 +327,7 @@ src/
 | Select                  | ui           | Selector desplegable estilizado.                                 |
 | Badge                   | ui           | Etiqueta visual para estados y categorías.                       |
 | Card                    | cards        | Tarjeta de información reutilizable.                             |
+| MensualChart            | charts       | Gráfico de barras con datos mensuales para visualización.        |
 | Landing                 | home         | Contenido de la página de inicio.                                |
 | Profile                 | profile      | Vista del perfil de usuario.                                     |
 | AdminDashboard          | admin        | Panel principal del administrador.                               |
@@ -400,7 +404,7 @@ Se integró Supabase Auth para el sistema de autenticación:
 | Recuperar contraseña   | `supabase.auth.resetPasswordForEmail()`.                 |
 | Persistencia de sesión | Token JWT almacenado automáticamente por Supabase.       |
 | Contexto de auth       | React Context + Provider para estado global de sesión.   |
-| Store de auth          | Estado centralizado de autenticación (`authStore.ts`).   |
+| Store de auth          | Estado centralizado de autenticación (`authStore.ts` con Zustand).|
 
 ### 5.6. Implementación de roles y paneles
 
@@ -569,7 +573,7 @@ En la fase final del proyecto se elaboraron cuatro documentos:
 
 ### 7.2. Problemas de planificación
 
-| Problema                                       | Solución                                                      |
+| Problema                                       | Solución                                                                    |
 |------------------------------------------------|-----------------------------------------------------------------------------|
 | Subestimación del tiempo para políticas RLS    | Se dedicó una semana completa adicional a la configuración de seguridad.    |
 | Complejidad de las relaciones N:M              | Se simplificó la interfaz para gestionar las relaciones de forma intuitiva. |
@@ -581,18 +585,18 @@ En la fase final del proyecto se elaboraron cuatro documentos:
 
 ### Cumplimiento de objetivos
 
-| Objetivo | Descripción                                              | Estado     |
-|----------|----------------------------------------------------------|------------|
-| O1       | Sistema de autenticación con registro y login            | ✅ Cumplido|
-| O2       | Modelo de datos relacional                               | ✅ Cumplido|
-| O3       | Interfaz responsive                                      | ✅ Cumplido|
-| O4       | Sistema de roles con permisos diferenciados              | ✅ Cumplido|
-| O5       | Gestión de terrenos                                      | ✅ Cumplido|
-| O6       | Gestión de tareas                                        | ✅ Cumplido|
-| O7       | Relaciones gerente-capataz y capataz-trabajador          | ✅ Cumplido|
-| O8       | Políticas de seguridad RLS                               | ✅ Cumplido|
-| O9       | Documentación completa                                   | ✅ Cumplido|
-| O10      | Despliegue accesible desde Internet                      | ✅ Cumplido|
+| Objetivo | Descripción                                              | Estado      |
+|----------|----------------------------------------------------------|-------------|
+| O1       | Sistema de autenticación con registro y login            | ✅ Cumplido |
+| O2       | Modelo de datos relacional                               | ✅ Cumplido |
+| O3       | Interfaz responsive                                      | ✅ Cumplido |
+| O4       | Sistema de roles con permisos diferenciados              | ✅ Cumplido |
+| O5       | Gestión de terrenos                                      | ✅ Cumplido |
+| O6       | Gestión de tareas                                        | ✅ Cumplido |
+| O7       | Relaciones gerente-capataz y capataz-trabajador          | ✅ Cumplido |
+| O8       | Políticas de seguridad RLS                               | ✅ Cumplido |
+| O9       | Documentación completa                                   | ✅ Cumplido |
+| O10      | Despliegue accesible desde Internet                      | ✅ Cumplido |
 
 ### Valoración personal
 
