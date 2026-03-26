@@ -143,18 +143,18 @@ La aplicación se abrirá en: [http://localhost:5173](http://localhost:5173)
 
 ## 🧠 Tecnologías principales
 
-| Tecnología               | Versión   | Uso                                              |
-|--------------------------|-----------|--------------------------------------------------|
-| React                    | 19.2.0    | Librería de interfaz de usuario (SPA)            |
-| TypeScript               | 5.9.3     | Tipado estático sobre JavaScript                 |
-| Vite                     | 7.2.4     | Build tool ultrarrápido con HMR                  |
-| TailwindCSS              | 4.1.18    | Framework CSS de utilidades (responsive)          |
-| Supabase                 | 2.93.3    | BaaS: PostgreSQL + Auth + API REST + RLS         |
-| React Router             | 7.13.1    | Enrutamiento y navegación SPA                    |
-| Zustand                  | 5.0.11    | Gestión de estado global ligera                  |
-| i18next / react-i18next  | 25.8.14 / 16.5.4 | Internacionalización (español/inglés)    |
-| @vitejs/plugin-react-swc | 4.2.2     | Compilación rápida con SWC                       |
-| ESLint                   | 9.39.1    | Análisis estático de código                      |
+| Tecnología               | Versión          | Uso                                              |
+|--------------------------|------------------|--------------------------------------------------|
+| React                    | 19.2.0           | Librería de interfaz de usuario (SPA)            |
+| TypeScript               | 5.9.3            | Tipado estático sobre JavaScript                 |
+| Vite                     | 7.2.4            | Build tool ultrarrápido con HMR                  |
+| TailwindCSS              | 4.1.18           | Framework CSS de utilidades (responsive)         |
+| Supabase                 | 2.93.3           | BaaS: PostgreSQL + Auth + API REST + RLS         |
+| React Router             | 7.13.1           | Enrutamiento y navegación SPA                    |
+| Zustand                  | 5.0.11           | Gestión de estado global ligera                  |
+| i18next / react-i18next  | 25.8.14 / 16.5.4 | Internacionalización (español/inglés)            |
+| @vitejs/plugin-react-swc | 4.2.2            | Compilación rápida con SWC                       |
+| ESLint                   | 9.39.1           | Análisis estático de código                      |
 
 ---
 
