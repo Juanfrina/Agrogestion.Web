@@ -8,6 +8,7 @@
  */
 
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../hooks/useAuth';
 import { AuthRepository } from '../../database/repositories/AuthRepository';
 import { useAuthStore } from '../../store/authStore';
@@ -33,6 +34,7 @@ export default function Header() {
   const { perfil, isAuthenticated, roleName } = useAuth();
   const reset = useAuthStore((s) => s.reset);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   /** Cierra sesión, limpia el store y redirige al login */
   const handleLogout = async () => {
@@ -49,7 +51,7 @@ export default function Header() {
     <header className="navbar">
       {/* Lado izquierdo: nombre de la app */}
       <h1 className="text-xl font-bold m-0" style={{ color: 'var(--color-text-on-primary)' }}>
-        Agrogestión
+        {t('app.name')}
       </h1>
 
       {/* Lado derecho: info del usuario + logout */}
@@ -62,7 +64,7 @@ export default function Header() {
             {roleName}
           </Badge>
           <Button variant="danger" onClick={handleLogout}>
-            Cerrar sesión
+            {t('nav.logout')}
           </Button>
         </div>
       )}

@@ -16,6 +16,7 @@
  */
 
 import { Navigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '../../store/authStore';
 import type { ReactNode } from 'react';
 
@@ -38,13 +39,14 @@ interface ProtectedRouteProps {
  */
 export function ProtectedRoute({ children, allowedRoles }: ProtectedRouteProps) {
   const { session, perfil, loading } = useAuthStore();
+  const { t } = useTranslation();
 
   // Mientras se comprueba la sesión, mostramos un spinner
   if (loading) {
     return (
       <div className="loading-screen">
         <div className="spinner" />
-        <span>Cargando...</span>
+        <span>{t('common.loading')}</span>
       </div>
     );
   }

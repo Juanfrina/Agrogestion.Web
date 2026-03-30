@@ -11,6 +11,7 @@
  */
 
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { AuthProvider } from '../context/AuthContext';
 import { ProtectedRoute } from './ProtectedRoute';
 import { PublicRoute } from './PublicRoute';
@@ -37,13 +38,24 @@ import Layout from '../components/common/Layout';
  * @returns Un Navigate a la ruta que corresponde al rol del usuario
  */
 function RedirectByRole() {
-  const { perfil, loading } = useAuthStore();
+  const { perfil, session, loading } = useAuthStore();
+  const { t } = useTranslation();
 
   if (loading) {
     return (
       <div className="loading-screen">
         <div className="spinner" />
-        <span>Cargando...</span>
+        <span>{t('common.loading')}</span>
+      </div>
+    );
+  }
+
+  // Si hay sesión pero el perfil aún no se cargó, esperamos (evita loop)
+  if (session && !perfil) {
+    return (
+      <div className="loading-screen">
+        <div className="spinner" />
+        <span>{t('common.loadingProfile')}</span>
       </div>
     );
   }

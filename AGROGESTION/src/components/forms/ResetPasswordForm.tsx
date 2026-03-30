@@ -8,6 +8,7 @@
  */
 
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { AuthRepository } from '../../database/repositories/AuthRepository';
 import InputField from './InputField';
 import Button from '../ui/Button';
@@ -19,6 +20,7 @@ import { isValidPassword } from '../../utils/validators';
  * Muestra una alerta de éxito cuando la contraseña se cambia correctamente.
  */
 export default function ResetPasswordForm() {
+  const { t } = useTranslation();
   /** Estado de los campos */
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -34,11 +36,11 @@ export default function ResetPasswordForm() {
 
     /* Validaciones */
     if (!isValidPassword(newPassword)) {
-      setError('La contraseña debe tener al menos 6 caracteres');
+      setError(t('auth.errorPasswordLength'));
       return;
     }
     if (newPassword !== confirmPassword) {
-      setError('Las contraseñas no coinciden');
+      setError(t('auth.errorPasswordMatch'));
       return;
     }
 
@@ -49,7 +51,7 @@ export default function ResetPasswordForm() {
       setNewPassword('');
       setConfirmPassword('');
     } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : 'Error al cambiar la contraseña';
+      const msg = err instanceof Error ? err.message : t('profile.errorChangePassword');
       setError(msg);
     } finally {
       setLoading(false);
@@ -58,12 +60,12 @@ export default function ResetPasswordForm() {
 
   return (
     <form onSubmit={handleSubmit} className="form-card flex flex-col gap-4">
-      <h2 className="text-center">Cambiar contraseña</h2>
+      <h2 className="text-center">{t('profile.changePassword')}</h2>
 
       {success && (
         <Alert
           type="success"
-          message="Contraseña actualizada correctamente"
+          message={t('profile.passwordUpdated')}
           onClose={() => setSuccess(false)}
         />
       )}
@@ -71,27 +73,27 @@ export default function ResetPasswordForm() {
       {error && <Alert type="error" message={error} onClose={() => setError('')} />}
 
       <InputField
-        label="Nueva contraseña"
+        label={t('profile.newPassword')}
         name="newPassword"
         type="password"
         value={newPassword}
         onChange={(e) => setNewPassword(e.target.value)}
-        placeholder="Mínimo 6 caracteres"
+        placeholder={t('auth.placeholderPassword')}
         required
       />
 
       <InputField
-        label="Confirmar contraseña"
+        label={t('profile.confirmNewPassword')}
         name="confirmPassword"
         type="password"
         value={confirmPassword}
         onChange={(e) => setConfirmPassword(e.target.value)}
-        placeholder="Repite la contraseña"
+        placeholder={t('auth.placeholderConfirmPassword')}
         required
       />
 
       <Button type="submit" variant="primary" loading={loading}>
-        Cambiar contraseña
+        {t('profile.changePassword')}
       </Button>
     </form>
   );

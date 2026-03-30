@@ -1,14 +1,14 @@
 /**
  * @file LoginForm.tsx
- * @description Formulario de inicio de sesión.
+ * @description Formulario de inicio de sesión con validación en tiempo real.
  *
- * Esto maneja el login completo: campos de email y contraseña,
- * validación, llamada al AuthRepository y gestión de errores.
- * Si el login va bien, llama a onSuccess o navega a /dashboard.
+ * Valida email y contraseña al perder el foco (onBlur). Muestra bordes
+ * verdes/rojos según el estado. Incluye botón "Volver" para cancelar.
  */
 
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { AuthRepository } from '../../database/repositories/AuthRepository';
 import { useAuthStore } from '../../store/authStore';
 import InputField from './InputField';
@@ -17,36 +17,61 @@ import Alert from '../common/Alert';
 import { isValidEmail } from '../../utils/validators';
 
 interface LoginFormProps {
-  /** Callback opcional tras login exitoso — si no se pasa, navega a / */
   onSuccess?: () => void;
 }
 
 /**
- * Formulario de login — gestiona estado, validación y envío.
- * Usa InputField y Button para mantener consistencia visual.
+ * Formulario de login con validación en tiempo real y botón de volver.
  */
 export default function LoginForm({ onSuccess }: LoginFormProps) {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { setPerfil, setSession } = useAuthStore();
 
-  /** Estado del formulario */
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  /** Envía las credenciales al servidor */
+  /** Errores por campo (validación en tiempo real) */
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+  /** Campos que el usuario ya ha tocado */
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
+
+  /** Valida un campo individual al perder foco */
+  const validateField = (name: string) => {
+    setTouched((p) => ({ ...p, [name]: true }));
+    const errs = { ...fieldErrors };
+
+    if (name === 'email') {
+      if (!email.trim()) errs.email = t('auth.errorEmailRequired');
+      else if (!isValidEmail(email)) errs.email = t('auth.errorEmailInvalid');
+      else delete errs.email;
+    }
+    if (name === 'password') {
+      if (!password) errs.password = t('auth.errorPasswordRequired');
+      else if (password.length < 6) errs.password = t('auth.errorPasswordMin');
+      else delete errs.password;
+    }
+
+    setFieldErrors(errs);
+  };
+
+  /** Envía credenciales */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
-    /* Validación básica */
-    if (!isValidEmail(email)) {
-      setError('Introduce un email válido');
-      return;
-    }
-    if (password.length < 6) {
-      setError('La contraseña debe tener al menos 6 caracteres');
+    /* Forzamos validación de ambos campos */
+    setTouched({ email: true, password: true });
+    const errs: Record<string, string> = {};
+    if (!email.trim()) errs.email = t('auth.errorEmailRequired');
+    else if (!isValidEmail(email)) errs.email = t('auth.errorEmailInvalid');
+    if (!password) errs.password = t('auth.errorPasswordRequired');
+    else if (password.length < 6) errs.password = t('auth.errorPasswordMin');
+
+    if (Object.keys(errs).length) {
+      setFieldErrors(errs);
       return;
     }
 
@@ -54,20 +79,11 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
     try {
       const data = await AuthRepository.signIn(email, password);
       setSession(data.session);
-
-      /* Traemos el perfil del usuario */
       const perfil = await AuthRepository.getPerfil(data.user.id);
       setPerfil(perfil);
-
-      /* Éxito: callback custom o navegación por defecto */
-      if (onSuccess) {
-        onSuccess();
-      } else {
-        navigate('/');
-      }
+      onSuccess ? onSuccess() : navigate('/dashboard');
     } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : 'Error al iniciar sesión';
-      setError(msg);
+      setError(err instanceof Error ? err.message : t('auth.errorLogin'));
     } finally {
       setLoading(false);
     }
@@ -75,33 +91,48 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
 
   return (
     <form onSubmit={handleSubmit} className="form-card flex flex-col gap-4">
-      <h2 className="text-center">Iniciar sesión</h2>
+      <h2 className="text-center">{t('auth.login')}</h2>
 
       {error && <Alert type="error" message={error} onClose={() => setError('')} />}
 
       <InputField
-        label="Email"
+        label={t('auth.email')}
         name="email"
         type="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        placeholder="tu@email.com"
+        onBlur={() => validateField('email')}
+        error={touched.email ? fieldErrors.email : undefined}
+        valid={touched.email && !fieldErrors.email && email.length > 0}
+        placeholder={t('auth.placeholderEmail')}
         required
       />
 
       <InputField
-        label="Contraseña"
+        label={t('auth.password')}
         name="password"
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        placeholder="••••••"
+        onBlur={() => validateField('password')}
+        error={touched.password ? fieldErrors.password : undefined}
+        valid={touched.password && !fieldErrors.password && password.length > 0}
+        placeholder={t('auth.placeholderPassword')}
         required
       />
 
       <Button type="submit" variant="primary" loading={loading}>
-        Entrar
+        {t('auth.enter')}
       </Button>
+
+      <div className="flex items-center justify-between" style={{ fontSize: '0.88rem' }}>
+        <Link to="/registro" style={{ color: 'var(--color-primary)' }}>
+          {t('auth.noAccount')}
+        </Link>
+        <Link to="/" className="btn-cancel">
+          {t('common.back')}
+        </Link>
+      </div>
     </form>
   );
 }

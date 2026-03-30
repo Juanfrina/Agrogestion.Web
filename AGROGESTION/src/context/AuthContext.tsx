@@ -31,19 +31,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const { setSession, setPerfil, setLoading, reset } = useAuthStore();
 
   useEffect(() => {
-    // Al montar el componente: miramos si ya hay una sesión guardada en el navegador
-    AuthRepository.getSession().then(async (session) => {
-      setSession(session);
-
-      // Si hay sesión activa, traemos el perfil del usuario desde la BD
-      if (session?.user) {
-        const perfil = await AuthRepository.getPerfil(session.user.id);
-        setPerfil(perfil);
-      }
-
-      // Ya terminamos de cargar — los componentes hijos ya pueden renderizar
-      setLoading(false);
-    });
+    // Al montar: miramos si hay sesión guardada en sessionStorage
+    AuthRepository.getSession()
+      .then(async (session) => {
+        if (session?.user) {
+          setSession(session);
+          try {
+            const perfil = await AuthRepository.getPerfil(session.user.id);
+            setPerfil(perfil);
+          } catch {
+            // Si falla traer el perfil, limpiamos todo
+            reset();
+          }
+        }
+      })
+      .catch(() => {
+        // Si falla la sesión, dejamos todo limpio
+        reset();
+      })
+      .finally(() => {
+        setLoading(false);
+      });
 
     // Nos suscribimos a los cambios de auth de Supabase
     // Esto se dispara cuando el usuario hace login, logout o se refresca el token
@@ -54,8 +62,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
         // Si acaba de hacer login, cargamos su perfil
         if (event === 'SIGNED_IN' && typedSession?.user) {
-          const perfil = await AuthRepository.getPerfil(typedSession.user.id);
-          setPerfil(perfil);
+          try {
+            const perfil = await AuthRepository.getPerfil(typedSession.user.id);
+            setPerfil(perfil);
+          } catch {
+            // Si falla cargar el perfil en el listener, limpiamos todo
+            reset();
+          }
         }
 
         // Si cierra sesión, limpiamos todo el store

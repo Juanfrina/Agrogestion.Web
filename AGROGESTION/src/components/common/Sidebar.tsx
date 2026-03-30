@@ -8,34 +8,33 @@
  */
 
 import { NavLink } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../hooks/useAuth';
 import { Rol } from '../../lib/types';
 
-/** Definición de un enlace del sidebar */
-interface SidebarLink {
-  to: string;
-  label: string;
-}
-
 /** Enlaces según el rol — cada rol ve menús diferentes */
-const linksByRole: Record<number, SidebarLink[]> = {
+const linksByRole: Record<number, { to: string; labelKey: string }[]> = {
   [Rol.ADMIN]: [
-    { to: '/admin', label: 'Dashboard' },
-    { to: '/admin/usuarios', label: 'Usuarios' },
+    { to: '/admin', labelKey: 'nav.dashboard' },
+    { to: '/admin/usuarios', labelKey: 'nav.usuarios' },
+    { to: '/perfil', labelKey: 'nav.perfil' },
   ],
   [Rol.GERENTE]: [
-    { to: '/gerente', label: 'Dashboard' },
-    { to: '/gerente/terrenos', label: 'Terrenos' },
-    { to: '/gerente/tareas', label: 'Tareas' },
+    { to: '/gerente', labelKey: 'nav.dashboard' },
+    { to: '/gerente/terrenos', labelKey: 'nav.terrenos' },
+    { to: '/gerente/tareas', labelKey: 'nav.tareas' },
+    { to: '/perfil', labelKey: 'nav.perfil' },
   ],
   [Rol.CAPATAZ]: [
-    { to: '/capataz', label: 'Dashboard' },
-    { to: '/capataz/tareas', label: 'Tareas' },
-    { to: '/capataz/trabajadores', label: 'Trabajadores' },
+    { to: '/capataz', labelKey: 'nav.dashboard' },
+    { to: '/capataz/tareas', labelKey: 'nav.tareas' },
+    { to: '/capataz/trabajadores', labelKey: 'nav.trabajadores' },
+    { to: '/perfil', labelKey: 'nav.perfil' },
   ],
   [Rol.TRABAJADOR]: [
-    { to: '/trabajador', label: 'Dashboard' },
-    { to: '/trabajador/mis-tareas', label: 'Mis Tareas' },
+    { to: '/trabajador', labelKey: 'nav.dashboard' },
+    { to: '/trabajador/mis-tareas', labelKey: 'nav.misTareas' },
+    { to: '/perfil', labelKey: 'nav.perfil' },
   ],
 };
 
@@ -45,6 +44,7 @@ const linksByRole: Record<number, SidebarLink[]> = {
  */
 export default function Sidebar() {
   const { perfil } = useAuth();
+  const { t } = useTranslation();
 
   /** Si no hay perfil, no mostramos nada */
   if (!perfil) return null;
@@ -75,7 +75,7 @@ export default function Sidebar() {
             transition: 'var(--transition-fast)',
           })}
         >
-          {link.label}
+          {t(link.labelKey)}
         </NavLink>
       ))}
     </aside>

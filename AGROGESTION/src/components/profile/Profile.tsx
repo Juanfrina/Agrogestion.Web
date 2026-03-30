@@ -9,6 +9,7 @@
  */
 
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../hooks/useAuth';
 import { AuthRepository } from '../../database/repositories/AuthRepository';
 import Card from '../cards/Card';
@@ -27,6 +28,7 @@ import ResetPasswordForm from '../forms/ResetPasswordForm';
  */
 export default function Profile() {
   const { perfil, loading, roleName } = useAuth();
+  const { t } = useTranslation();
   const [editando, setEditando] = useState(false);
   const [guardando, setGuardando] = useState(false);
   const [mensaje, setMensaje] = useState<{ tipo: 'success' | 'error'; texto: string } | null>(null);
@@ -39,8 +41,8 @@ export default function Profile() {
     direccion: perfil?.direccion ?? '',
   });
 
-  if (loading) return <Spinner size="lg" text="Cargando perfil..." />;
-  if (!perfil) return <Alert type="error" message="No se pudo cargar el perfil" />;
+  if (loading) return <Spinner size="lg" text={t('common.loading')} />;
+  if (!perfil) return <Alert type="error" message={t('profile.errorLoading')} />;
 
   /** Handler genérico para los inputs */
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -65,10 +67,10 @@ export default function Profile() {
     setMensaje(null);
     try {
       await AuthRepository.updatePerfil(perfil.id, form);
-      setMensaje({ tipo: 'success', texto: 'Perfil actualizado correctamente' });
+      setMensaje({ tipo: 'success', texto: t('profile.profileUpdated') });
       setEditando(false);
     } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : 'Error al guardar';
+      const msg = err instanceof Error ? err.message : t('profile.errorSaving');
       setMensaje({ tipo: 'error', texto: msg });
     } finally {
       setGuardando(false);
@@ -94,38 +96,38 @@ export default function Profile() {
       )}
 
       {/* Tarjeta con los datos del usuario */}
-      <Card title="Mi Perfil">
+      <Card title={t('profile.title')}>
         <div className="space-y-4">
           {/* Datos que NO se pueden editar */}
           <div className="flex items-center gap-3">
             <Badge variant={badgeVariant()}>{roleName}</Badge>
           </div>
-          <p><strong>DNI:</strong> {perfil.dni}</p>
-          <p><strong>Email:</strong> {perfil.email}</p>
+          <p><strong>{t('auth.dni')}:</strong> {perfil.dni}</p>
+          <p><strong>{t('auth.email')}:</strong> {perfil.email}</p>
 
           {/* Datos editables */}
           {editando ? (
             <div className="space-y-3">
-              <InputField label="Nombre" name="nombre" type="text" value={form.nombre} onChange={handleChange} required />
-              <InputField label="Apellidos" name="apellidos" type="text" value={form.apellidos} onChange={handleChange} required />
-              <InputField label="Teléfono" name="tlf" type="text" value={form.tlf} onChange={handleChange} />
-              <InputField label="Dirección" name="direccion" type="text" value={form.direccion} onChange={handleChange} />
+              <InputField label={t('auth.name')} name="nombre" type="text" value={form.nombre} onChange={handleChange} required />
+              <InputField label={t('auth.surname')} name="apellidos" type="text" value={form.apellidos} onChange={handleChange} required />
+              <InputField label={t('auth.phone')} name="tlf" type="text" value={form.tlf} onChange={handleChange} />
+              <InputField label={t('auth.address')} name="direccion" type="text" value={form.direccion} onChange={handleChange} />
               <div className="flex gap-3">
                 <Button variant="primary" onClick={handleGuardar} loading={guardando}>
-                  Guardar
+                  {t('common.save')}
                 </Button>
                 <Button variant="secondary" onClick={() => setEditando(false)}>
-                  Cancelar
+                  {t('common.cancel')}
                 </Button>
               </div>
             </div>
           ) : (
             <div className="space-y-2">
-              <p><strong>Nombre:</strong> {perfil.nombre} {perfil.apellidos}</p>
-              <p><strong>Teléfono:</strong> {perfil.tlf}</p>
-              <p><strong>Dirección:</strong> {perfil.direccion}</p>
+              <p><strong>{t('auth.name')}:</strong> {perfil.nombre} {perfil.apellidos}</p>
+              <p><strong>{t('auth.phone')}:</strong> {perfil.tlf}</p>
+              <p><strong>{t('auth.address')}:</strong> {perfil.direccion}</p>
               <Button variant="primary" onClick={activarEdicion}>
-                Editar Perfil
+                {t('profile.editProfile')}
               </Button>
             </div>
           )}
@@ -133,7 +135,7 @@ export default function Profile() {
       </Card>
 
       {/* Sección para cambiar la contraseña */}
-      <Card title="Cambiar Contraseña">
+      <Card title={t('profile.changePassword')}>
         <ResetPasswordForm />
       </Card>
     </div>

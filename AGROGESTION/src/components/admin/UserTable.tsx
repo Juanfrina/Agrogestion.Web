@@ -7,6 +7,7 @@
  */
 
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { AdminRepository } from '../../database/repositories/AdminRepository';
 import type { Perfil } from '../../interfaces/Perfil';
 import { Rol } from '../../interfaces/Rol';
@@ -26,6 +27,7 @@ import Alert from '../common/Alert';
  * @returns La tabla de usuarios con todas las acciones disponibles
  */
 export default function UserTable() {
+  const { t } = useTranslation();
   const [usuarios, setUsuarios] = useState<Perfil[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -53,7 +55,7 @@ export default function UserTable() {
       const data = await AdminRepository.getAllUsers();
       setUsuarios(data);
     } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : 'Error al cargar usuarios';
+      const msg = err instanceof Error ? err.message : t('admin.errorLoadUsers');
       setError(msg);
     } finally {
       setLoading(false);
@@ -83,10 +85,10 @@ export default function UserTable() {
   /** Devuelve el nombre legible del rol */
   const getRolNombre = (id_rol: number): string => {
     switch (id_rol) {
-      case Rol.ADMIN: return 'Admin';
-      case Rol.GERENTE: return 'Gerente';
-      case Rol.CAPATAZ: return 'Capataz';
-      default: return 'Trabajador';
+      case Rol.ADMIN: return t('roles.admin');
+      case Rol.GERENTE: return t('roles.gerente');
+      case Rol.CAPATAZ: return t('roles.capataz');
+      default: return t('roles.trabajador');
     }
   };
 
@@ -102,7 +104,7 @@ export default function UserTable() {
     if (!usuarioSeleccionado) return;
     try {
       await AdminRepository.updateUserRole(usuarioSeleccionado.id, Number(nuevoRol));
-      setMensaje({ tipo: 'success', texto: 'Rol actualizado correctamente' });
+      setMensaje({ tipo: 'success', texto: t('admin.roleUpdated') });
       setModalRol(false);
       cargarUsuarios();
     } catch (err: unknown) {
@@ -124,10 +126,10 @@ export default function UserTable() {
     try {
       if (accionConfirm === 'baja') {
         await AdminRepository.softDeleteUser(usuarioSeleccionado.id);
-        setMensaje({ tipo: 'success', texto: 'Usuario dado de baja' });
+        setMensaje({ tipo: 'success', texto: t('admin.userDeactivated') });
       } else {
         await AdminRepository.reactivateUser(usuarioSeleccionado.id);
-        setMensaje({ tipo: 'success', texto: 'Usuario reactivado' });
+        setMensaje({ tipo: 'success', texto: t('admin.userReactivated') });
       }
       setModalConfirm(false);
       cargarUsuarios();
@@ -139,48 +141,48 @@ export default function UserTable() {
 
   /** Opciones para el select de roles */
   const opcionesRol = [
-    { value: String(Rol.ADMIN), label: 'Administrador' },
-    { value: String(Rol.GERENTE), label: 'Gerente' },
-    { value: String(Rol.CAPATAZ), label: 'Capataz' },
-    { value: String(Rol.TRABAJADOR), label: 'Trabajador' },
+    { value: String(Rol.ADMIN), label: t('roles.admin') },
+    { value: String(Rol.GERENTE), label: t('roles.gerente') },
+    { value: String(Rol.CAPATAZ), label: t('roles.capataz') },
+    { value: String(Rol.TRABAJADOR), label: t('roles.trabajador') },
   ];
 
   /** Columnas de la tabla */
   const columnas = [
-    { key: 'nombre', header: 'Nombre', render: (u: Perfil) => `${u.nombre} ${u.apellidos}` },
-    { key: 'email', header: 'Email' },
-    { key: 'dni', header: 'DNI' },
+    { key: 'nombre', header: t('common.name'), render: (u: Perfil) => `${u.nombre} ${u.apellidos}` },
+    { key: 'email', header: t('common.email') },
+    { key: 'dni', header: t('auth.dni') },
     {
       key: 'id_rol',
-      header: 'Rol',
+      header: t('common.role'),
       render: (u: Perfil) => (
         <Badge variant={getBadgeVariant(u.id_rol)}>{getRolNombre(u.id_rol)}</Badge>
       ),
     },
     {
       key: 'estado',
-      header: 'Estado',
+      header: t('common.status'),
       render: (u: Perfil) => (
         <Badge variant={u.fecha_baja ? 'error' : 'success'}>
-          {u.fecha_baja ? 'Baja' : 'Activo'}
+          {u.fecha_baja ? t('admin.inactive') : t('admin.active')}
         </Badge>
       ),
     },
     {
       key: 'acciones',
-      header: 'Acciones',
+      header: t('common.actions'),
       render: (u: Perfil) => (
         <div className="flex gap-2">
           <Button variant="secondary" onClick={() => abrirModalRol(u)}>
-            Cambiar Rol
+            {t('admin.changeRole')}
           </Button>
           {u.fecha_baja ? (
             <Button variant="accent" onClick={() => abrirModalConfirm(u, 'alta')}>
-              Reactivar
+              {t('admin.reactivate')}
             </Button>
           ) : (
             <Button variant="danger" onClick={() => abrirModalConfirm(u, 'baja')}>
-              Dar de Baja
+              {t('admin.deactivate')}
             </Button>
           )}
         </div>
@@ -188,12 +190,12 @@ export default function UserTable() {
     },
   ];
 
-  if (loading) return <Spinner size="lg" text="Cargando usuarios..." />;
+  if (loading) return <Spinner size="lg" text={t('admin.loadingUsers')} />;
   if (error) return <Alert type="error" message={error} />;
 
   return (
     <div className="space-y-4 p-6">
-      <h2 className="text-2xl font-bold">Gestión de Usuarios</h2>
+      <h2 className="text-2xl font-bold">{t('admin.userManagement')}</h2>
 
       {/* Alerta de feedback */}
       {mensaje && (
@@ -201,16 +203,16 @@ export default function UserTable() {
       )}
 
       {/* Buscador */}
-      <SearchBar value={busqueda} onChange={setBusqueda} placeholder="Buscar por nombre o email..." />
+      <SearchBar value={busqueda} onChange={setBusqueda} placeholder={t('admin.searchUsers')} />
 
       {/* Tabla de usuarios */}
-      <Table columns={columnas} data={usuariosFiltrados} emptyMessage="No se encontraron usuarios" />
+      <Table columns={columnas} data={usuariosFiltrados} emptyMessage={t('admin.noUsersFound')} />
 
       {/* Modal de cambio de rol */}
-      <Modal isOpen={modalRol} onClose={() => setModalRol(false)} title="Cambiar Rol">
+      <Modal isOpen={modalRol} onClose={() => setModalRol(false)} title={t('admin.changeRole')}>
         <div className="space-y-4">
           <p>
-            Cambiando rol de <strong>{usuarioSeleccionado?.nombre} {usuarioSeleccionado?.apellidos}</strong>
+            {t('admin.changingRoleOf')} <strong>{usuarioSeleccionado?.nombre} {usuarioSeleccionado?.apellidos}</strong>
           </p>
           <Select
             options={opcionesRol}
@@ -219,24 +221,24 @@ export default function UserTable() {
             name="nuevoRol"
           />
           <div className="flex gap-3">
-            <Button variant="primary" onClick={confirmarCambioRol}>Confirmar</Button>
-            <Button variant="secondary" onClick={() => setModalRol(false)}>Cancelar</Button>
+            <Button variant="primary" onClick={confirmarCambioRol}>{t('common.confirm')}</Button>
+            <Button variant="secondary" onClick={() => setModalRol(false)}>{t('common.cancel')}</Button>
           </div>
         </div>
       </Modal>
 
       {/* Modal de confirmación baja/alta */}
-      <Modal isOpen={modalConfirm} onClose={() => setModalConfirm(false)} title="Confirmar Acción">
+      <Modal isOpen={modalConfirm} onClose={() => setModalConfirm(false)} title={t('admin.confirmAction')}>
         <div className="space-y-4">
           <p>
-            ¿Seguro que quieres {accionConfirm === 'baja' ? 'dar de baja' : 'reactivar'} a{' '}
+            {accionConfirm === 'baja' ? t('admin.confirmDeactivate') : t('admin.confirmReactivate')}{' '}
             <strong>{usuarioSeleccionado?.nombre} {usuarioSeleccionado?.apellidos}</strong>?
           </p>
           <div className="flex gap-3">
             <Button variant={accionConfirm === 'baja' ? 'danger' : 'accent'} onClick={confirmarAccion}>
-              {accionConfirm === 'baja' ? 'Dar de Baja' : 'Reactivar'}
+              {accionConfirm === 'baja' ? t('admin.deactivate') : t('admin.reactivate')}
             </Button>
-            <Button variant="secondary" onClick={() => setModalConfirm(false)}>Cancelar</Button>
+            <Button variant="secondary" onClick={() => setModalConfirm(false)}>{t('common.cancel')}</Button>
           </div>
         </div>
       </Modal>

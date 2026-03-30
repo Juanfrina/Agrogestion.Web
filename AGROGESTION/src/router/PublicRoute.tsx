@@ -22,7 +22,7 @@ interface PublicRouteProps {
  * @returns El children si no hay sesión, o Navigate si ya está logueado
  */
 export function PublicRoute({ children }: PublicRouteProps) {
-  const { session, loading } = useAuthStore();
+  const { session, perfil, loading } = useAuthStore();
 
   if (loading) {
     return (
@@ -33,8 +33,8 @@ export function PublicRoute({ children }: PublicRouteProps) {
     );
   }
 
-  // Si ya tiene sesión, al dashboard
-  if (session) return <Navigate to="/dashboard" replace />;
+  // Solo redirigimos si tiene sesión Y perfil cargado (evita loop si perfil aún no llegó)
+  if (session && perfil) return <Navigate to="/dashboard" replace />;
 
   return <>{children}</>;
 }

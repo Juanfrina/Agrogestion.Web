@@ -12,5 +12,8 @@ export const DNI_REGEX = /^\d{8}[A-Za-z]$/;
 /** Email básico: algo@algo.algo — no pretende cubrir el RFC entero, pero vale para el 99% */
 export const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-/** Teléfono: al menos 9 dígitos, puede tener espacios o guiones en medio */
-export const PHONE_REGEX = /^\+?\d[\d\s\-]{8,}$/;
+/** Nombre / Apellidos: solo letras (incluye acentos), espacios y guiones, mínimo 3 caracteres */
+export const NAME_REGEX = /^[A-Za-zÀ-ÿñÑ\s-]{3,}$/;
+
+/** Teléfono español: empieza por 6, 7, 8 o 9 y exactamente 9 dígitos */
+export const PHONE_REGEX = /^[6-9]\d{8}$/;

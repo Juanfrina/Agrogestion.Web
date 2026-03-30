@@ -7,7 +7,7 @@
  * para mostrar errores al usuario si algo no cuadra.
  */
 
-import { DNI_REGEX, EMAIL_REGEX, PHONE_REGEX } from './regex';
+import { DNI_REGEX, EMAIL_REGEX, PHONE_REGEX, NAME_REGEX } from './regex';
 
 /**
  * Comprueba si un DNI tiene formato válido (8 dígitos + 1 letra).
@@ -62,4 +62,15 @@ export function isValidPassword(password: string): boolean {
  */
 export function isNotEmpty(value: string): boolean {
   return value.trim().length > 0;
+}
+
+/**
+ * Comprueba que un nombre o apellido sea válido:
+ * solo letras (incluye acentos/ñ), espacios y guiones, mínimo 3 caracteres.
+ *
+ * @param name - El nombre o apellido a validar
+ * @returns true si cumple el formato
+ */
+export function isValidName(name: string): boolean {
+  return NAME_REGEX.test(name.trim());
 }

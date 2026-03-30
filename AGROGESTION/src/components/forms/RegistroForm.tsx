@@ -1,14 +1,15 @@
 /**
  * @file RegistroForm.tsx
- * @description Formulario de registro de nuevos usuarios.
+ * @description Formulario de registro con validación en tiempo real.
  *
- * Esto tiene todos los campos necesarios para crear una cuenta:
- * nombre, apellidos, DNI, email, teléfono, dirección, rol y contraseña.
- * Valida todo antes de enviarlo al AuthRepository.
+ * Valida cada campo al perder el foco (onBlur): formato de DNI, email,
+ * teléfono, contraseñas, etc. Además comprueba en Supabase si el email
+ * ya existe. Incluye botón "Volver" para cancelar el registro.
  */
 
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useCallback } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { AuthRepository } from '../../database/repositories/AuthRepository';
 import InputField from './InputField';
 import Button from '../ui/Button';
@@ -20,29 +21,27 @@ import {
   isValidPhone,
   isValidPassword,
   isNotEmpty,
+  isValidName,
 } from '../../utils/validators';
 import { Rol } from '../../lib/types';
 
 interface RegistroFormProps {
-  /** Callback opcional tras registro exitoso */
   onSuccess?: () => void;
 }
 
-/** Opciones del select de rol */
 const rolOptions = [
-  { value: Rol.GERENTE, label: 'Gerente' },
-  { value: Rol.CAPATAZ, label: 'Capataz' },
-  { value: Rol.TRABAJADOR, label: 'Trabajador' },
+  { value: Rol.GERENTE, label: 'roles.gerente' },
+  { value: Rol.CAPATAZ, label: 'roles.capataz' },
+  { value: Rol.TRABAJADOR, label: 'roles.trabajador' },
 ];
 
 /**
- * Formulario de registro completo con validación.
- * Usa InputField, Select y Button para la UI.
+ * Formulario de registro con validación en tiempo real y botón de volver.
  */
 export default function RegistroForm({ onSuccess }: RegistroFormProps) {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
-  /** Estado de todos los campos del formulario */
   const [form, setForm] = useState({
     nombre: '',
     apellidos: '',
@@ -55,57 +54,141 @@ export default function RegistroForm({ onSuccess }: RegistroFormProps) {
     id_rol: '' as string | number,
   });
 
-  /** Errores de validación por campo */
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [globalError, setGlobalError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [checkingEmail, setCheckingEmail] = useState(false);
 
-  /** Actualiza un campo del formulario */
+  /** Actualiza un campo */
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
-    // Limpiamos el error de ese campo cuando el usuario escribe
-    setErrors((prev) => ({ ...prev, [name]: '' }));
+    setForm((p) => ({ ...p, [name]: value }));
+    /* Limpiamos error al escribir */
+    if (errors[name]) setErrors((p) => { const n = { ...p }; delete n[name]; return n; });
   };
 
-  /** Valida todos los campos y devuelve true si todo está bien */
-  const validate = (): boolean => {
-    const newErrors: Record<string, string> = {};
+  /** Validación por campo individual (onBlur) */
+  const validateField = useCallback(
+    async (name: string) => {
+      setTouched((p) => ({ ...p, [name]: true }));
+      const errs = { ...errors };
 
-    if (!isNotEmpty(form.nombre)) newErrors.nombre = 'El nombre es obligatorio';
-    if (!isNotEmpty(form.apellidos)) newErrors.apellidos = 'Los apellidos son obligatorios';
-    if (!isValidDNI(form.dni)) newErrors.dni = 'DNI no válido (8 dígitos + letra)';
-    if (!isValidEmail(form.email)) newErrors.email = 'Email no válido';
-    if (!isValidPhone(form.tlf)) newErrors.tlf = 'Teléfono no válido';
-    if (!isNotEmpty(form.direccion)) newErrors.direccion = 'La dirección es obligatoria';
-    if (!isValidPassword(form.password)) newErrors.password = 'Mínimo 6 caracteres';
-    if (form.password !== form.confirmPassword) newErrors.confirmPassword = 'Las contraseñas no coinciden';
-    if (!form.id_rol) newErrors.id_rol = 'Selecciona un rol';
+      switch (name) {
+        case 'nombre':
+          if (!isNotEmpty(form.nombre)) errs.nombre = t('auth.errorNameRequired');
+          else if (!isValidName(form.nombre)) errs.nombre = t('auth.errorNameInvalid');
+          else delete errs.nombre;
+          break;
+        case 'apellidos':
+          if (!isNotEmpty(form.apellidos)) errs.apellidos = t('auth.errorSurnameRequired');
+          else if (!isValidName(form.apellidos)) errs.apellidos = t('auth.errorSurnameInvalid');
+          else delete errs.apellidos;
+          break;
+        case 'dni':
+          if (!form.dni.trim()) errs.dni = t('auth.errorDniRequired');
+          else if (!isValidDNI(form.dni)) errs.dni = t('auth.errorDniInvalid');
+          else delete errs.dni;
+          break;
+        case 'email':
+          if (!form.email.trim()) {
+            errs.email = t('auth.errorEmailRequired');
+          } else if (!isValidEmail(form.email)) {
+            errs.email = t('auth.errorEmailInvalid');
+          } else {
+            /* Comprobar si ya existe en la BD */
+            setCheckingEmail(true);
+            try {
+              const taken = await AuthRepository.isEmailTaken(form.email);
+              if (taken) errs.email = t('auth.errorEmailTaken');
+              else delete errs.email;
+            } catch {
+              delete errs.email; /* Si falla la comprobación, no bloqueamos */
+            } finally {
+              setCheckingEmail(false);
+            }
+          }
+          break;
+        case 'tlf':
+          if (!form.tlf.trim()) errs.tlf = t('auth.errorPhoneRequired');
+          else if (!isValidPhone(form.tlf)) errs.tlf = t('auth.errorPhoneInvalid');
+          else delete errs.tlf;
+          break;
+        case 'direccion':
+          if (!isNotEmpty(form.direccion)) errs.direccion = t('auth.errorAddressRequired');
+          else delete errs.direccion;
+          break;
+        case 'password':
+          if (!form.password) errs.password = t('auth.errorPasswordRequired');
+          else if (!isValidPassword(form.password)) errs.password = t('auth.errorPasswordMin');
+          else delete errs.password;
+          /* Si ya tocó confirmar, re-validamos */
+          if (touched.confirmPassword) {
+            if (form.confirmPassword && form.password !== form.confirmPassword)
+              errs.confirmPassword = t('auth.errorPasswordMatch');
+            else if (form.confirmPassword) delete errs.confirmPassword;
+          }
+          break;
+        case 'confirmPassword':
+          if (!form.confirmPassword) errs.confirmPassword = t('auth.errorConfirmRequired');
+          else if (form.password !== form.confirmPassword) errs.confirmPassword = t('auth.errorPasswordMatch');
+          else delete errs.confirmPassword;
+          break;
+        case 'id_rol':
+          if (!form.id_rol) errs.id_rol = t('auth.errorRoleRequired');
+          else delete errs.id_rol;
+          break;
+      }
 
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
+      setErrors(errs);
+    },
+    [form, errors, touched],
+  );
 
-  /** Envía el registro al servidor */
+  /** ¿El campo ha sido tocado y no tiene error? */
+  const isValid = (name: string) =>
+    touched[name] && !errors[name] && isNotEmpty(String(form[name as keyof typeof form]));
+
+  /** Envía el registro */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setGlobalError('');
 
-    if (!validate()) return;
+    /* Marcamos todos como tocados y validamos */
+    const allFields = ['nombre', 'apellidos', 'dni', 'email', 'tlf', 'direccion', 'password', 'confirmPassword', 'id_rol'];
+    const newTouched: Record<string, boolean> = {};
+    allFields.forEach((f) => (newTouched[f] = true));
+    setTouched(newTouched);
+
+    const newErrors: Record<string, string> = {};
+    if (!isNotEmpty(form.nombre)) newErrors.nombre = t('auth.errorNameRequired');
+    else if (!isValidName(form.nombre)) newErrors.nombre = t('auth.errorNameInvalid');
+    if (!isNotEmpty(form.apellidos)) newErrors.apellidos = t('auth.errorSurnameRequired');
+    else if (!isValidName(form.apellidos)) newErrors.apellidos = t('auth.errorSurnameInvalid');
+    if (!isValidDNI(form.dni)) newErrors.dni = t('auth.errorDniInvalid');
+    if (!isValidEmail(form.email)) newErrors.email = t('auth.errorEmailInvalid');
+    if (!isValidPhone(form.tlf)) newErrors.tlf = t('auth.errorPhoneInvalid');
+    if (!isNotEmpty(form.direccion)) newErrors.direccion = t('auth.errorAddressRequired');
+    if (!isValidPassword(form.password)) newErrors.password = t('auth.errorPasswordMin');
+    if (form.password !== form.confirmPassword) newErrors.confirmPassword = t('auth.errorPasswordMatch');
+    if (!form.id_rol) newErrors.id_rol = t('auth.errorRoleRequired');
+
+    if (Object.keys(newErrors).length) {
+      setErrors(newErrors);
+      return;
+    }
 
     setLoading(true);
     try {
-      /* Comprobamos si el email ya está registrado */
       const taken = await AuthRepository.isEmailTaken(form.email);
       if (taken) {
-        setErrors((prev) => ({ ...prev, email: 'Este email ya está registrado' }));
+        setErrors((p) => ({ ...p, email: t('auth.errorEmailTaken') }));
         setLoading(false);
         return;
       }
 
-      /* Enviamos los datos de registro */
       await AuthRepository.signUp({
         nombre: form.nombre,
         apellidos: form.apellidos,
@@ -117,15 +200,9 @@ export default function RegistroForm({ onSuccess }: RegistroFormProps) {
         id_rol: Number(form.id_rol),
       });
 
-      /* Éxito */
-      if (onSuccess) {
-        onSuccess();
-      } else {
-        navigate('/login');
-      }
+      onSuccess ? onSuccess() : navigate('/login');
     } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : 'Error al registrar';
-      setGlobalError(msg);
+      setGlobalError(err instanceof Error ? err.message : t('auth.errorRegister'));
     } finally {
       setLoading(false);
     }
@@ -133,7 +210,7 @@ export default function RegistroForm({ onSuccess }: RegistroFormProps) {
 
   return (
     <form onSubmit={handleSubmit} className="form-card flex flex-col gap-4">
-      <h2 className="text-center">Registro</h2>
+      <h2 className="text-center">{t('auth.register')}</h2>
 
       {globalError && (
         <Alert type="error" message={globalError} onClose={() => setGlobalError('')} />
@@ -141,95 +218,130 @@ export default function RegistroForm({ onSuccess }: RegistroFormProps) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <InputField
-          label="Nombre"
+          label={t('auth.name')}
           name="nombre"
           value={form.nombre}
           onChange={handleChange}
-          error={errors.nombre}
+          onBlur={() => validateField('nombre')}
+          error={touched.nombre ? errors.nombre : undefined}
+          valid={isValid('nombre')}
+          placeholder={t('auth.placeholderName')}
           required
         />
         <InputField
-          label="Apellidos"
+          label={t('auth.surname')}
           name="apellidos"
           value={form.apellidos}
           onChange={handleChange}
-          error={errors.apellidos}
+          onBlur={() => validateField('apellidos')}
+          error={touched.apellidos ? errors.apellidos : undefined}
+          valid={isValid('apellidos')}
+          placeholder={t('auth.placeholderSurname')}
           required
         />
         <InputField
-          label="DNI"
+          label={t('auth.dni')}
           name="dni"
           value={form.dni}
           onChange={handleChange}
-          error={errors.dni}
-          placeholder="12345678A"
+          onBlur={() => validateField('dni')}
+          error={touched.dni ? errors.dni : undefined}
+          valid={isValid('dni')}
+          placeholder={t('auth.placeholderDni')}
+          hint={t('auth.hintDni')}
           maxLength={9}
           required
         />
         <InputField
-          label="Email"
+          label={t('auth.email')}
           name="email"
           type="email"
           value={form.email}
           onChange={handleChange}
-          error={errors.email}
+          onBlur={() => validateField('email')}
+          error={touched.email ? errors.email : undefined}
+          valid={isValid('email') && !checkingEmail}
+          placeholder={t('auth.placeholderEmail')}
+          hint={checkingEmail ? t('auth.checkingEmail') : undefined}
           required
         />
         <InputField
-          label="Teléfono"
+          label={t('auth.phone')}
           name="tlf"
           value={form.tlf}
           onChange={handleChange}
-          error={errors.tlf}
-          placeholder="612345678"
+          onBlur={() => validateField('tlf')}
+          error={touched.tlf ? errors.tlf : undefined}
+          valid={isValid('tlf')}
+          placeholder={t('auth.placeholderPhone')}
+          hint={t('auth.hintPhone')}
+          maxLength={9}
           required
         />
         <InputField
-          label="Dirección"
+          label={t('auth.address')}
           name="direccion"
           value={form.direccion}
           onChange={handleChange}
-          error={errors.direccion}
+          onBlur={() => validateField('direccion')}
+          error={touched.direccion ? errors.direccion : undefined}
+          valid={isValid('direccion')}
+          placeholder={t('auth.placeholderAddress')}
           required
         />
       </div>
 
       <div className="flex flex-col gap-1">
         <label className="font-medium" style={{ color: 'var(--color-text-primary)' }}>
-          Rol <span style={{ color: 'var(--color-error)' }}>*</span>
+          {t('auth.role')} <span style={{ color: 'var(--color-error)' }}>*</span>
         </label>
         <Select
           name="id_rol"
-          options={rolOptions}
+          options={rolOptions.map(o => ({ ...o, label: t(o.label) }))}
           value={form.id_rol}
-          onChange={handleChange}
-          placeholder="Selecciona un rol"
+          onChange={(e) => { handleChange(e); setTouched((p) => ({ ...p, id_rol: true })); }}
+          placeholder={t('auth.selectRole')}
         />
-        {errors.id_rol && <span className="form-error">{errors.id_rol}</span>}
+        {touched.id_rol && errors.id_rol && <span className="form-error">{errors.id_rol}</span>}
       </div>
 
       <InputField
-        label="Contraseña"
+        label={t('auth.password')}
         name="password"
         type="password"
         value={form.password}
         onChange={handleChange}
-        error={errors.password}
+        onBlur={() => validateField('password')}
+        error={touched.password ? errors.password : undefined}
+        valid={isValid('password')}
+        placeholder={t('auth.placeholderPassword')}
         required
       />
       <InputField
-        label="Confirmar contraseña"
+        label={t('auth.confirmPassword')}
         name="confirmPassword"
         type="password"
         value={form.confirmPassword}
         onChange={handleChange}
-        error={errors.confirmPassword}
+        onBlur={() => validateField('confirmPassword')}
+        error={touched.confirmPassword ? errors.confirmPassword : undefined}
+        valid={isValid('confirmPassword')}
+        placeholder={t('auth.placeholderConfirmPassword')}
         required
       />
 
       <Button type="submit" variant="primary" loading={loading}>
-        Registrarse
+        {t('auth.register')}
       </Button>
+
+      <div className="flex items-center justify-between" style={{ fontSize: '0.88rem' }}>
+        <Link to="/login" style={{ color: 'var(--color-primary)' }}>
+          {t('auth.hasAccount')}
+        </Link>
+        <Link to="/" className="btn-cancel">
+          {t('common.back')}
+        </Link>
+      </div>
     </form>
   );
 }

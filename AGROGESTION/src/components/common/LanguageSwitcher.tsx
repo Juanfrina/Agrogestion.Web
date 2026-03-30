@@ -1,84 +1,75 @@
 /**
  * @file LanguageSwitcher.tsx
- * @description Selector de idioma (placeholder por ahora).
- *
- * Esto muestra dos botones "ES" y "EN" para cambiar el idioma.
- * De momento la lógica de i18n no está conectada — solo está la UI lista
- * para cuando integremos react-i18next o similar.
+ * @description Desplegable de selección de idioma con soporte para ES, EN y RO.
  */
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import i18n from '../../lib/i18n';
 
 type Lang = 'es' | 'en' | 'ro';
 
+const LANGUAGES: { code: Lang; label: string; flag: string }[] = [
+  { code: 'es', label: 'Español', flag: '🇪🇸' },
+  { code: 'en', label: 'English', flag: '🇬🇧' },
+  { code: 'ro', label: 'Română', flag: '🇷🇴' },
+];
+
 /**
- * Selector de idioma — botones para español, inglés y rumano.
- * El botón activo se resalta con el color primario.
+ * Selector de idioma tipo dropdown.
+ * Muestra "Idioma" con una flechita; al hacer clic se despliegan las opciones.
  */
 export default function LanguageSwitcher() {
+  const { t } = useTranslation();
   const [lang, setLang] = useState<Lang>((i18n.language as Lang) || 'es');
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
 
   const changeLang = (l: Lang) => {
     setLang(l);
     i18n.changeLanguage(l);
+    setOpen(false);
   };
 
-  /** Estilos base para los botones de idioma */
-  const baseStyle: React.CSSProperties = {
-    padding: '0.25rem 0.75rem',
-    border: '1px solid var(--color-border)',
-    cursor: 'pointer',
-    fontSize: '0.875rem',
-    fontWeight: 600,
-    transition: 'var(--transition-fast)',
-  };
+  /** Cierra el dropdown si se hace clic fuera */
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, []);
 
-  /** Estilo del botón activo */
-  const activeStyle: React.CSSProperties = {
-    ...baseStyle,
-    backgroundColor: 'var(--color-primary)',
-    color: 'var(--color-text-on-primary)',
-    borderColor: 'var(--color-primary)',
-  };
-
-  /** Estilo del botón inactivo */
-  const inactiveStyle: React.CSSProperties = {
-    ...baseStyle,
-    backgroundColor: 'transparent',
-    color: 'var(--color-text-secondary)',
-  };
+  const current = LANGUAGES.find((l) => l.code === lang)!;
 
   return (
-    <div className="flex">
+    <div className="lang-switcher" ref={ref}>
       <button
-        onClick={() => changeLang('es')}
-        style={{
-          ...(lang === 'es' ? activeStyle : inactiveStyle),
-          borderRadius: 'var(--radius-md) 0 0 var(--radius-md)',
-        }}
+        className="lang-switcher__toggle"
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+        aria-haspopup="listbox"
       >
-        ES
+        <span>{current.flag}</span>
+        <span>{t('common.language')}</span>
+        <span className={`lang-switcher__arrow ${open ? 'lang-switcher__arrow--open' : ''}`}>▾</span>
       </button>
-      <button
-        onClick={() => changeLang('en')}
-        style={{
-          ...(lang === 'en' ? activeStyle : inactiveStyle),
-          borderLeft: 'none',
-        }}
-      >
-        EN
-      </button>
-      <button
-        onClick={() => changeLang('ro')}
-        style={{
-          ...(lang === 'ro' ? activeStyle : inactiveStyle),
-          borderRadius: '0 var(--radius-md) var(--radius-md) 0',
-          borderLeft: 'none',
-        }}
-      >
-        RO
-      </button>
+
+      {open && (
+        <ul className="lang-switcher__menu" role="listbox">
+          {LANGUAGES.map((l) => (
+            <li key={l.code} role="option" aria-selected={l.code === lang}>
+              <button
+                className={`lang-switcher__option ${l.code === lang ? 'lang-switcher__option--active' : ''}`}
+                onClick={() => changeLang(l.code)}
+              >
+                <span>{l.flag}</span>
+                <span>{l.label}</span>
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
