@@ -1,43 +1,28 @@
 /**
  * @file GerentePage.tsx
- * @description Panel del Gerente — desde aquí gestiona terrenos, tareas y capataces.
- *
- * De momento es un placeholder. Aquí irán:
- *   - Lista de terrenos propios
- *   - Creación y asignación de tareas
- *   - Gestión de capataces asociados
+ * @description Panel del Gerente — usa Layout y rutas anidadas para dashboard, terrenos y tareas.
  */
 
-import { AuthRepository } from '../database/repositories/AuthRepository';
-import { useAuthStore } from '../store/authStore';
-import { useNavigate } from 'react-router-dom';
+import Layout from '../components/common/Layout';
+import GerenteDashboard from '../components/gerente/GerenteDashboard';
+import TerrenoList from '../components/gerente/TerrenoList';
+import TareaGerenteList from '../components/gerente/TareaGerenteList';
+import { Routes, Route } from 'react-router-dom';
 
 /**
- * Componente del panel de gerente.
- * Solo accesible por usuarios con rol GERENTE (id_rol = 2).
+ * Página del gerente con rutas anidadas.
+ * /gerente → Dashboard, /gerente/terrenos → Terrenos, /gerente/tareas → Tareas.
  *
- * @returns El panel de gerente con header y mensaje de bienvenida
+ * @returns El panel de gerente con Layout y enrutado interno
  */
 export default function GerentePage() {
-  const { perfil } = useAuthStore();
-  const navigate = useNavigate();
-
-  /** Cierra la sesión y redirige al login */
-  const handleLogout = async () => {
-    await AuthRepository.signOut();
-    navigate('/login');
-  };
-
   return (
-    <div className="p-8">
-      <div className="flex items-center justify-between">
-        <h1>Panel Gerente</h1>
-        <button onClick={handleLogout} className="btn-danger">Cerrar Sesión</button>
-      </div>
-      <div className="mt-4 flex items-center gap-3">
-        <span className="badge badge-gerente">Gerente</span>
-        <p>Bienvenido, {perfil?.nombre} {perfil?.apellidos}</p>
-      </div>
-    </div>
+    <Layout>
+      <Routes>
+        <Route index element={<GerenteDashboard />} />
+        <Route path="terrenos" element={<TerrenoList />} />
+        <Route path="tareas" element={<TareaGerenteList />} />
+      </Routes>
+    </Layout>
   );
 }

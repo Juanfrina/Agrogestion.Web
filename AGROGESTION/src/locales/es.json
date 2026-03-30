@@ -1,0 +1,44 @@
+{
+  "app": {
+    "name": "Agrogestión",
+    "slogan": "Innovación · Sostenibilidad · Productividad"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "terrenos": "Terrenos",
+    "tareas": "Tareas",
+    "trabajadores": "Trabajadores",
+    "usuarios": "Usuarios",
+    "perfil": "Mi Perfil",
+    "logout": "Cerrar Sesión"
+  },
+  "auth": {
+    "login": "Iniciar Sesión",
+    "register": "Registrarse",
+    "email": "Email",
+    "password": "Contraseña",
+    "confirmPassword": "Repite la contraseña",
+    "noAccount": "¿No tienes cuenta?",
+    "hasAccount": "¿Ya tienes cuenta?",
+    "forgotPassword": "¿Olvidaste tu contraseña?"
+  },
+  "roles": {
+    "admin": "Administrador",
+    "gerente": "Gerente",
+    "capataz": "Capataz",
+    "trabajador": "Trabajador"
+  },
+  "common": {
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "create": "Crear",
+    "search": "Buscar...",
+    "loading": "Cargando...",
+    "noData": "No hay datos disponibles",
+    "confirm": "Confirmar",
+    "back": "Volver",
+    "welcome": "Bienvenido"
+  }
+}

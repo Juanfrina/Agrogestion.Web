@@ -1,0 +1,44 @@
+{
+  "app": {
+    "name": "Agrogestión",
+    "slogan": "Inovație · Sustenabilitate · Productivitate"
+  },
+  "nav": {
+    "dashboard": "Panou de control",
+    "terrenos": "Terenuri",
+    "tareas": "Sarcini",
+    "trabajadores": "Muncitori",
+    "usuarios": "Utilizatori",
+    "perfil": "Profilul meu",
+    "logout": "Deconectare"
+  },
+  "auth": {
+    "login": "Autentificare",
+    "register": "Înregistrare",
+    "email": "Email",
+    "password": "Parolă",
+    "confirmPassword": "Confirmă parola",
+    "noAccount": "Nu ai un cont?",
+    "hasAccount": "Ai deja un cont?",
+    "forgotPassword": "Ai uitat parola?"
+  },
+  "roles": {
+    "admin": "Administrator",
+    "gerente": "Manager",
+    "capataz": "Maistru",
+    "trabajador": "Muncitor"
+  },
+  "common": {
+    "save": "Salvează",
+    "cancel": "Anulează",
+    "edit": "Editează",
+    "delete": "Șterge",
+    "create": "Creează",
+    "search": "Caută...",
+    "loading": "Se încarcă...",
+    "noData": "Nu există date disponibile",
+    "confirm": "Confirmă",
+    "back": "Înapoi",
+    "welcome": "Bine ai venit"
+  }
+}

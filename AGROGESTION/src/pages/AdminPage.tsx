@@ -1,44 +1,26 @@
 /**
  * @file AdminPage.tsx
- * @description Panel del Administrador — control total del sistema.
- *
- * De momento es un placeholder con el nombre del usuario y un botón de logout.
- * Aquí irán las funciones de gestión de usuarios, ver estadísticas, etc.
+ * @description Panel del Administrador — usa Layout y rutas anidadas para dashboard y usuarios.
  */
 
-import { AuthRepository } from '../database/repositories/AuthRepository';
-import { useAuthStore } from '../store/authStore';
-import { useNavigate } from 'react-router-dom';
+import Layout from '../components/common/Layout';
+import AdminDashboard from '../components/admin/AdminDashboard';
+import UserTable from '../components/admin/UserTable';
+import { Routes, Route } from 'react-router-dom';
 
 /**
- * Componente del panel de administración.
- * Solo accesible por usuarios con rol ADMIN (id_rol = 1).
+ * Página del admin con rutas anidadas.
+ * /admin → Dashboard, /admin/usuarios → Tabla de usuarios.
  *
- * @returns El panel de admin con header y mensaje de bienvenida
+ * @returns El panel de admin con Layout y enrutado interno
  */
 export default function AdminPage() {
-  const { perfil } = useAuthStore();
-  const navigate = useNavigate();
-
-  /** Cierra la sesión y redirige al login */
-  const handleLogout = async () => {
-    await AuthRepository.signOut();
-    navigate('/login');
-  };
-
   return (
-    <div className="p-8">
-      {/* Header con título y botón de logout */}
-      <div className="flex items-center justify-between">
-        <h1>Panel Admin</h1>
-        <button onClick={handleLogout} className="btn-danger">Cerrar Sesión</button>
-      </div>
-
-      {/* Badge de rol y bienvenida */}
-      <div className="mt-4 flex items-center gap-3">
-        <span className="badge badge-admin">Admin</span>
-        <p>Bienvenido, {perfil?.nombre} {perfil?.apellidos}</p>
-      </div>
-    </div>
+    <Layout>
+      <Routes>
+        <Route index element={<AdminDashboard />} />
+        <Route path="usuarios" element={<UserTable />} />
+      </Routes>
+    </Layout>
   );
 }
