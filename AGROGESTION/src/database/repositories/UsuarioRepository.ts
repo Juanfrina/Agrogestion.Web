@@ -73,6 +73,30 @@ export const UsuarioRepository = {
   },
 
   /**
+   * Desasocia un capataz de un gerente (borrado lógico).
+   */
+  async removeCapatazFromGerente(gerenteId: string, capatazId: string): Promise<void> {
+    const { error } = await supabase
+      .from('gerente_capataz')
+      .update({ fecha_baja: new Date().toISOString().split('T')[0] })
+      .eq('id_gerente', gerenteId)
+      .eq('id_capataz', capatazId);
+    if (error) throw error;
+  },
+
+  /**
+   * Desasocia un trabajador de un capataz (borrado lógico).
+   */
+  async removeTrabajadorFromCapataz(capatazId: string, trabajadorId: string): Promise<void> {
+    const { error } = await supabase
+      .from('capataz_trabajador')
+      .update({ fecha_baja: new Date().toISOString().split('T')[0] })
+      .eq('id_capataz', capatazId)
+      .eq('id_trabajador', trabajadorId);
+    if (error) throw error;
+  },
+
+  /**
    * Trae todos los capataces disponibles (activos, sin fecha de baja).
    * Útil para los selects de asignación.
    *

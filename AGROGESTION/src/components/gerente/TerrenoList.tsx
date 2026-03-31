@@ -46,7 +46,9 @@ export default function TerrenoList() {
       const data = await TerrenoRepository.getByGestor(perfil.id);
       setTerrenos(data);
     } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : 'Error al cargar terrenos';
+      const msg = err instanceof Error ? err.message
+        : (err && typeof err === 'object' && 'message' in err) ? String((err as { message: string }).message)
+        : 'Error al cargar terrenos';
       setError(msg);
     } finally {
       setLoading(false);
@@ -131,7 +133,7 @@ export default function TerrenoList() {
 
       {mensaje && <Alert type={mensaje.tipo} message={mensaje.texto} onClose={() => setMensaje(null)} />}
 
-      <SearchBar value={busqueda} onChange={setBusqueda} placeholder="Buscar terrenos..." />
+      <SearchBar value={busqueda} onChange={setBusqueda} placeholder="🔍Buscar terrenos..." />
 
       <Table columns={columnas} data={terrenosFiltrados} emptyMessage="No tienes terrenos todavía" />
 

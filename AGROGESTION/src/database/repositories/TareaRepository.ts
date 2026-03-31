@@ -10,6 +10,7 @@
 
 import { supabase } from '../supabase/Client';
 import type { Tarea, TareaFormData } from '../../interfaces/Tarea';
+import { ESTADOS_TAREA } from '../../lib/constants';
 
 /** Query de selección con todos los joins típicos de una tarea */
 const TAREA_SELECT = `
@@ -92,7 +93,7 @@ export const TareaRepository = {
         id_terreno: data.id_terreno,
         id_gerente: gerenteId,
         id_capataz: data.id_capataz ?? null,
-        id_estado: 1,
+        id_estado: data.id_capataz ? ESTADOS_TAREA.ASIGNADA : ESTADOS_TAREA.PENDIENTE,
       })
       .select()
       .single();
@@ -205,6 +206,21 @@ export const TareaRepository = {
   },
 
   /**
+   * Reasigna un trabajador que había rechazado (actualiza RECHAZADA → PENDIENTE).
+   */
+  async reassignTrabajador(tareaId: number, trabajadorId: string): Promise<void> {
+    const { error } = await supabase
+      .from('tarea_trabajador')
+      .update({
+        estado: 'PENDIENTE',
+        fecha_respuesta: null,
+      })
+      .eq('id_tarea', tareaId)
+      .eq('id_trabajador', trabajadorId);
+    if (error) throw error;
+  },
+
+  /**
    * Trae los trabajadores asignados a una tarea con sus datos de perfil.
    *
    * @param tareaId - Id de la tarea
@@ -236,6 +252,27 @@ export const TareaRepository = {
       .from('tarea_trabajador')
       .update({
         estado: aceptar ? 'ACEPTADA' : 'RECHAZADA',
+        fecha_respuesta: new Date().toISOString(),
+      })
+      .eq('id_tarea', tareaId)
+      .eq('id_trabajador', trabajadorId);
+    if (error) throw error;
+  },
+
+  /**
+   * El trabajador marca su asignación como completada.
+   *
+   * @param tareaId      - Id de la tarea
+   * @param trabajadorId - UUID del trabajador
+   */
+  async completeTrabajadorAssignment(
+    tareaId: number,
+    trabajadorId: string,
+  ): Promise<void> {
+    const { error } = await supabase
+      .from('tarea_trabajador')
+      .update({
+        estado: 'COMPLETADA',
         fecha_respuesta: new Date().toISOString(),
       })
       .eq('id_tarea', tareaId)

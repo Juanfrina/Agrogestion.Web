@@ -167,7 +167,7 @@ CREATE TABLE tarea_trabajador (
     CONSTRAINT fk_tt_tarea      FOREIGN KEY (id_tarea)          REFERENCES tarea(id_tarea),
     CONSTRAINT fk_tt_trabajador FOREIGN KEY (id_trabajador)     REFERENCES perfiles(id),
     CONSTRAINT fk_tt_capataz    FOREIGN KEY (id_capataz_asigna) REFERENCES perfiles(id),
-    CONSTRAINT chk_tt_estado CHECK (estado IN ('PENDIENTE', 'ACEPTADA', 'RECHAZADA'))
+    CONSTRAINT chk_tt_estado CHECK (estado IN ('PENDIENTE', 'ACEPTADA', 'RECHAZADA', 'COMPLETADA'))
 );
 
 -- Relación Capataz ↔ Trabajador (asignación estable)
@@ -274,6 +274,47 @@ AS $$
     SELECT EXISTS (
         SELECT 1 FROM perfiles WHERE email = email_to_check
     );
+$$;
+
+-- Funciones helper para romper recursión en RLS
+-- (SECURITY DEFINER ignora las políticas RLS al ejecutarse)
+
+CREATE OR REPLACE FUNCTION public.tarea_ids_by_gerente(uid UUID)
+RETURNS SETOF INTEGER
+LANGUAGE sql STABLE SECURITY DEFINER SET search_path = public
+AS $$
+    SELECT id_tarea FROM tarea WHERE id_gerente = uid AND fecha_baja IS NULL;
+$$;
+
+CREATE OR REPLACE FUNCTION public.tarea_ids_by_capataz(uid UUID)
+RETURNS SETOF INTEGER
+LANGUAGE sql STABLE SECURITY DEFINER SET search_path = public
+AS $$
+    SELECT id_tarea FROM tarea WHERE id_capataz = uid AND fecha_baja IS NULL;
+$$;
+
+CREATE OR REPLACE FUNCTION public.tarea_ids_by_trabajador(uid UUID)
+RETURNS SETOF INTEGER
+LANGUAGE sql STABLE SECURITY DEFINER SET search_path = public
+AS $$
+    SELECT id_tarea FROM tarea_trabajador WHERE id_trabajador = uid AND fecha_baja IS NULL;
+$$;
+
+CREATE OR REPLACE FUNCTION public.terreno_ids_by_capataz(uid UUID)
+RETURNS SETOF INTEGER
+LANGUAGE sql STABLE SECURITY DEFINER SET search_path = public
+AS $$
+    SELECT DISTINCT id_terreno FROM tarea WHERE id_capataz = uid AND fecha_baja IS NULL;
+$$;
+
+CREATE OR REPLACE FUNCTION public.terreno_ids_by_trabajador(uid UUID)
+RETURNS SETOF INTEGER
+LANGUAGE sql STABLE SECURITY DEFINER SET search_path = public
+AS $$
+    SELECT DISTINCT t.id_terreno FROM tarea t
+    JOIN tarea_trabajador tt ON tt.id_tarea = t.id_tarea
+    WHERE tt.id_trabajador = uid
+      AND tt.fecha_baja IS NULL AND t.fecha_baja IS NULL;
 $$;
 
 -- Trigger: crear perfil automáticamente al registrarse
@@ -526,22 +567,14 @@ CREATE POLICY "terreno_select_capataz"
     ON terreno FOR SELECT TO authenticated
     USING (
         public.get_my_role() = 3
-        AND id_terreno IN (
-            SELECT id_terreno FROM tarea
-            WHERE id_capataz = auth.uid() AND fecha_baja IS NULL
-        )
+        AND id_terreno IN (SELECT public.terreno_ids_by_capataz(auth.uid()))
     );
 
 CREATE POLICY "terreno_select_trabajador"
     ON terreno FOR SELECT TO authenticated
     USING (
         public.get_my_role() = 4
-        AND id_terreno IN (
-            SELECT t.id_terreno FROM tarea t
-            JOIN tarea_trabajador tt ON tt.id_tarea = t.id_tarea
-            WHERE tt.id_trabajador = auth.uid()
-              AND tt.fecha_baja IS NULL AND t.fecha_baja IS NULL
-        )
+        AND id_terreno IN (SELECT public.terreno_ids_by_trabajador(auth.uid()))
     );
 
 CREATE POLICY "terreno_insert_gerente"
@@ -589,10 +622,7 @@ CREATE POLICY "tarea_select_trabajador"
     ON tarea FOR SELECT TO authenticated
     USING (
         public.get_my_role() = 4
-        AND id_tarea IN (
-            SELECT id_tarea FROM tarea_trabajador
-            WHERE id_trabajador = auth.uid() AND fecha_baja IS NULL
-        )
+        AND id_tarea IN (SELECT public.tarea_ids_by_trabajador(auth.uid()))
     );
 
 CREATE POLICY "tarea_insert_gerente"
@@ -679,14 +709,14 @@ CREATE POLICY "tt_select_gerente"
     ON tarea_trabajador FOR SELECT TO authenticated
     USING (
         public.get_my_role() = 2
-        AND id_tarea IN (SELECT id_tarea FROM tarea WHERE id_gerente = auth.uid())
+        AND id_tarea IN (SELECT public.tarea_ids_by_gerente(auth.uid()))
     );
 
 CREATE POLICY "tt_select_capataz"
     ON tarea_trabajador FOR SELECT TO authenticated
     USING (
         id_capataz_asigna = auth.uid()
-        OR id_tarea IN (SELECT id_tarea FROM tarea WHERE id_capataz = auth.uid())
+        OR id_tarea IN (SELECT public.tarea_ids_by_capataz(auth.uid()))
     );
 
 CREATE POLICY "tt_select_trabajador"
@@ -794,16 +824,13 @@ CREATE POLICY "comentarios_select_gerente"
 CREATE POLICY "comentarios_select_capataz"
     ON comentarios_tarea FOR SELECT TO authenticated
     USING (
-        id_tarea IN (SELECT id_tarea FROM tarea WHERE id_capataz = auth.uid())
+        id_tarea IN (SELECT public.tarea_ids_by_capataz(auth.uid()))
     );
 
 CREATE POLICY "comentarios_select_trabajador"
     ON comentarios_tarea FOR SELECT TO authenticated
     USING (
-        id_tarea IN (
-            SELECT id_tarea FROM tarea_trabajador
-            WHERE id_trabajador = auth.uid() AND fecha_baja IS NULL
-        )
+        id_tarea IN (SELECT public.tarea_ids_by_trabajador(auth.uid()))
     );
 
 -- Cualquier usuario involucrado en la tarea puede dejar comentarios
@@ -818,17 +845,14 @@ CREATE POLICY "comentarios_insert_capataz"
     ON comentarios_tarea FOR INSERT TO authenticated
     WITH CHECK (
         id_autor = auth.uid()
-        AND id_tarea IN (SELECT id_tarea FROM tarea WHERE id_capataz = auth.uid())
+        AND id_tarea IN (SELECT public.tarea_ids_by_capataz(auth.uid()))
     );
 
 CREATE POLICY "comentarios_insert_trabajador"
     ON comentarios_tarea FOR INSERT TO authenticated
     WITH CHECK (
         id_autor = auth.uid()
-        AND id_tarea IN (
-            SELECT id_tarea FROM tarea_trabajador
-            WHERE id_trabajador = auth.uid() AND fecha_baja IS NULL
-        )
+        AND id_tarea IN (SELECT public.tarea_ids_by_trabajador(auth.uid()))
     );
 
 CREATE POLICY "comentarios_insert_admin"

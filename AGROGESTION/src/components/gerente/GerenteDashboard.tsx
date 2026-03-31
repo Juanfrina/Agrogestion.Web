@@ -45,7 +45,9 @@ export default function GerenteDashboard() {
         setTerrenos(terrenosData);
         setTareas(tareasData);
       } catch (err: unknown) {
-        const msg = err instanceof Error ? err.message : 'Error al cargar datos';
+        const msg = err instanceof Error ? err.message
+          : (err && typeof err === 'object' && 'message' in err) ? String((err as { message: string }).message)
+          : 'Error al cargar datos';
         setError(msg);
       } finally {
         setLoading(false);
@@ -79,10 +81,10 @@ export default function GerenteDashboard() {
           <p className="text-3xl font-bold">{tareas.length}</p>
         </Card>
         <Card title="En Progreso">
-          <p className="text-3xl font-bold">{tareasEstado('En progreso')}</p>
+          <p className="text-3xl font-bold">{tareasEstado('EN_PROGRESO')}</p>
         </Card>
         <Card title="Completadas">
-          <p className="text-3xl font-bold">{tareasEstado('Completada')}</p>
+          <p className="text-3xl font-bold">{tareasEstado('COMPLETADA')}</p>
         </Card>
       </div>
 
@@ -112,8 +114,8 @@ export default function GerenteDashboard() {
                       {t.terreno?.nombre ?? 'Sin terreno'}
                     </span>
                   </div>
-                  <Badge variant={t.estado?.nombre === 'Completada' ? 'success' : 'warning'}>
-                    {t.estado?.nombre ?? 'Pendiente'}
+                  <Badge variant={t.estado?.nombre === 'COMPLETADA' ? 'success' : 'warning'}>
+                    {t.estado?.nombre ?? 'PENDIENTE'}
                   </Badge>
                 </div>
               </Card>

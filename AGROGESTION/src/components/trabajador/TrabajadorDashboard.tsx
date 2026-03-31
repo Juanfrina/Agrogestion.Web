@@ -8,6 +8,7 @@
 
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../hooks/useAuth';
 import { TareaRepository } from '../../database/repositories/TareaRepository';
 import type { Tarea } from '../../interfaces/Tarea';
@@ -17,28 +18,33 @@ import Badge from '../ui/Badge';
 import Spinner from '../common/Spinner';
 import Alert from '../common/Alert';
 
-/**
- * Dashboard principal del trabajador.
- * Muestra estadísticas de tareas y asignaciones recientes.
- *
- * @returns El panel de resumen del trabajador
- */
+/** Tarea aplanada con estado de asignación del trabajador */
+interface TareaConAsignacion extends Tarea {
+  estadoAsignacion: string;
+}
+
 export default function TrabajadorDashboard() {
   const { perfil } = useAuth();
   const navigate = useNavigate();
-  const [tareas, setTareas] = useState<Tarea[]>([]);
+  const { t } = useTranslation();
+  const [tareas, setTareas] = useState<TareaConAsignacion[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  /** Carga las tareas del trabajador al montar */
   useEffect(() => {
     if (!perfil) return;
     const cargar = async () => {
       try {
         const data = await TareaRepository.getTareasByTrabajador(perfil.id);
-        setTareas(data);
+        const aplanadas: TareaConAsignacion[] = data.map((row: Record<string, unknown>) => ({
+          ...(row.tarea as Tarea),
+          estadoAsignacion: row.estado as string,
+        }));
+        setTareas(aplanadas);
       } catch (err: unknown) {
-        const msg = err instanceof Error ? err.message : 'Error al cargar tareas';
+        const msg = err instanceof Error ? err.message
+          : (err && typeof err === 'object' && 'message' in err) ? String((err as { message: string }).message)
+          : t('tarea.errorLoad');
         setError(msg);
       } finally {
         setLoading(false);
@@ -47,10 +53,10 @@ export default function TrabajadorDashboard() {
     cargar();
   }, [perfil]);
 
-  if (loading) return <Spinner size="lg" text="Cargando dashboard..." />;
+  if (loading) return <Spinner size="lg" text={t('tarea.loadingTasks')} />;
   if (error) return <Alert type="error" message={error} />;
 
-  /** Cuenta tareas por estado */
+  /** Cuenta tareas por estado de la tarea */
   const contar = (estado: string) => tareas.filter((t) => t.estado?.nombre === estado).length;
 
   /** Últimas asignaciones recientes */
@@ -60,40 +66,42 @@ export default function TrabajadorDashboard() {
 
   return (
     <div className="space-y-6 p-6">
-      <h2 className="text-2xl font-bold">Dashboard Trabajador</h2>
+      <h2 className="text-2xl font-bold">Dashboard {t('common.role')} {t('nav.misTareas')}</h2>
 
       {/* Estadísticas */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <Card title="Pendientes">
-          <p className="text-3xl font-bold">{contar('Pendiente') + contar('Asignada')}</p>
+        <Card title={t('tarea.statusPendiente')}>
+          <p className="text-3xl font-bold">{contar('PENDIENTE') + contar('ASIGNADA')}</p>
         </Card>
-        <Card title="En Progreso">
-          <p className="text-3xl font-bold">{contar('En progreso')}</p>
+        <Card title={t('tarea.statusEnProgreso')}>
+          <p className="text-3xl font-bold">{contar('EN_PROGRESO')}</p>
         </Card>
-        <Card title="Completadas">
-          <p className="text-3xl font-bold">{contar('Completada')}</p>
+        <Card title={t('tarea.statusCompletada')}>
+          <p className="text-3xl font-bold">{contar('COMPLETADA')}</p>
         </Card>
       </div>
 
       {/* Acciones rápidas */}
-      <Button variant="primary" onClick={() => navigate('/trabajador/tareas')}>
-        Ver Mis Tareas
+      <Button variant="primary" onClick={() => navigate('/trabajador/mis-tareas')}>
+        {t('nav.misTareas')}
       </Button>
 
       {/* Asignaciones recientes */}
       {recientes.length > 0 && (
         <div>
-          <h3 className="mb-3 text-xl font-semibold">Asignaciones Recientes</h3>
+          <h3 className="mb-3 text-xl font-semibold">{t('tarea.myTasks')}</h3>
           <div className="space-y-2">
-            {recientes.map((t) => (
-              <Card key={t.id_tarea}>
+            {recientes.map((tarea) => (
+              <Card key={tarea.id_tarea}>
                 <div className="flex items-center justify-between">
                   <div>
-                    <strong>{t.nombre}</strong>
-                    <span className="ml-2 text-sm text-gray-500">{t.terreno?.nombre}</span>
+                    <strong>{tarea.nombre}</strong>
+                    <span className="ml-2 text-sm" style={{ color: 'var(--color-text-secondary)' }}>
+                      {tarea.terreno?.nombre}
+                    </span>
                   </div>
-                  <Badge variant={t.estado?.nombre === 'Completada' ? 'success' : 'warning'}>
-                    {t.estado?.nombre ?? 'Pendiente'}
+                  <Badge variant={tarea.estado?.nombre === 'COMPLETADA' ? 'success' : 'warning'}>
+                    {tarea.estado?.nombre ?? 'PENDIENTE'}
                   </Badge>
                 </div>
               </Card>

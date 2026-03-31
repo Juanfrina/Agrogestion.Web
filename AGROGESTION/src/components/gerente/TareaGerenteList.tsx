@@ -57,7 +57,9 @@ export default function TareaGerenteList() {
         setTerrenos(terrenosData);
         setCapataces(capatacesData);
       } catch (err: unknown) {
-        const msg = err instanceof Error ? err.message : 'Error al cargar datos';
+        const msg = err instanceof Error ? err.message
+          : (err && typeof err === 'object' && 'message' in err) ? String((err as { message: string }).message)
+          : 'Error al cargar datos';
         setError(msg);
       } finally {
         setLoading(false);
@@ -81,10 +83,11 @@ export default function TareaGerenteList() {
   /** Opciones del filtro de estado */
   const opcionesEstado = [
     { value: '', label: 'Todos los estados' },
-    { value: 'Pendiente', label: 'Pendiente' },
-    { value: 'Asignada', label: 'Asignada' },
-    { value: 'En progreso', label: 'En progreso' },
-    { value: 'Completada', label: 'Completada' },
+    { value: 'PENDIENTE', label: 'Pendiente' },
+    { value: 'ASIGNADA', label: 'Asignada' },
+    { value: 'EN_PROGRESO', label: 'En Progreso' },
+    { value: 'COMPLETADA', label: 'Completada' },
+    { value: 'RECHAZADA', label: 'Rechazada' },
   ];
 
   /** Columnas de la tabla */
@@ -96,7 +99,7 @@ export default function TareaGerenteList() {
       key: 'estado',
       header: 'Estado',
       render: (t: Tarea) => {
-        const variante = t.estado?.nombre === 'Completada' ? 'success' : t.estado?.nombre === 'En progreso' ? 'warning' : 'error';
+        const variante = t.estado?.nombre === 'COMPLETADA' ? 'success' : t.estado?.nombre === 'EN_PROGRESO' ? 'warning' : 'error';
         return <Badge variant={variante}>{t.estado?.nombre ?? 'Pendiente'}</Badge>;
       },
     },

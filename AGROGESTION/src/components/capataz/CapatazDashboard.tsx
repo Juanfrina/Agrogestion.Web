@@ -53,8 +53,8 @@ export default function CapatazDashboard() {
   /** Cuenta tareas por estado */
   const contar = (estado: string) => tareas.filter((t) => t.estado?.nombre === estado).length;
 
-  /** Tareas pendientes de aceptar (estado "Asignada") */
-  const tareasPendientes = tareas.filter((t) => t.estado?.nombre === 'Asignada');
+  /** Tareas pendientes de aceptar (estado "ASIGNADA") */
+  const tareasPendientes = tareas.filter((t) => t.estado?.nombre === 'ASIGNADA');
 
   return (
     <div className="space-y-6 p-6">
@@ -66,13 +66,13 @@ export default function CapatazDashboard() {
           <p className="text-3xl font-bold">{tareas.length}</p>
         </Card>
         <Card title="Pendientes">
-          <p className="text-3xl font-bold">{contar('Asignada')}</p>
+          <p className="text-3xl font-bold">{contar('ASIGNADA')}</p>
         </Card>
         <Card title="En Progreso">
-          <p className="text-3xl font-bold">{contar('En progreso')}</p>
+          <p className="text-3xl font-bold">{contar('EN_PROGRESO')}</p>
         </Card>
         <Card title="Completadas">
-          <p className="text-3xl font-bold">{contar('Completada')}</p>
+          <p className="text-3xl font-bold">{contar('COMPLETADA')}</p>
         </Card>
       </div>
 

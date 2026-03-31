@@ -15,6 +15,7 @@ import InputField from './InputField';
 import Button from '../ui/Button';
 import Select from '../ui/Select';
 import Alert from '../common/Alert';
+import Modal from '../common/Modal';
 import {
   isValidDNI,
   isValidEmail,
@@ -59,6 +60,11 @@ export default function RegistroForm({ onSuccess }: RegistroFormProps) {
   const [globalError, setGlobalError] = useState('');
   const [loading, setLoading] = useState(false);
   const [checkingEmail, setCheckingEmail] = useState(false);
+
+  /* Checkboxes legales */
+  const [acceptTerms, setAcceptTerms] = useState(false);
+  const [acceptCookies, setAcceptCookies] = useState(false);
+  const [legalModal, setLegalModal] = useState<'terms' | 'cookies' | null>(null);
 
   /** Actualiza un campo */
   const handleChange = (
@@ -174,6 +180,8 @@ export default function RegistroForm({ onSuccess }: RegistroFormProps) {
     if (!isValidPassword(form.password)) newErrors.password = t('auth.errorPasswordMin');
     if (form.password !== form.confirmPassword) newErrors.confirmPassword = t('auth.errorPasswordMatch');
     if (!form.id_rol) newErrors.id_rol = t('auth.errorRoleRequired');
+    if (!acceptTerms) newErrors.acceptTerms = t('auth.errorAcceptTerms');
+    if (!acceptCookies) newErrors.acceptCookies = t('auth.errorAcceptCookies');
 
     if (Object.keys(newErrors).length) {
       setErrors(newErrors);
@@ -330,6 +338,45 @@ export default function RegistroForm({ onSuccess }: RegistroFormProps) {
         required
       />
 
+      {/* Checkboxes legales */}
+      <div className="flex flex-col gap-3" style={{ fontSize: '0.88rem' }}>
+        <div>
+          <label className="flex items-center gap-2 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={acceptTerms}
+              onChange={(e) => { setAcceptTerms(e.target.checked); if (e.target.checked) setErrors((p) => { const n = { ...p }; delete n.acceptTerms; return n; }); }}
+              style={{ accentColor: 'var(--color-primary)', width: '16px', height: '16px', flexShrink: 0 }}
+            />
+            <span>
+              {t('auth.acceptTermsPrefix')}{' '}
+              <button type="button" onClick={() => setLegalModal('terms')} style={{ color: 'var(--color-primary)', textDecoration: 'underline', background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontSize: 'inherit' }}>
+                {t('landing.terms')}
+              </button>
+            </span>
+          </label>
+          {errors.acceptTerms && <span className="form-error" style={{ marginLeft: '24px' }}>{errors.acceptTerms}</span>}
+        </div>
+
+        <div>
+          <label className="flex items-center gap-2 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={acceptCookies}
+              onChange={(e) => { setAcceptCookies(e.target.checked); if (e.target.checked) setErrors((p) => { const n = { ...p }; delete n.acceptCookies; return n; }); }}
+              style={{ accentColor: 'var(--color-primary)', width: '16px', height: '16px', flexShrink: 0 }}
+            />
+            <span>
+              {t('auth.acceptCookiesPrefix')}{' '}
+              <button type="button" onClick={() => setLegalModal('cookies')} style={{ color: 'var(--color-primary)', textDecoration: 'underline', background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontSize: 'inherit' }}>
+                {t('landing.cookies')}
+              </button>
+            </span>
+          </label>
+          {errors.acceptCookies && <span className="form-error" style={{ marginLeft: '24px' }}>{errors.acceptCookies}</span>}
+        </div>
+      </div>
+
       <Button type="submit" variant="primary" loading={loading}>
         {t('auth.register')}
       </Button>
@@ -342,6 +389,17 @@ export default function RegistroForm({ onSuccess }: RegistroFormProps) {
           {t('common.back')}
         </Link>
       </div>
+
+      {/* Modal legal */}
+      <Modal
+        isOpen={legalModal !== null}
+        onClose={() => setLegalModal(null)}
+        title={legalModal ? t(`landing.${legalModal}`) : ''}
+      >
+        <div style={{ maxHeight: '60vh', overflowY: 'auto', whiteSpace: 'pre-line', lineHeight: '1.6', color: 'var(--color-text-primary)' }}>
+          {legalModal && t(`landing.${legalModal}Content`)}
+        </div>
+      </Modal>
     </form>
   );
 }

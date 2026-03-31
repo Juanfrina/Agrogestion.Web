@@ -22,20 +22,16 @@ interface SearchBarProps {
 export default function SearchBar({
   value,
   onChange,
-  placeholder = 'Buscar...',
+  placeholder = '🔍Buscar...',
 }: SearchBarProps) {
   return (
-    <div className="relative flex items-center">
-      {/* Icono de lupa posicionado a la izquierda */}
-      <span className="absolute left-3 text-[var(--color-text-muted)]">
-        🔍
-      </span>
+    <div className="flex items-center">
       <input
         type="text"
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="pl-10 w-full"
+        className="w-full"
       />
     </div>
   );

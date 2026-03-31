@@ -55,11 +55,13 @@ export default function TerrenoForm({ terreno, onSave, onCancel }: TerrenoFormPr
       if (terreno) {
         await TerrenoRepository.update(terreno.id_terreno, form);
       } else {
-        await TerrenoRepository.create({ ...form }, perfil.id);
+        await TerrenoRepository.create(perfil.id, form);
       }
       onSave();
     } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : 'Error al guardar terreno';
+      const msg = err instanceof Error ? err.message
+        : (err && typeof err === 'object' && 'message' in err) ? String((err as { message: string }).message)
+        : 'Error al guardar terreno';
       setError(msg);
     } finally {
       setLoading(false);

@@ -87,7 +87,7 @@ export default function InputField({
             tabIndex={-1}
             aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
           >
-            {showPassword ? '🙈' : '👁'}
+            {showPassword ? '🙈' : '🙉'}
           </button>
         )}
       </div>

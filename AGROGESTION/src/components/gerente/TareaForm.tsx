@@ -72,11 +72,13 @@ export default function TareaForm({ tarea, terrenos, capataces, onSave, onCancel
       if (tarea) {
         await TareaRepository.update(tarea.id_tarea, datos);
       } else {
-        await TareaRepository.create({ ...datos, id_gerente: perfil.id });
+        await TareaRepository.create(perfil.id, datos);
       }
       onSave();
     } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : 'Error al guardar tarea';
+      const msg = err instanceof Error ? err.message
+        : (err && typeof err === 'object' && 'message' in err) ? String((err as { message: string }).message)
+        : 'Error al guardar tarea';
       setError(msg);
     } finally {
       setLoading(false);

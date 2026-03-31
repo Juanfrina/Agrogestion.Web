@@ -19,7 +19,7 @@ export default function TrabajadorPage() {
     <Layout>
       <Routes>
         <Route index element={<TrabajadorDashboard />} />
-        <Route path="tareas" element={<MisTareasList />} />
+        <Route path="mis-tareas" element={<MisTareasList />} />
       </Routes>
     </Layout>
   );

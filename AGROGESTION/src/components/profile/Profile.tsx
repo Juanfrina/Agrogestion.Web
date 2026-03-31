@@ -37,6 +37,7 @@ export default function Profile() {
   const [form, setForm] = useState({
     nombre: perfil?.nombre ?? '',
     apellidos: perfil?.apellidos ?? '',
+    email: perfil?.email ?? '',
     tlf: perfil?.tlf ?? '',
     direccion: perfil?.direccion ?? '',
   });
@@ -54,6 +55,7 @@ export default function Profile() {
     setForm({
       nombre: perfil.nombre,
       apellidos: perfil.apellidos,
+      email: perfil.email,
       tlf: perfil.tlf,
       direccion: perfil.direccion,
     });
@@ -66,7 +68,16 @@ export default function Profile() {
     setGuardando(true);
     setMensaje(null);
     try {
-      await AuthRepository.updatePerfil(perfil.id, form);
+      // Si el email cambió, actualizamos en Auth + perfiles
+      if (form.email !== perfil.email) {
+        await AuthRepository.updateEmail(perfil.id, form.email);
+      }
+      await AuthRepository.updatePerfil(perfil.id, {
+        nombre: form.nombre,
+        apellidos: form.apellidos,
+        tlf: form.tlf,
+        direccion: form.direccion,
+      });
       setMensaje({ tipo: 'success', texto: t('profile.profileUpdated') });
       setEditando(false);
     } catch (err: unknown) {
@@ -103,11 +114,11 @@ export default function Profile() {
             <Badge variant={badgeVariant()}>{roleName}</Badge>
           </div>
           <p><strong>{t('auth.dni')}:</strong> {perfil.dni}</p>
-          <p><strong>{t('auth.email')}:</strong> {perfil.email}</p>
 
           {/* Datos editables */}
           {editando ? (
             <div className="space-y-3">
+              <InputField label={t('auth.email')} name="email" type="email" value={form.email} onChange={handleChange} required />
               <InputField label={t('auth.name')} name="nombre" type="text" value={form.nombre} onChange={handleChange} required />
               <InputField label={t('auth.surname')} name="apellidos" type="text" value={form.apellidos} onChange={handleChange} required />
               <InputField label={t('auth.phone')} name="tlf" type="text" value={form.tlf} onChange={handleChange} />
@@ -123,6 +134,7 @@ export default function Profile() {
             </div>
           ) : (
             <div className="space-y-2">
+              <p><strong>{t('auth.email')}:</strong> {perfil.email}</p>
               <p><strong>{t('auth.name')}:</strong> {perfil.nombre} {perfil.apellidos}</p>
               <p><strong>{t('auth.phone')}:</strong> {perfil.tlf}</p>
               <p><strong>{t('auth.address')}:</strong> {perfil.direccion}</p>

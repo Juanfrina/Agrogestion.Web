@@ -135,6 +135,29 @@ export const AuthRepository = {
   },
 
   /**
+   * Cambia el email del usuario autenticado.
+   * Actualiza tanto en auth.users (Supabase Auth) como en la tabla perfiles.
+   *
+   * @param userId   - UUID del usuario
+   * @param newEmail - Nuevo email
+   * @throws Error si el email ya está en uso o hay error
+   */
+  async updateEmail(userId: string, newEmail: string) {
+    // 1. Actualizar en Supabase Auth
+    const { error: authError } = await supabase.auth.updateUser({
+      email: newEmail,
+    });
+    if (authError) throw authError;
+
+    // 2. Actualizar en la tabla perfiles
+    const { error: dbError } = await supabase
+      .from('perfiles')
+      .update({ email: newEmail })
+      .eq('id', userId);
+    if (dbError) throw dbError;
+  },
+
+  /**
    * Comprueba si un email ya está registrado en la app.
    * Llama a la función RPC "is_email_taken" que definimos en la BD.
    * Es SECURITY DEFINER, así que funciona sin importar el rol del que pregunta.

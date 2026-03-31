@@ -23,6 +23,7 @@ const linksByRole: Record<number, { to: string; labelKey: string }[]> = {
     { to: '/gerente', labelKey: 'nav.dashboard' },
     { to: '/gerente/terrenos', labelKey: 'nav.terrenos' },
     { to: '/gerente/tareas', labelKey: 'nav.tareas' },
+    { to: '/gerente/equipo', labelKey: 'nav.equipo' },
     { to: '/perfil', labelKey: 'nav.perfil' },
   ],
   [Rol.CAPATAZ]: [

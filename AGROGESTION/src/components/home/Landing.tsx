@@ -10,9 +10,11 @@
  *   - Footer: políticas, contacto, copyright e iconos sociales
  */
 
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from '../common/LanguageSwitcher';
+import Modal from '../common/Modal';
 
 /* ── Iconos SVG inline para redes sociales ── */
 const FacebookIcon = () => (
@@ -39,6 +41,7 @@ const GitHubIcon = () => (
  */
 export default function Landing() {
   const { t } = useTranslation();
+  const [legalModal, setLegalModal] = useState<'privacy' | 'terms' | 'cookies' | null>(null);
 
   return (
     <div className="landing">
@@ -160,9 +163,9 @@ export default function Landing() {
           <div className="landing-footer__col">
             <h4>{t('landing.legal')}</h4>
             <ul>
-              <li><a href="#privacidad">{t('landing.privacy')}</a></li>
-              <li><a href="#terminos">{t('landing.terms')}</a></li>
-              <li><a href="#cookies">{t('landing.cookies')}</a></li>
+              <li><button type="button" onClick={() => setLegalModal('privacy')} className="landing-footer__link">{t('landing.privacy')}</button></li>
+              <li><button type="button" onClick={() => setLegalModal('terms')} className="landing-footer__link">{t('landing.terms')}</button></li>
+              <li><button type="button" onClick={() => setLegalModal('cookies')} className="landing-footer__link">{t('landing.cookies')}</button></li>
             </ul>
           </div>
 
@@ -172,11 +175,11 @@ export default function Landing() {
             <ul>
               <li>
                 <span className="landing-footer__icon">✉</span>
-                <a href="mailto:admin@agrogestion.com">admin@agrogestion.com</a>
+                <a href="mailto:juanfranhp13@gmail.com">juanfranhp13@gmail.com</a>
               </li>
               <li>
                 <span className="landing-footer__icon">☎</span>
-                <a href="tel:+34600123456">+34 600 123 456</a>
+                <a href="tel:+34669864020">+34 669 864 020</a>
               </li>
             </ul>
           </div>
@@ -203,6 +206,17 @@ export default function Landing() {
           <p>&copy; {new Date().getFullYear()} {t('landing.copyright')}</p>
         </div>
       </footer>
+
+      {/* ════════════════════ MODAL LEGAL ════════════════════ */}
+      <Modal
+        isOpen={legalModal !== null}
+        onClose={() => setLegalModal(null)}
+        title={legalModal ? t(`landing.${legalModal}`) : ''}
+      >
+        <div style={{ maxHeight: '60vh', overflowY: 'auto', whiteSpace: 'pre-line', lineHeight: '1.6', color: 'var(--color-text-primary)' }}>
+          {legalModal && t(`landing.${legalModal}Content`)}
+        </div>
+      </Modal>
     </div>
   );
 }
