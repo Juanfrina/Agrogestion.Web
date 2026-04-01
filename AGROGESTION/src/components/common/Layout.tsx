@@ -7,7 +7,7 @@
  * La estructura usa flex para que el sidebar y el contenido se repartan el espacio.
  */
 
-import type { ReactNode } from 'react';
+import { useState, type ReactNode } from 'react';
 import Header from './Header';
 import Sidebar from './Sidebar';
 import Footer from './Footer';
@@ -22,18 +22,20 @@ interface LayoutProps {
  * El sidebar ocupa 16rem fijos y el contenido se expande para llenar el resto.
  */
 export default function Layout({ children }: LayoutProps) {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   return (
     <div className="flex flex-col min-h-screen">
       {/* Cabecera fija arriba */}
-      <Header />
+      <Header onToggleSidebar={() => setSidebarOpen((v) => !v)} />
 
       {/* Cuerpo: sidebar + contenido */}
       <div className="flex flex-1">
-        <Sidebar />
+        <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
         {/* Contenido principal */}
         <main
-          className="flex-1 p-6 bg-(--color-bg-main)"
+          className="flex-1 p-3 sm:p-6 bg-(--color-bg-main)"
         >
           {children}
         </main>

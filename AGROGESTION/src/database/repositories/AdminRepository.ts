@@ -91,4 +91,62 @@ export const AdminRepository = {
       total: perfiles.length,
     };
   },
+
+  /**
+   * Obtiene el número de registros de usuarios por mes (últimos 6 meses).
+   *
+   * @returns Array de objetos { mes, valor } con el conteo mensual
+   */
+  async getMonthlyRegistrations(): Promise<{ mes: string; valor: number }[]> {
+    const sixMonthsAgo = new Date();
+    sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 5);
+    sixMonthsAgo.setDate(1);
+    sixMonthsAgo.setHours(0, 0, 0, 0);
+
+    const { data, error } = await supabase
+      .from('perfiles')
+      .select('created_at')
+      .gte('created_at', sixMonthsAgo.toISOString());
+    if (error) throw error;
+
+    const monthNames = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+    const counts: Record<string, number> = {};
+
+    // Inicializar los últimos 6 meses con 0
+    for (let i = 0; i < 6; i++) {
+      const d = new Date();
+      d.setMonth(d.getMonth() - (5 - i));
+      const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+      counts[key] = 0;
+    }
+
+    // Contar registros por mes
+    for (const row of data ?? []) {
+      const d = new Date(row.created_at);
+      const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+      if (key in counts) counts[key]++;
+    }
+
+    return Object.entries(counts).map(([key, valor]) => {
+      const [, month] = key.split('-');
+      return { mes: monthNames[Number(month) - 1], valor };
+    });
+  },
+
+  /**
+   * Actualiza los datos de un usuario (nombre, apellidos, email, tlf, direccion, dni).
+   *
+   * @param userId  - UUID del usuario a editar
+   * @param updates - Campos a actualizar
+   */
+  async updateUser(
+    userId: string,
+    updates: Partial<Pick<Perfil, 'nombre' | 'apellidos' | 'email' | 'tlf' | 'direccion' | 'dni'>>,
+  ): Promise<void> {
+    const { error } = await supabase
+      .from('perfiles')
+      .update(updates)
+      .eq('id', userId);
+    if (error) throw error;
+  },
 };

@@ -4,7 +4,7 @@
  *
  * Esto muestra la barra de navegación superior con el nombre de la app,
  * el nombre del usuario, su rol en un badge y un botón para cerrar sesión.
- * Si no hay sesión, no muestra nada (o podrías poner un link a login).
+ * En móvil incluye botón hamburguesa para abrir/cerrar el sidebar.
  */
 
 import { useNavigate } from 'react-router-dom';
@@ -26,11 +26,15 @@ function rolToBadgeVariant(roleName: string | null) {
   }
 }
 
+interface HeaderProps {
+  onToggleSidebar?: () => void;
+}
+
 /**
  * Cabecera de la app — usa la clase "navbar" del CSS global.
  * Lee el estado del usuario con useAuth() y maneja el logout.
  */
-export default function Header() {
+export default function Header({ onToggleSidebar }: HeaderProps) {
   const { perfil, isAuthenticated, roleName } = useAuth();
   const reset = useAuthStore((s) => s.reset);
   const navigate = useNavigate();
@@ -49,15 +53,27 @@ export default function Header() {
 
   return (
     <header className="navbar">
-      {/* Lado izquierdo: nombre de la app */}
-      <h1 className="text-xl font-bold m-0 text-(--color-text-on-primary)">
-        {t('app.name')}
-      </h1>
+      <div className="flex items-center gap-2">
+        {/* Botón hamburguesa — solo en móvil */}
+        {onToggleSidebar && (
+          <button
+            onClick={onToggleSidebar}
+            className="md:hidden text-(--color-text-on-primary) text-2xl leading-none p-1"
+            aria-label="Abrir menú"
+          >
+            ☰
+          </button>
+        )}
+        {/* Nombre de la app */}
+        <h1 className="text-xl font-bold m-0 text-(--color-text-on-primary)">
+          {t('app.name')}
+        </h1>
+      </div>
 
       {/* Lado derecho: info del usuario + logout */}
       {isAuthenticated && perfil && (
-        <div className="flex items-center gap-3">
-          <span className="text-(--color-text-on-primary)">
+        <div className="flex items-center gap-2 sm:gap-3">
+          <span className="hidden sm:inline text-(--color-text-on-primary)">
             {perfil.nombre} {perfil.apellidos}
           </span>
           <Badge variant={rolToBadgeVariant(roleName)}>

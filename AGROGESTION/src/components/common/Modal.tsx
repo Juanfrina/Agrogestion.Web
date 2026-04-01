@@ -34,7 +34,7 @@ export default function Modal({ isOpen, onClose, title, children }: ModalProps) 
     >
       {/* Paramos la propagación para que clicar dentro no cierre el modal */}
       <div
-        className="card max-w-lg w-full mx-4"
+        className="card max-w-lg w-full mx-4 max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Cabecera con título y botón de cerrar */}

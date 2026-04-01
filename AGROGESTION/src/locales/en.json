@@ -135,7 +135,13 @@
     "errorLoadUsers": "Error loading users",
     "confirmAction": "Confirm Action",
     "searchUsers": "🔍Search by name or email...",
-    "noUsersFound": "No users found"
+    "noUsersFound": "No users found",
+    "roleDistribution": "Role Distribution",
+    "monthlyRegistrations": "Monthly Registrations",
+    "noChartData": "No data available",
+    "editUser": "Edit User",
+    "userUpdated": "User updated successfully",
+    "errorUpdateUser": "Error updating user"
   },
   "common": {
     "save": "Save",

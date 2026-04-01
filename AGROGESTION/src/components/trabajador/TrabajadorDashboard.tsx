@@ -65,7 +65,7 @@ export default function TrabajadorDashboard() {
     .slice(0, 5);
 
   return (
-    <div className="space-y-6 p-6">
+    <div className="space-y-6">
       <h2 className="text-2xl font-bold">{t('nav.dashboard')} — {t('nav.misTareas')}</h2>
 
       {/* Estadísticas */}

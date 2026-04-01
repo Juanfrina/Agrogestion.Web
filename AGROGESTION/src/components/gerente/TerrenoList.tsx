@@ -128,8 +128,8 @@ export default function TerrenoList() {
   if (error) return <Alert type="error" message={error} />;
 
   return (
-    <div className="space-y-4 p-6">
-      <div className="mt-2 flex items-center justify-between">
+    <div className="space-y-4">
+      <div className="mt-2 flex flex-wrap items-center justify-between gap-2">
         <h2 className="text-2xl font-bold">{t('terreno.myTerrenos')}</h2>
         <Button variant="accent" onClick={abrirCrear}>{t('terreno.newTerreno')}</Button>
       </div>

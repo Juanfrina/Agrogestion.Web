@@ -135,7 +135,13 @@
     "errorLoadUsers": "Eroare la încărcarea utilizatorilor",
     "confirmAction": "Confirmă Acțiunea",
     "searchUsers": "🔍Caută după nume sau email...",
-    "noUsersFound": "Nu s-au găsit utilizatori"
+    "noUsersFound": "Nu s-au găsit utilizatori",
+    "roleDistribution": "Distribuția pe Roluri",
+    "monthlyRegistrations": "Înregistrări Lunare",
+    "noChartData": "Nu există date disponibile",
+    "editUser": "Editează Utilizator",
+    "userUpdated": "Utilizator actualizat cu succes",
+    "errorUpdateUser": "Eroare la actualizarea utilizatorului"
   },
   "common": {
     "save": "Salvează",

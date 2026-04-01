@@ -43,6 +43,17 @@ export default function UserTable() {
   const [modalConfirm, setModalConfirm] = useState(false);
   const [accionConfirm, setAccionConfirm] = useState<'baja' | 'alta'>('baja');
 
+  // Modal de edición de usuario
+  const [modalEditar, setModalEditar] = useState(false);
+  const [formEditar, setFormEditar] = useState({
+    nombre: '',
+    apellidos: '',
+    email: '',
+    tlf: '',
+    direccion: '',
+    dni: '',
+  });
+
   /** Carga los usuarios al montar */
   useEffect(() => {
     cargarUsuarios();
@@ -140,6 +151,34 @@ export default function UserTable() {
     }
   };
 
+  /** Abre el modal de edición con los datos del usuario */
+  const abrirModalEditar = (usuario: Perfil) => {
+    setUsuarioSeleccionado(usuario);
+    setFormEditar({
+      nombre: usuario.nombre,
+      apellidos: usuario.apellidos,
+      email: usuario.email,
+      tlf: usuario.tlf,
+      direccion: usuario.direccion,
+      dni: usuario.dni,
+    });
+    setModalEditar(true);
+  };
+
+  /** Confirma la edición del usuario */
+  const confirmarEdicion = async () => {
+    if (!usuarioSeleccionado) return;
+    try {
+      await AdminRepository.updateUser(usuarioSeleccionado.id, formEditar);
+      setMensaje({ tipo: 'success', texto: t('admin.userUpdated') });
+      setModalEditar(false);
+      cargarUsuarios();
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : t('admin.errorUpdateUser');
+      setMensaje({ tipo: 'error', texto: msg });
+    }
+  };
+
   /** Opciones para el select de roles */
   const opcionesRol = [
     { value: String(Rol.ADMIN), label: t('roles.admin') },
@@ -173,7 +212,10 @@ export default function UserTable() {
       key: 'acciones',
       header: t('common.actions'),
       render: (u: Perfil) => (
-        <div className="flex gap-2">
+        <div className="flex gap-2 flex-wrap">
+          <Button variant="accent" onClick={() => abrirModalEditar(u)}>
+            {t('common.edit')}
+          </Button>
           <Button variant="secondary" onClick={() => abrirModalRol(u)}>
             {t('admin.changeRole')}
           </Button>
@@ -195,7 +237,7 @@ export default function UserTable() {
   if (error) return <Alert type="error" message={error} />;
 
   return (
-    <div className="space-y-4 p-6">
+    <div className="space-y-4">
       <h2 className="text-2xl font-bold">{t('admin.userManagement')}</h2>
 
       {/* Alerta de feedback */}
@@ -240,6 +282,76 @@ export default function UserTable() {
               {accionConfirm === 'baja' ? t('admin.deactivate') : t('admin.reactivate')}
             </Button>
             <Button variant="secondary" onClick={() => setModalConfirm(false)}>{t('common.cancel')}</Button>
+          </div>
+        </div>
+      </Modal>
+
+      {/* Modal de edición de usuario */}
+      <Modal isOpen={modalEditar} onClose={() => setModalEditar(false)} title={t('admin.editUser')}>
+        <div className="space-y-4">
+          <div>
+            <label className="form-label" htmlFor="edit-nombre">{t('auth.name')}</label>
+            <input
+              id="edit-nombre"
+              type="text"
+              className="form-input"
+              value={formEditar.nombre}
+              onChange={(e) => setFormEditar({ ...formEditar, nombre: e.target.value })}
+            />
+          </div>
+          <div>
+            <label className="form-label" htmlFor="edit-apellidos">{t('auth.surname')}</label>
+            <input
+              id="edit-apellidos"
+              type="text"
+              className="form-input"
+              value={formEditar.apellidos}
+              onChange={(e) => setFormEditar({ ...formEditar, apellidos: e.target.value })}
+            />
+          </div>
+          <div>
+            <label className="form-label" htmlFor="edit-email">{t('common.email')}</label>
+            <input
+              id="edit-email"
+              type="email"
+              className="form-input"
+              value={formEditar.email}
+              onChange={(e) => setFormEditar({ ...formEditar, email: e.target.value })}
+            />
+          </div>
+          <div>
+            <label className="form-label" htmlFor="edit-dni">{t('auth.dni')}</label>
+            <input
+              id="edit-dni"
+              type="text"
+              className="form-input"
+              value={formEditar.dni}
+              onChange={(e) => setFormEditar({ ...formEditar, dni: e.target.value })}
+            />
+          </div>
+          <div>
+            <label className="form-label" htmlFor="edit-tlf">{t('auth.phone')}</label>
+            <input
+              id="edit-tlf"
+              type="text"
+              className="form-input"
+              value={formEditar.tlf}
+              onChange={(e) => setFormEditar({ ...formEditar, tlf: e.target.value })}
+            />
+          </div>
+          <div>
+            <label className="form-label" htmlFor="edit-direccion">{t('auth.address')}</label>
+            <input
+              id="edit-direccion"
+              type="text"
+              className="form-input"
+              value={formEditar.direccion}
+              onChange={(e) => setFormEditar({ ...formEditar, direccion: e.target.value })}
+            />
+          </div>
+          <div className="flex gap-3">
+            <Button variant="primary" onClick={confirmarEdicion}>{t('common.save')}</Button>
+            <Button variant="secondary" onClick={() => setModalEditar(false)}>{t('common.cancel')}</Button>
           </div>
         </div>
       </Modal>

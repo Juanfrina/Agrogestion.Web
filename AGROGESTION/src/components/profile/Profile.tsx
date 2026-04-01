@@ -100,7 +100,7 @@ export default function Profile() {
   };
 
   return (
-    <div className="mx-auto max-w-2xl space-y-6 p-6">
+    <div className="mx-auto max-w-2xl space-y-6">
       {/* Alerta de feedback */}
       {mensaje && (
         <Alert type={mensaje.tipo} message={mensaje.texto} onClose={() => setMensaje(null)} />

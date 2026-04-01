@@ -15,7 +15,7 @@ export default function Footer() {
     <footer
       className="text-center p-4 bg-(--color-primary-dark) text-white"
     >
-      <p className="m-0">
+      <p className="m-0 text-(--color-text-on-primary)">
         © 2026 Agrogestión — Innovación · Sostenibilidad · Productividad
       </p>
     </footer>

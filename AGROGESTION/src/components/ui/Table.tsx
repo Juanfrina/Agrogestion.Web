@@ -59,7 +59,7 @@ export default function Table<T extends object>({
 
   return (
     <div className="card overflow-x-auto">
-      <table className="w-full">
+      <table className="w-full min-w-150">
         <thead>
           <tr
             className="border-b-2 border-(--color-border)"
@@ -67,7 +67,7 @@ export default function Table<T extends object>({
             {columns.map((col) => (
               <th
                 key={col.key}
-                className="text-left p-3 font-semibold text-(--color-text-secondary)"
+                className="text-left p-3 font-semibold text-(--color-text-secondary) whitespace-nowrap"
               >
                 {col.header}
               </th>

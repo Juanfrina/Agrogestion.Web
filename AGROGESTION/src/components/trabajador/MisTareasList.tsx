@@ -190,7 +190,7 @@ export default function MisTareasList() {
   if (error) return <Alert type="error" message={error} />;
 
   return (
-    <div className="space-y-4 p-6">
+    <div className="space-y-4">
       <h2 className="text-2xl font-bold">{t('tarea.myTasks')}</h2>
 
       {mensaje && <Alert type={mensaje.tipo} message={mensaje.texto} onClose={() => setMensaje(null)} />}

@@ -71,7 +71,7 @@ export default function GerenteDashboard() {
     .slice(0, 5);
 
   return (
-    <div className="space-y-6 p-6">
+    <div className="space-y-6">
       <h2 className="text-2xl font-bold">{t('dashboard.title')}</h2>
 
       {/* Estadísticas */}

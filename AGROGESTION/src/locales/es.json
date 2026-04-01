@@ -135,7 +135,13 @@
     "errorLoadUsers": "Error al cargar usuarios",
     "confirmAction": "Confirmar Acción",
     "searchUsers": "🔍Buscar por nombre o email...",
-    "noUsersFound": "No se encontraron usuarios"
+    "noUsersFound": "No se encontraron usuarios",
+    "roleDistribution": "Distribución por Rol",
+    "monthlyRegistrations": "Registros Mensuales",
+    "noChartData": "Sin datos disponibles",
+    "editUser": "Editar Usuario",
+    "userUpdated": "Usuario actualizado correctamente",
+    "errorUpdateUser": "Error al actualizar usuario"
   },
   "common": {
     "save": "Guardar",

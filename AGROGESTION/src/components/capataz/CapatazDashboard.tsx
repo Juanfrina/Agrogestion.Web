@@ -57,7 +57,7 @@ export default function CapatazDashboard() {
   const tareasPendientes = tareas.filter((t) => t.estado?.nombre === 'ASIGNADA');
 
   return (
-    <div className="space-y-6 p-6">
+    <div className="space-y-6">
       <h2 className="text-2xl font-bold">Dashboard Capataz</h2>
 
       {/* Estadísticas */}

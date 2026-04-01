@@ -5,6 +5,8 @@
  * Aquí mostramos los enlaces de navegación que corresponden a cada rol.
  * Un admin ve "Dashboard" y "Usuarios", un gerente ve "Terrenos" y "Tareas", etc.
  * Usa NavLink de react-router-dom para resaltar la ruta activa.
+ *
+ * En móvil, el sidebar se oculta y se muestra con un botón hamburguesa.
  */
 
 import { NavLink } from 'react-router-dom';
@@ -39,11 +41,17 @@ const linksByRole: Record<number, { to: string; labelKey: string }[]> = {
   ],
 };
 
+interface SidebarProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
 /**
  * Sidebar de navegación — muestra enlaces según el rol del usuario.
  * Cada enlace resalta cuando está activo (fondo primary-light).
+ * En móvil se muestra con overlay; en desktop siempre visible.
  */
-export default function Sidebar() {
+export default function Sidebar({ isOpen, onClose }: SidebarProps) {
   const { perfil } = useAuth();
   const { t } = useTranslation();
 
@@ -54,21 +62,29 @@ export default function Sidebar() {
   const links = linksByRole[perfil.id_rol] || [];
 
   return (
-    <aside
-      className="sidebar flex flex-col gap-1 p-4"
-    >
-      {links.map((link) => (
-        <NavLink
-          key={link.to}
-          to={link.to}
-          end
-          className={({ isActive }) =>
-            `sidebar-link ${isActive ? 'sidebar-link--active' : ''}`
-          }
-        >
-          {t(link.labelKey as never)}
-        </NavLink>
-      ))}
-    </aside>
+    <>
+      {/* Overlay oscuro en móvil */}
+      {isOpen && (
+        <div className="sidebar-overlay md:hidden" onClick={onClose} />
+      )}
+
+      <aside
+        className={`sidebar flex flex-col gap-1 p-4 ${isOpen ? 'sidebar--open' : ''}`}
+      >
+        {links.map((link) => (
+          <NavLink
+            key={link.to}
+            to={link.to}
+            end
+            className={({ isActive }) =>
+              `sidebar-link ${isActive ? 'sidebar-link--active' : ''}`
+            }
+            onClick={onClose}
+          >
+            {t(link.labelKey as never)}
+          </NavLink>
+        ))}
+      </aside>
+    </>
   );
 }
