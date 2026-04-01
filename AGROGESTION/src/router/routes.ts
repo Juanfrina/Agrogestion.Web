@@ -19,6 +19,6 @@ export const ROUTES = {
   CAPATAZ_TAREAS: '/capataz/tareas',
   CAPATAZ_TRABAJADORES: '/capataz/trabajadores',
   TRABAJADOR: '/trabajador',
-  TRABAJADOR_TAREAS: '/trabajador/tareas',
+  TRABAJADOR_TAREAS: '/trabajador/mis-tareas',
   PROFILE: '/perfil',
 } as const;

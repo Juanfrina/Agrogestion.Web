@@ -26,9 +26,8 @@ interface CardProps {
 export default function Card({ children, className = '', onClick, title }: CardProps) {
   return (
     <div
-      className={`card ${className}`}
+      className={`card ${className} ${onClick ? 'cursor-pointer' : ''}`}
       onClick={onClick}
-      style={onClick ? { cursor: 'pointer' } : undefined}
     >
       {title && <h3 className="mb-3">{title}</h3>}
       {children}

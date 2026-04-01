@@ -55,28 +55,18 @@ export default function Sidebar() {
 
   return (
     <aside
-      className="flex flex-col gap-1 p-4"
-      style={{
-        width: '16rem',
-        minHeight: '100%',
-        backgroundColor: 'var(--color-bg-card)',
-        borderRight: '1px solid var(--color-border)',
-      }}
+      className="sidebar flex flex-col gap-1 p-4"
     >
       {links.map((link) => (
         <NavLink
           key={link.to}
           to={link.to}
           end
-          className="block px-4 py-2 rounded-[var(--radius-md)] no-underline"
-          style={({ isActive }) => ({
-            backgroundColor: isActive ? 'var(--color-primary-light)' : 'transparent',
-            color: isActive ? 'var(--color-primary-dark)' : 'var(--color-text-primary)',
-            fontWeight: isActive ? 600 : 400,
-            transition: 'var(--transition-fast)',
-          })}
+          className={({ isActive }) =>
+            `sidebar-link ${isActive ? 'sidebar-link--active' : ''}`
+          }
         >
-          {t(link.labelKey)}
+          {t(link.labelKey as never)}
         </NavLink>
       ))}
     </aside>

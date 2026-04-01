@@ -7,6 +7,7 @@
  */
 
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../hooks/useAuth';
 import { TareaRepository } from '../../database/repositories/TareaRepository';
 import { TerrenoRepository } from '../../database/repositories/TerrenoRepository';
@@ -31,6 +32,7 @@ import TareaForm from './TareaForm';
  */
 export default function TareaGerenteList() {
   const { perfil } = useAuth();
+  const { t } = useTranslation();
   const [tareas, setTareas] = useState<Tarea[]>([]);
   const [terrenos, setTerrenos] = useState<Terreno[]>([]);
   const [capataces, setCapataces] = useState<Perfil[]>([]);
@@ -59,13 +61,14 @@ export default function TareaGerenteList() {
       } catch (err: unknown) {
         const msg = err instanceof Error ? err.message
           : (err && typeof err === 'object' && 'message' in err) ? String((err as { message: string }).message)
-          : 'Error al cargar datos';
+          : t('tarea.errorLoad');
         setError(msg);
       } finally {
         setLoading(false);
       }
     };
     cargar();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [perfil]);
 
   /** Recarga solo las tareas */
@@ -82,48 +85,48 @@ export default function TareaGerenteList() {
 
   /** Opciones del filtro de estado */
   const opcionesEstado = [
-    { value: '', label: 'Todos los estados' },
-    { value: 'PENDIENTE', label: 'Pendiente' },
-    { value: 'ASIGNADA', label: 'Asignada' },
-    { value: 'EN_PROGRESO', label: 'En Progreso' },
-    { value: 'COMPLETADA', label: 'Completada' },
-    { value: 'RECHAZADA', label: 'Rechazada' },
+    { value: '', label: t('tarea.allStatuses') },
+    { value: 'PENDIENTE', label: t('tarea.statusPendiente') },
+    { value: 'ASIGNADA', label: t('tarea.statusAsignada') },
+    { value: 'EN_PROGRESO', label: t('tarea.statusEnProgreso') },
+    { value: 'COMPLETADA', label: t('tarea.statusCompletada') },
+    { value: 'RECHAZADA', label: t('tarea.statusRechazada') },
   ];
 
   /** Columnas de la tabla */
   const columnas = [
-    { key: 'nombre', header: 'Nombre' },
-    { key: 'terreno', header: 'Terreno', render: (t: Tarea) => t.terreno?.nombre ?? '—' },
-    { key: 'capataz', header: 'Capataz', render: (t: Tarea) => t.capataz ? `${t.capataz.nombre} ${t.capataz.apellidos}` : 'Sin asignar' },
+    { key: 'nombre', header: t('tarea.name') },
+    { key: 'terreno', header: t('tarea.terrain'), render: (row: Tarea) => row.terreno?.nombre ?? '—' },
+    { key: 'capataz', header: t('tarea.capataz'), render: (row: Tarea) => row.capataz ? `${row.capataz.nombre} ${row.capataz.apellidos}` : t('tarea.noAssigned') },
     {
       key: 'estado',
-      header: 'Estado',
-      render: (t: Tarea) => {
-        const variante = t.estado?.nombre === 'COMPLETADA' ? 'success' : t.estado?.nombre === 'EN_PROGRESO' ? 'warning' : 'error';
-        return <Badge variant={variante}>{t.estado?.nombre ?? 'Pendiente'}</Badge>;
+      header: t('tarea.status'),
+      render: (row: Tarea) => {
+        const variante = row.estado?.nombre === 'COMPLETADA' ? 'success' : row.estado?.nombre === 'EN_PROGRESO' ? 'warning' : 'error';
+        return <Badge variant={variante}>{row.estado?.nombre ?? t('tarea.statusPendiente')}</Badge>;
       },
     },
-    { key: 'fechas', header: 'Fechas', render: (t: Tarea) => `${t.fecha_inicio} — ${t.fecha_fin}` },
+    { key: 'fechas', header: t('tarea.dates'), render: (row: Tarea) => `${row.fecha_inicio} — ${row.fecha_fin}` },
     {
       key: 'acciones',
-      header: 'Acciones',
-      render: (t: Tarea) => (
-        <Button variant="secondary" onClick={() => { setTareaEditar(t); setModalForm(true); }}>
-          Editar
+      header: t('tarea.actions'),
+      render: (row: Tarea) => (
+        <Button variant="secondary" onClick={() => { setTareaEditar(row); setModalForm(true); }}>
+          {t('tarea.edit')}
         </Button>
       ),
     },
   ];
 
-  if (loading) return <Spinner size="lg" text="Cargando tareas..." />;
+  if (loading) return <Spinner size="lg" text={t('tarea.loadingTasks')} />;
   if (error) return <Alert type="error" message={error} />;
 
   return (
     <div className="space-y-4 p-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold">Mis Tareas</h2>
+        <h2 className="text-2xl font-bold">{t('tarea.myTasks')}</h2>
         <Button variant="primary" onClick={() => { setTareaEditar(undefined); setModalForm(true); }}>
-          Nueva Tarea
+          {t('tarea.newTask')}
         </Button>
       </div>
 
@@ -135,20 +138,20 @@ export default function TareaGerenteList() {
         value={filtroEstado}
         onChange={(e) => setFiltroEstado(e.target.value)}
         name="filtroEstado"
-        placeholder="Filtrar por estado"
+        placeholder={t('tarea.filterByStatus')}
       />
 
-      <Table columns={columnas} data={tareasFiltradas} emptyMessage="No hay tareas" />
+      <Table<Tarea> columns={columnas} data={tareasFiltradas} emptyMessage={t('tarea.noTasks')} />
 
       {/* Modal de formulario */}
-      <Modal isOpen={modalForm} onClose={() => setModalForm(false)} title={tareaEditar ? 'Editar Tarea' : 'Nueva Tarea'}>
+      <Modal isOpen={modalForm} onClose={() => setModalForm(false)} title={tareaEditar ? t('tarea.editTask') : t('tarea.newTask')}>
         <TareaForm
           tarea={tareaEditar}
           terrenos={terrenos}
           capataces={capataces}
           onSave={() => {
             setModalForm(false);
-            setMensaje({ tipo: 'success', texto: 'Tarea guardada correctamente' });
+            setMensaje({ tipo: 'success', texto: t('tarea.savedOk') });
             recargarTareas();
           }}
           onCancel={() => setModalForm(false)}

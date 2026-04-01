@@ -196,7 +196,15 @@
     "assignPending": "Pending",
     "assignAccepted": "Accepted",
     "assignRejected": "Rejected",
-    "assignCompleted": "Completed"
+    "assignCompleted": "Completed",
+    "allStatuses": "All statuses",
+    "capataz": "Foreman",
+    "noAssigned": "Unassigned",
+    "newTask": "New Task",
+    "editTask": "Edit Task",
+    "edit": "Edit",
+    "savedOk": "Task saved successfully",
+    "filterByStatus": "Filter by status"
   },
   "team": {
     "title": "My Team",
@@ -221,6 +229,28 @@
     "errorLoading": "Error loading team",
     "errorAdding": "Error adding to team",
     "errorRemoving": "Error removing from team"
+  },
+  "terreno": {
+    "myTerrenos": "My Lands",
+    "newTerreno": "New Land",
+    "editTerreno": "Edit Land",
+    "deleteTerreno": "Delete Land",
+    "savedOk": "Land saved successfully",
+    "deleted": "Land deleted",
+    "errorLoad": "Error loading lands",
+    "errorDelete": "Error deleting",
+    "loadingTerrenos": "Loading lands...",
+    "noTerrenos": "You have no lands yet",
+    "searchPlaceholder": "Search lands...",
+    "confirmDelete": "Are you sure you want to delete",
+    "nombre": "Name",
+    "ubicacion": "Location",
+    "tipoCultivo": "Crop Type",
+    "estado": "Status",
+    "acciones": "Actions",
+    "edit": "Edit",
+    "delete": "Delete",
+    "cancel": "Cancel"
   },
   "profile": {
     "title": "My Profile",

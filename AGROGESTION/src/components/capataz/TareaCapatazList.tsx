@@ -57,6 +57,7 @@ export default function TareaCapatazList() {
 
   useEffect(() => {
     cargarTareas();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [perfil]);
 
   /** Traduce el id_estado a texto */
@@ -168,7 +169,7 @@ export default function TareaCapatazList() {
 
       {mensaje && <Alert type={mensaje.tipo} message={mensaje.texto} onClose={() => setMensaje(null)} />}
 
-      <Table columns={columnas} data={tareas} emptyMessage={t('tarea.noTasks')} />
+      <Table<Tarea> columns={columnas} data={tareas} emptyMessage={t('tarea.noTasks')} />
 
       {/* Modal de asignación de trabajadores */}
       <Modal isOpen={modalAsignar} onClose={() => setModalAsignar(false)} title={t('tarea.assignWorkers')}>

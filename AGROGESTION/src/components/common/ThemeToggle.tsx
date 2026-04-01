@@ -18,15 +18,7 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={toggle}
-      className="p-2 rounded-[var(--radius-md)]"
-      style={{
-        background: 'none',
-        border: '1px solid var(--color-border)',
-        cursor: 'pointer',
-        fontSize: '1.25rem',
-        lineHeight: 1,
-        transition: 'var(--transition-fast)',
-      }}
+      className="p-2 rounded-md bg-transparent border border-(--color-border) cursor-pointer text-xl leading-none transition-all"
       aria-label={isDark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'}
       title={isDark ? 'Modo claro' : 'Modo oscuro'}
     >

@@ -54,6 +54,7 @@ export default function MiEquipoGerente() {
 
   useEffect(() => {
     cargarEquipo();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [perfil]);
 
   const handleAñadir = async () => {
@@ -110,13 +111,14 @@ export default function MiEquipoGerente() {
       <div className="card mb-6">
         <h2 className="mb-4">{t('team.addCapataz')}</h2>
         {disponibles.length === 0 ? (
-          <p style={{ color: 'var(--color-text-secondary)' }}>{t('team.noAvailableCapataces')}</p>
+          <p className="text-(--color-text-secondary)">{t('team.noAvailableCapataces')}</p>
         ) : (
           <div className="flex gap-3 items-end flex-wrap">
             <select
               className="input flex-1"
               value={seleccionado}
               onChange={(e) => setSeleccionado(e.target.value)}
+              aria-label={t('team.selectCapataz')}
             >
               <option value="">{t('team.selectCapataz')}</option>
               {disponibles.map((c) => (
@@ -140,33 +142,24 @@ export default function MiEquipoGerente() {
       <div className="card">
         <h2 className="mb-4">{t('team.myCapataces')}</h2>
         {capataces.length === 0 ? (
-          <p style={{ color: 'var(--color-text-secondary)' }}>{t('team.noCapataces')}</p>
+          <p className="text-(--color-text-secondary)">{t('team.noCapataces')}</p>
         ) : (
           <div className="flex flex-col gap-3">
             {capataces.map((c) => (
               <div
                 key={c.id}
-                className="flex items-center justify-between p-4 rounded-[var(--radius-md)]"
-                style={{
-                  backgroundColor: 'var(--color-bg-main)',
-                  border: '1px solid var(--color-border)',
-                }}
+                className="flex items-center justify-between p-4 rounded-md bg-(--color-bg-main) border border-(--color-border)"
               >
                 <div>
                   <p className="font-semibold m-0">
                     {c.nombre} {c.apellidos}
                   </p>
-                  <p className="text-sm m-0" style={{ color: 'var(--color-text-secondary)' }}>
+                  <p className="text-sm m-0 text-(--color-text-secondary)">
                     {c.email} · {c.tlf}
                   </p>
                 </div>
                 <button
-                  className="btn"
-                  style={{
-                    backgroundColor: 'var(--color-error)',
-                    color: '#fff',
-                    border: 'none',
-                  }}
+                  className="btn btn-danger"
                   onClick={() => {
                     setCapatazEliminar(c);
                     setModalConfirm(true);
@@ -197,8 +190,7 @@ export default function MiEquipoGerente() {
             {t('common.cancel')}
           </button>
           <button
-            className="btn"
-            style={{ backgroundColor: 'var(--color-error)', color: '#fff', border: 'none' }}
+            className="btn btn-danger"
             onClick={confirmarEliminar}
           >
             {t('common.confirm')}

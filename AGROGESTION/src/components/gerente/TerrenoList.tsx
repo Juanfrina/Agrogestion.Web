@@ -7,6 +7,7 @@
  */
 
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../hooks/useAuth';
 import { TerrenoRepository } from '../../database/repositories/TerrenoRepository';
 import type { Terreno } from '../../interfaces/Terreno';
@@ -26,6 +27,7 @@ import TerrenoForm from './TerrenoForm';
  */
 export default function TerrenoList() {
   const { perfil } = useAuth();
+  const { t } = useTranslation();
   const [terrenos, setTerrenos] = useState<Terreno[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -48,7 +50,7 @@ export default function TerrenoList() {
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message
         : (err && typeof err === 'object' && 'message' in err) ? String((err as { message: string }).message)
-        : 'Error al cargar terrenos';
+        : t('terreno.errorLoad');
       setError(msg);
     } finally {
       setLoading(false);
@@ -57,6 +59,7 @@ export default function TerrenoList() {
 
   useEffect(() => {
     cargarTerrenos();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [perfil]);
 
   /** Filtra terrenos por nombre o ubicación */
@@ -83,7 +86,7 @@ export default function TerrenoList() {
   /** Callback cuando se guarda (crear o editar) */
   const handleSave = () => {
     setModalForm(false);
-    setMensaje({ tipo: 'success', texto: 'Terreno guardado correctamente' });
+    setMensaje({ tipo: 'success', texto: t('terreno.savedOk') });
     cargarTerrenos();
   };
 
@@ -92,63 +95,63 @@ export default function TerrenoList() {
     if (!terrenoEliminar) return;
     try {
       await TerrenoRepository.softDelete(terrenoEliminar.id_terreno);
-      setMensaje({ tipo: 'success', texto: 'Terreno eliminado' });
+      setMensaje({ tipo: 'success', texto: t('terreno.deleted') });
       setModalEliminar(false);
       cargarTerrenos();
     } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : 'Error al eliminar';
+      const msg = err instanceof Error ? err.message : t('terreno.errorDelete');
       setMensaje({ tipo: 'error', texto: msg });
     }
   };
 
   /** Columnas de la tabla */
   const columnas = [
-    { key: 'nombre', header: 'Nombre' },
-    { key: 'ubicacion', header: 'Ubicación' },
-    { key: 'tipo_cultivo', header: 'Tipo Cultivo' },
-    { key: 'estado', header: 'Estado' },
+    { key: 'nombre', header: t('terreno.nombre') },
+    { key: 'ubicacion', header: t('terreno.ubicacion') },
+    { key: 'tipo_cultivo', header: t('terreno.tipoCultivo') },
+    { key: 'estado', header: t('terreno.estado') },
     {
       key: 'acciones',
-      header: 'Acciones',
-      render: (t: Terreno) => (
+      header: t('terreno.acciones'),
+      render: (row: Terreno) => (
         <div className="flex gap-2">
-          <Button variant="secondary" onClick={() => abrirEditar(t)}>Editar</Button>
-          <Button variant="danger" onClick={() => { setTerrenoEliminar(t); setModalEliminar(true); }}>
-            Eliminar
+          <Button variant="secondary" onClick={() => abrirEditar(row)}>{t('terreno.edit')}</Button>
+          <Button variant="danger" onClick={() => { setTerrenoEliminar(row); setModalEliminar(true); }}>
+            {t('terreno.delete')}
           </Button>
         </div>
       ),
     },
   ];
 
-  if (loading) return <Spinner size="lg" text="Cargando terrenos..." />;
+  if (loading) return <Spinner size="lg" text={t('terreno.loadingTerrenos')} />;
   if (error) return <Alert type="error" message={error} />;
 
   return (
     <div className="space-y-4 p-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold">Mis Terrenos</h2>
-        <Button variant="primary" onClick={abrirCrear}>Nuevo Terreno</Button>
+        <h2 className="text-2xl font-bold">{t('terreno.myTerrenos')}</h2>
+        <Button variant="primary" onClick={abrirCrear}>{t('terreno.newTerreno')}</Button>
       </div>
 
       {mensaje && <Alert type={mensaje.tipo} message={mensaje.texto} onClose={() => setMensaje(null)} />}
 
-      <SearchBar value={busqueda} onChange={setBusqueda} placeholder="🔍Buscar terrenos..." />
+      <SearchBar value={busqueda} onChange={setBusqueda} placeholder={t('terreno.searchPlaceholder')} />
 
-      <Table columns={columnas} data={terrenosFiltrados} emptyMessage="No tienes terrenos todavía" />
+      <Table<Terreno> columns={columnas} data={terrenosFiltrados} emptyMessage={t('terreno.noTerrenos')} />
 
       {/* Modal de formulario (crear/editar) */}
-      <Modal isOpen={modalForm} onClose={() => setModalForm(false)} title={terrenoEditar ? 'Editar Terreno' : 'Nuevo Terreno'}>
+      <Modal isOpen={modalForm} onClose={() => setModalForm(false)} title={terrenoEditar ? t('terreno.editTerreno') : t('terreno.newTerreno')}>
         <TerrenoForm terreno={terrenoEditar} onSave={handleSave} onCancel={() => setModalForm(false)} />
       </Modal>
 
       {/* Modal de confirmación de eliminación */}
-      <Modal isOpen={modalEliminar} onClose={() => setModalEliminar(false)} title="Eliminar Terreno">
+      <Modal isOpen={modalEliminar} onClose={() => setModalEliminar(false)} title={t('terreno.deleteTerreno')}>
         <div className="space-y-4">
-          <p>¿Seguro que quieres eliminar <strong>{terrenoEliminar?.nombre}</strong>?</p>
+          <p>{t('terreno.confirmDelete')} <strong>{terrenoEliminar?.nombre}</strong>?</p>
           <div className="flex gap-3">
-            <Button variant="danger" onClick={confirmarEliminar}>Eliminar</Button>
-            <Button variant="secondary" onClick={() => setModalEliminar(false)}>Cancelar</Button>
+            <Button variant="danger" onClick={confirmarEliminar}>{t('terreno.delete')}</Button>
+            <Button variant="secondary" onClick={() => setModalEliminar(false)}>{t('terreno.cancel')}</Button>
           </div>
         </div>
       </Modal>

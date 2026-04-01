@@ -46,6 +46,7 @@ export default function UserTable() {
   /** Carga los usuarios al montar */
   useEffect(() => {
     cargarUsuarios();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   /** Trae todos los usuarios del repo */
@@ -206,7 +207,7 @@ export default function UserTable() {
       <SearchBar value={busqueda} onChange={setBusqueda} placeholder={t('admin.searchUsers')} />
 
       {/* Tabla de usuarios */}
-      <Table columns={columnas} data={usuariosFiltrados} emptyMessage={t('admin.noUsersFound')} />
+      <Table<Perfil> columns={columnas} data={usuariosFiltrados} emptyMessage={t('admin.noUsersFound')} />
 
       {/* Modal de cambio de rol */}
       <Modal isOpen={modalRol} onClose={() => setModalRol(false)} title={t('admin.changeRole')}>

@@ -36,7 +36,7 @@ export default function ResetPasswordForm() {
 
     /* Validaciones */
     if (!isValidPassword(newPassword)) {
-      setError(t('auth.errorPasswordLength'));
+      setError(t('auth.errorPasswordMin'));
       return;
     }
     if (newPassword !== confirmPassword) {

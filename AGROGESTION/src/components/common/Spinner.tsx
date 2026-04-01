@@ -13,11 +13,11 @@ interface SpinnerProps {
   text?: string;
 }
 
-/** Mapeamos los tamaños a valores CSS */
-const sizeStyles: Record<string, React.CSSProperties> = {
-  sm: { width: '1rem', height: '1rem' },
-  md: {},
-  lg: { width: '3rem', height: '3rem' },
+/** Mapeamos los tamaños a clases Tailwind */
+const sizeClasses: Record<string, string> = {
+  sm: 'w-4 h-4',
+  md: '',
+  lg: 'w-12 h-12',
 };
 
 /**
@@ -27,9 +27,9 @@ const sizeStyles: Record<string, React.CSSProperties> = {
 export default function Spinner({ size = 'md', text }: SpinnerProps) {
   return (
     <div className="flex flex-col items-center gap-2">
-      <div className="spinner" style={sizeStyles[size]} />
+      <div className={`spinner ${sizeClasses[size]}`} />
       {text && (
-        <p style={{ color: 'var(--color-text-muted)', fontSize: '0.875rem' }}>
+        <p className="text-(--color-text-muted) text-sm">
           {text}
         </p>
       )}

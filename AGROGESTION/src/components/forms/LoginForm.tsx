@@ -81,7 +81,7 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
       setSession(data.session);
       const perfil = await AuthRepository.getPerfil(data.user.id);
       setPerfil(perfil);
-      onSuccess ? onSuccess() : navigate('/dashboard');
+      if (onSuccess) { onSuccess(); } else { navigate('/dashboard'); }
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : t('auth.errorLogin'));
     } finally {
@@ -125,8 +125,8 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
         {t('auth.enter')}
       </Button>
 
-      <div className="flex items-center justify-between" style={{ fontSize: '0.88rem' }}>
-        <Link to="/registro" style={{ color: 'var(--color-primary)' }}>
+      <div className="flex items-center justify-between text-[0.88rem]">
+        <Link to="/registro" className="text-(--color-primary)">
           {t('auth.noAccount')}
         </Link>
         <Link to="/" className="btn-cancel">

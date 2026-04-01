@@ -26,7 +26,7 @@ export const UsuarioRepository = {
       .is('fecha_baja', null);
     if (error) throw error;
     // El join devuelve { capataz: Perfil }, así que extraemos solo el perfil
-    return (data ?? []).map((row: { capataz: Perfil }) => row.capataz);
+    return (data ?? []).map((row) => (row as unknown as { capataz: Perfil }).capataz);
   },
 
   /**
@@ -43,7 +43,7 @@ export const UsuarioRepository = {
       .eq('id_capataz', capatazId)
       .is('fecha_baja', null);
     if (error) throw error;
-    return (data ?? []).map((row: { trabajador: Perfil }) => row.trabajador);
+    return (data ?? []).map((row) => (row as unknown as { trabajador: Perfil }).trabajador);
   },
 
   /**

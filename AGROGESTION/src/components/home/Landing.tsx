@@ -213,7 +213,7 @@ export default function Landing() {
         onClose={() => setLegalModal(null)}
         title={legalModal ? t(`landing.${legalModal}`) : ''}
       >
-        <div style={{ maxHeight: '60vh', overflowY: 'auto', whiteSpace: 'pre-line', lineHeight: '1.6', color: 'var(--color-text-primary)' }}>
+        <div className="legal-content">
           {legalModal && t(`landing.${legalModal}Content`)}
         </div>
       </Modal>

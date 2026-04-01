@@ -16,4 +16,5 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 }
 
 /** Hook pa usar el contexto del tema fácilmente */
+// eslint-disable-next-line react-refresh/only-export-components
 export const useThemeContext = () => useContext(ThemeContext);

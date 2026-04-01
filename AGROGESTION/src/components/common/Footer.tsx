@@ -13,11 +13,7 @@
 export default function Footer() {
   return (
     <footer
-      className="text-center p-4"
-      style={{
-        backgroundColor: 'var(--color-primary-dark)',
-        color: '#fff',
-      }}
+      className="text-center p-4 bg-(--color-primary-dark) text-white"
     >
       <p className="m-0">
         © 2026 Agrogestión — Innovación · Sostenibilidad · Productividad

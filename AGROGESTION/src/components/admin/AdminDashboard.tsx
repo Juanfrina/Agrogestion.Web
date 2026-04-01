@@ -51,21 +51,17 @@ export default function AdminDashboard() {
       }
     };
     cargarStats();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <div style={{ padding: '1.5rem' }}>
-      <h2 style={{
-        fontSize: '1.5rem',
-        fontWeight: 700,
-        color: 'var(--color-primary-dark)',
-        marginBottom: '1.5rem',
-      }}>
+    <div className="p-6">
+      <h2 className="text-2xl font-bold text-(--color-primary-dark) mb-6">
         {t('admin.panelTitle')}
       </h2>
 
       {loading && (
-        <div style={{ display: 'flex', justifyContent: 'center', padding: '3rem 0' }}>
+        <div className="flex justify-center py-12">
           <Spinner size="lg" text={t('admin.loadingStats')} />
         </div>
       )}
@@ -77,64 +73,54 @@ export default function AdminDashboard() {
       {!loading && !error && stats && (
         <>
           {/* Tarjetas con las estadísticas */}
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
-            gap: '1rem',
-            marginBottom: '2rem',
-          }}>
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-4 mb-8">
             <Card>
-              <p style={{ color: 'var(--color-text-muted)', fontSize: '0.875rem', marginBottom: '0.25rem' }}>
+              <p className="stat-label">
                 {t('admin.totalUsers')}
               </p>
-              <p style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--color-primary-dark)' }}>
+              <p className="stat-value text-(--color-primary-dark)">
                 {stats.total}
               </p>
             </Card>
             <Card>
-              <p style={{ color: 'var(--color-text-muted)', fontSize: '0.875rem', marginBottom: '0.25rem' }}>
+              <p className="stat-label">
                 {t('roles.admin')}
               </p>
-              <p style={{ fontSize: '2rem', fontWeight: 700, color: '#283593' }}>
+              <p className="stat-value text-[#283593]">
                 {stats.admins}
               </p>
             </Card>
             <Card>
-              <p style={{ color: 'var(--color-text-muted)', fontSize: '0.875rem', marginBottom: '0.25rem' }}>
+              <p className="stat-label">
                 {t('roles.gerente')}
               </p>
-              <p style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--color-primary)' }}>
+              <p className="stat-value text-(--color-primary)">
                 {stats.gerentes}
               </p>
             </Card>
             <Card>
-              <p style={{ color: 'var(--color-text-muted)', fontSize: '0.875rem', marginBottom: '0.25rem' }}>
+              <p className="stat-label">
                 {t('roles.capataz')}
               </p>
-              <p style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--color-accent)' }}>
+              <p className="stat-value text-(--color-accent)">
                 {stats.capataces}
               </p>
             </Card>
             <Card>
-              <p style={{ color: 'var(--color-text-muted)', fontSize: '0.875rem', marginBottom: '0.25rem' }}>
+              <p className="stat-label">
                 {t('roles.trabajador')}
               </p>
-              <p style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--color-earth)' }}>
+              <p className="stat-value text-(--color-earth)">
                 {stats.trabajadores}
               </p>
             </Card>
           </div>
 
           {/* Acciones rápidas */}
-          <h3 style={{
-            fontSize: '1.1rem',
-            fontWeight: 600,
-            color: 'var(--color-text-primary)',
-            marginBottom: '1rem',
-          }}>
+          <h3 className="text-lg font-semibold text-(--color-text-primary) mb-4">
             {t('admin.quickActions')}
           </h3>
-          <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+          <div className="flex gap-4 flex-wrap">
             <Button variant="primary" onClick={() => navigate('/admin/usuarios')}>
               {t('admin.manageUsers')}
             </Button>

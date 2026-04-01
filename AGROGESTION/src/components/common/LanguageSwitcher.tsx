@@ -47,7 +47,7 @@ export default function LanguageSwitcher() {
       <button
         className="lang-switcher__toggle"
         onClick={() => setOpen((v) => !v)}
-        aria-expanded={open}
+        aria-expanded={open ? "true" : "false"}
         aria-haspopup="listbox"
       >
         <span>{current.flag}</span>
@@ -56,16 +56,19 @@ export default function LanguageSwitcher() {
       </button>
 
       {open && (
-        <ul className="lang-switcher__menu" role="listbox">
+        <ul className="lang-switcher__menu" role="listbox" aria-label={t('common.language')}>
           {LANGUAGES.map((l) => (
-            <li key={l.code} role="option" aria-selected={l.code === lang}>
-              <button
-                className={`lang-switcher__option ${l.code === lang ? 'lang-switcher__option--active' : ''}`}
-                onClick={() => changeLang(l.code)}
-              >
-                <span>{l.flag}</span>
-                <span>{l.label}</span>
-              </button>
+            <li
+              key={l.code}
+              role="option"
+              aria-selected={l.code === lang ? "true" : undefined}
+              className={`lang-switcher__option ${l.code === lang ? 'lang-switcher__option--active' : ''}`}
+              onClick={() => changeLang(l.code)}
+              tabIndex={0}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') changeLang(l.code); }}
+            >
+              <span>{l.flag}</span>
+              <span>{l.label}</span>
             </li>
           ))}
         </ul>

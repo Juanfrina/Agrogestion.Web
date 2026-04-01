@@ -29,8 +29,7 @@ export default function Modal({ isOpen, onClose, title, children }: ModalProps) 
 
   return (
     <div
-      className="fixed inset-0 flex items-center justify-center z-50"
-      style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
+      className="fixed inset-0 flex items-center justify-center z-50 modal-overlay"
       onClick={onClose}
     >
       {/* Paramos la propagación para que clicar dentro no cierre el modal */}
@@ -43,13 +42,7 @@ export default function Modal({ isOpen, onClose, title, children }: ModalProps) 
           {title && <h2 className="m-0">{title}</h2>}
           <button
             onClick={onClose}
-            className="font-bold text-xl leading-none ml-auto"
-            style={{
-              background: 'none',
-              border: 'none',
-              color: 'var(--color-text-secondary)',
-              cursor: 'pointer',
-            }}
+            className="font-bold text-xl leading-none ml-auto modal-close"
             aria-label="Cerrar modal"
           >
             ×

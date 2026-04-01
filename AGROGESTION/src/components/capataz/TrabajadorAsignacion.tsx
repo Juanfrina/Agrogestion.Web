@@ -68,6 +68,7 @@ export default function TrabajadorAsignacion({ tareaId, onClose }: TrabajadorAsi
 
   useEffect(() => {
     cargarDatos();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [perfil, tareaId]);
 
   /** Asigna un trabajador nuevo a la tarea */
@@ -129,14 +130,13 @@ export default function TrabajadorAsignacion({ tareaId, onClose }: TrabajadorAsi
       <div>
         <h4 className="mb-2 font-semibold">{t('tarea.assignWorkers')}</h4>
         {asignaciones.length === 0 ? (
-          <p className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>{t('tarea.noTasks')}</p>
+          <p className="text-sm text-(--color-text-secondary)">{t('tarea.noTasks')}</p>
         ) : (
           <ul className="space-y-1">
             {asignaciones.map((a) => (
               <li
                 key={a.id_trabajador}
-                className="flex items-center justify-between rounded p-2"
-                style={{ border: '1px solid var(--color-border)' }}
+                className="flex items-center justify-between rounded p-2 border border-(--color-border)"
               >
                 <div className="flex items-center gap-2">
                   <span>{a.trabajador.nombre} {a.trabajador.apellidos}</span>
@@ -158,14 +158,13 @@ export default function TrabajadorAsignacion({ tareaId, onClose }: TrabajadorAsi
       <div>
         <h4 className="mb-2 font-semibold">{t('team.myTrabajadores')}</h4>
         {noAsignados.length === 0 ? (
-          <p className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>{t('team.noAvailableTrabajadores')}</p>
+          <p className="text-sm text-(--color-text-secondary)">{t('team.noAvailableTrabajadores')}</p>
         ) : (
           <ul className="space-y-1">
             {noAsignados.map((w) => (
               <li
                 key={w.id}
-                className="flex items-center justify-between rounded p-2"
-                style={{ border: '1px solid var(--color-border)' }}
+                className="flex items-center justify-between rounded p-2 border border-(--color-border)"
               >
                 <span>{w.nombre} {w.apellidos}</span>
                 <Button variant="primary" onClick={() => asignar(w.id)}>{t('tarea.accept')}</Button>

@@ -196,7 +196,15 @@
     "assignPending": "Pendiente",
     "assignAccepted": "Aceptada",
     "assignRejected": "Rechazada",
-    "assignCompleted": "Completada"
+    "assignCompleted": "Completada",
+    "allStatuses": "Todos los estados",
+    "capataz": "Capataz",
+    "noAssigned": "Sin asignar",
+    "newTask": "Nueva Tarea",
+    "editTask": "Editar Tarea",
+    "edit": "Editar",
+    "savedOk": "Tarea guardada correctamente",
+    "filterByStatus": "Filtrar por estado"
   },
   "team": {
     "title": "Mi Equipo",
@@ -221,6 +229,28 @@
     "errorLoading": "Error al cargar el equipo",
     "errorAdding": "Error al añadir al equipo",
     "errorRemoving": "Error al desvincular del equipo"
+  },
+  "terreno": {
+    "myTerrenos": "Mis Terrenos",
+    "newTerreno": "Nuevo Terreno",
+    "editTerreno": "Editar Terreno",
+    "deleteTerreno": "Eliminar Terreno",
+    "savedOk": "Terreno guardado correctamente",
+    "deleted": "Terreno eliminado",
+    "errorLoad": "Error al cargar terrenos",
+    "errorDelete": "Error al eliminar",
+    "loadingTerrenos": "Cargando terrenos...",
+    "noTerrenos": "No tienes terrenos todavía",
+    "searchPlaceholder": "Buscar terrenos...",
+    "confirmDelete": "¿Seguro que quieres eliminar",
+    "nombre": "Nombre",
+    "ubicacion": "Ubicación",
+    "tipoCultivo": "Tipo Cultivo",
+    "estado": "Estado",
+    "acciones": "Acciones",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "cancel": "Cancelar"
   },
   "profile": {
     "title": "Mi Perfil",

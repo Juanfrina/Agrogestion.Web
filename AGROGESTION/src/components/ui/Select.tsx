@@ -45,6 +45,7 @@ export default function Select({
       value={value}
       onChange={onChange}
       className={className}
+      aria-label={placeholder || name}
     >
       {/* Opción placeholder que no se puede seleccionar */}
       {placeholder && (

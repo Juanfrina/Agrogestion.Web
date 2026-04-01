@@ -54,6 +54,7 @@ export default function MiEquipoCapataz() {
 
   useEffect(() => {
     cargarEquipo();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [perfil]);
 
   const handleAñadir = async () => {
@@ -110,13 +111,14 @@ export default function MiEquipoCapataz() {
       <div className="card mb-6">
         <h2 className="mb-4">{t('team.addTrabajador')}</h2>
         {disponibles.length === 0 ? (
-          <p style={{ color: 'var(--color-text-secondary)' }}>{t('team.noAvailableTrabajadores')}</p>
+          <p className="text-(--color-text-secondary)">{t('team.noAvailableTrabajadores')}</p>
         ) : (
           <div className="flex gap-3 items-end flex-wrap">
             <select
               className="input flex-1"
               value={seleccionado}
               onChange={(e) => setSeleccionado(e.target.value)}
+              aria-label={t('team.selectTrabajador')}
             >
               <option value="">{t('team.selectTrabajador')}</option>
               {disponibles.map((w) => (
@@ -140,33 +142,24 @@ export default function MiEquipoCapataz() {
       <div className="card">
         <h2 className="mb-4">{t('team.myTrabajadores')}</h2>
         {trabajadores.length === 0 ? (
-          <p style={{ color: 'var(--color-text-secondary)' }}>{t('team.noTrabajadores')}</p>
+          <p className="text-(--color-text-secondary)">{t('team.noTrabajadores')}</p>
         ) : (
           <div className="flex flex-col gap-3">
             {trabajadores.map((w) => (
               <div
                 key={w.id}
-                className="flex items-center justify-between p-4 rounded-[var(--radius-md)]"
-                style={{
-                  backgroundColor: 'var(--color-bg-main)',
-                  border: '1px solid var(--color-border)',
-                }}
+                className="flex items-center justify-between p-4 rounded-md bg-(--color-bg-main) border border-(--color-border)"
               >
                 <div>
                   <p className="font-semibold m-0">
                     {w.nombre} {w.apellidos}
                   </p>
-                  <p className="text-sm m-0" style={{ color: 'var(--color-text-secondary)' }}>
+                  <p className="text-sm m-0 text-(--color-text-secondary)">
                     {w.email} · {w.tlf}
                   </p>
                 </div>
                 <button
-                  className="btn"
-                  style={{
-                    backgroundColor: 'var(--color-error)',
-                    color: '#fff',
-                    border: 'none',
-                  }}
+                  className="btn btn-danger"
                   onClick={() => {
                     setTrabajadorEliminar(w);
                     setModalConfirm(true);
@@ -197,8 +190,7 @@ export default function MiEquipoCapataz() {
             {t('common.cancel')}
           </button>
           <button
-            className="btn"
-            style={{ backgroundColor: 'var(--color-error)', color: '#fff', border: 'none' }}
+            className="btn btn-danger"
             onClick={confirmarEliminar}
           >
             {t('common.confirm')}

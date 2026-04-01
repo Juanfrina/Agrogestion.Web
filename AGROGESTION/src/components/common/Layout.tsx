@@ -33,8 +33,7 @@ export default function Layout({ children }: LayoutProps) {
 
         {/* Contenido principal */}
         <main
-          className="flex-1 p-6"
-          style={{ backgroundColor: 'var(--color-bg-main)' }}
+          className="flex-1 p-6 bg-(--color-bg-main)"
         >
           {children}
         </main>

@@ -96,7 +96,7 @@ export default function Profile() {
       Capataz: 'capataz',
       Trabajador: 'trabajador',
     };
-    return mapa[roleName] ?? 'trabajador';
+    return mapa[roleName ?? ''] ?? 'trabajador';
   };
 
   return (

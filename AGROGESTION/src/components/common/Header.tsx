@@ -50,14 +50,14 @@ export default function Header() {
   return (
     <header className="navbar">
       {/* Lado izquierdo: nombre de la app */}
-      <h1 className="text-xl font-bold m-0" style={{ color: 'var(--color-text-on-primary)' }}>
+      <h1 className="text-xl font-bold m-0 text-(--color-text-on-primary)">
         {t('app.name')}
       </h1>
 
       {/* Lado derecho: info del usuario + logout */}
       {isAuthenticated && perfil && (
         <div className="flex items-center gap-3">
-          <span style={{ color: 'var(--color-text-on-primary)' }}>
+          <span className="text-(--color-text-on-primary)">
             {perfil.nombre} {perfil.apellidos}
           </span>
           <Badge variant={rolToBadgeVariant(roleName)}>

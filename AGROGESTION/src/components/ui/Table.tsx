@@ -35,7 +35,7 @@ interface TableProps<T> {
  * Tabla genérica — recibe columnas y datos tipados.
  * Muestra spinner si está cargando y un mensaje si no hay datos.
  */
-export default function Table<T extends Record<string, unknown>>({
+export default function Table<T extends object>({
   columns,
   data,
   loading = false,
@@ -52,7 +52,7 @@ export default function Table<T extends Record<string, unknown>>({
   if (data.length === 0) {
     return (
       <div className="card p-8 text-center">
-        <p style={{ color: 'var(--color-text-muted)' }}>{emptyMessage}</p>
+        <p className="text-(--color-text-muted)">{emptyMessage}</p>
       </div>
     );
   }
@@ -62,15 +62,12 @@ export default function Table<T extends Record<string, unknown>>({
       <table className="w-full">
         <thead>
           <tr
-            style={{
-              borderBottom: '2px solid var(--color-border)',
-            }}
+            className="border-b-2 border-(--color-border)"
           >
             {columns.map((col) => (
               <th
                 key={col.key}
-                className="text-left p-3 font-semibold"
-                style={{ color: 'var(--color-text-secondary)' }}
+                className="text-left p-3 font-semibold text-(--color-text-secondary)"
               >
                 {col.header}
               </th>
@@ -81,15 +78,13 @@ export default function Table<T extends Record<string, unknown>>({
           {data.map((row, idx) => (
             <tr
               key={idx}
-              style={{
-                borderBottom: '1px solid var(--color-border)',
-              }}
+              className="border-b border-(--color-border)"
             >
               {columns.map((col) => (
                 <td key={col.key} className="p-3">
                   {col.render
                     ? col.render(row)
-                    : (row[col.key] as ReactNode)}
+                    : ((row as Record<string, unknown>)[col.key] as ReactNode)}
                 </td>
               ))}
             </tr>

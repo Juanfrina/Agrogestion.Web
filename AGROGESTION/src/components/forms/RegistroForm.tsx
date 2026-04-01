@@ -150,7 +150,7 @@ export default function RegistroForm({ onSuccess }: RegistroFormProps) {
 
       setErrors(errs);
     },
-    [form, errors, touched],
+    [form, errors, touched, t],
   );
 
   /** ¿El campo ha sido tocado y no tiene error? */
@@ -208,7 +208,7 @@ export default function RegistroForm({ onSuccess }: RegistroFormProps) {
         id_rol: Number(form.id_rol),
       });
 
-      onSuccess ? onSuccess() : navigate('/login');
+      if (onSuccess) { onSuccess(); } else { navigate('/login'); }
     } catch (err: unknown) {
       setGlobalError(err instanceof Error ? err.message : t('auth.errorRegister'));
     } finally {
@@ -300,12 +300,12 @@ export default function RegistroForm({ onSuccess }: RegistroFormProps) {
       </div>
 
       <div className="flex flex-col gap-1">
-        <label className="font-medium" style={{ color: 'var(--color-text-primary)' }}>
-          {t('auth.role')} <span style={{ color: 'var(--color-error)' }}>*</span>
+        <label className="font-medium text-(--color-text-primary)">
+          {t('auth.role')} <span className="text-(--color-error)">*</span>
         </label>
         <Select
           name="id_rol"
-          options={rolOptions.map(o => ({ ...o, label: t(o.label) }))}
+          options={rolOptions.map(o => ({ ...o, label: t(o.label as never) }))}
           value={form.id_rol}
           onChange={(e) => { handleChange(e); setTouched((p) => ({ ...p, id_rol: true })); }}
           placeholder={t('auth.selectRole')}
@@ -339,23 +339,23 @@ export default function RegistroForm({ onSuccess }: RegistroFormProps) {
       />
 
       {/* Checkboxes legales */}
-      <div className="flex flex-col gap-3" style={{ fontSize: '0.88rem' }}>
+      <div className="flex flex-col gap-3 text-[0.88rem]">
         <div>
           <label className="flex items-center gap-2 cursor-pointer">
             <input
               type="checkbox"
               checked={acceptTerms}
               onChange={(e) => { setAcceptTerms(e.target.checked); if (e.target.checked) setErrors((p) => { const n = { ...p }; delete n.acceptTerms; return n; }); }}
-              style={{ accentColor: 'var(--color-primary)', width: '16px', height: '16px', flexShrink: 0 }}
+              className="accent-(--color-primary) w-4 h-4 shrink-0"
             />
             <span>
               {t('auth.acceptTermsPrefix')}{' '}
-              <button type="button" onClick={() => setLegalModal('terms')} style={{ color: 'var(--color-primary)', textDecoration: 'underline', background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontSize: 'inherit' }}>
+              <button type="button" onClick={() => setLegalModal('terms')} className="text-(--color-primary) underline bg-transparent border-none p-0 cursor-pointer">
                 {t('landing.terms')}
               </button>
             </span>
           </label>
-          {errors.acceptTerms && <span className="form-error" style={{ marginLeft: '24px' }}>{errors.acceptTerms}</span>}
+          {errors.acceptTerms && <span className="form-error ml-6">{errors.acceptTerms}</span>}
         </div>
 
         <div>
@@ -364,16 +364,16 @@ export default function RegistroForm({ onSuccess }: RegistroFormProps) {
               type="checkbox"
               checked={acceptCookies}
               onChange={(e) => { setAcceptCookies(e.target.checked); if (e.target.checked) setErrors((p) => { const n = { ...p }; delete n.acceptCookies; return n; }); }}
-              style={{ accentColor: 'var(--color-primary)', width: '16px', height: '16px', flexShrink: 0 }}
+              className="accent-(--color-primary) w-4 h-4 shrink-0"
             />
             <span>
               {t('auth.acceptCookiesPrefix')}{' '}
-              <button type="button" onClick={() => setLegalModal('cookies')} style={{ color: 'var(--color-primary)', textDecoration: 'underline', background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontSize: 'inherit' }}>
+              <button type="button" onClick={() => setLegalModal('cookies')} className="text-(--color-primary) underline bg-transparent border-none p-0 cursor-pointer">
                 {t('landing.cookies')}
               </button>
             </span>
           </label>
-          {errors.acceptCookies && <span className="form-error" style={{ marginLeft: '24px' }}>{errors.acceptCookies}</span>}
+          {errors.acceptCookies && <span className="form-error ml-6">{errors.acceptCookies}</span>}
         </div>
       </div>
 
@@ -381,8 +381,8 @@ export default function RegistroForm({ onSuccess }: RegistroFormProps) {
         {t('auth.register')}
       </Button>
 
-      <div className="flex items-center justify-between" style={{ fontSize: '0.88rem' }}>
-        <Link to="/login" style={{ color: 'var(--color-primary)' }}>
+      <div className="flex items-center justify-between text-[0.88rem]">
+        <Link to="/login" className="text-(--color-primary)">
           {t('auth.hasAccount')}
         </Link>
         <Link to="/" className="btn-cancel">
@@ -396,7 +396,7 @@ export default function RegistroForm({ onSuccess }: RegistroFormProps) {
         onClose={() => setLegalModal(null)}
         title={legalModal ? t(`landing.${legalModal}`) : ''}
       >
-        <div style={{ maxHeight: '60vh', overflowY: 'auto', whiteSpace: 'pre-line', lineHeight: '1.6', color: 'var(--color-text-primary)' }}>
+        <div className="legal-content">
           {legalModal && t(`landing.${legalModal}Content`)}
         </div>
       </Modal>

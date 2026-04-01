@@ -51,7 +51,7 @@ export default function TrabajadorDashboard() {
       }
     };
     cargar();
-  }, [perfil]);
+  }, [perfil, t]);
 
   if (loading) return <Spinner size="lg" text={t('tarea.loadingTasks')} />;
   if (error) return <Alert type="error" message={error} />;
@@ -66,7 +66,7 @@ export default function TrabajadorDashboard() {
 
   return (
     <div className="space-y-6 p-6">
-      <h2 className="text-2xl font-bold">Dashboard {t('common.role')} {t('nav.misTareas')}</h2>
+      <h2 className="text-2xl font-bold">{t('nav.dashboard')} — {t('nav.misTareas')}</h2>
 
       {/* Estadísticas */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -96,7 +96,7 @@ export default function TrabajadorDashboard() {
                 <div className="flex items-center justify-between">
                   <div>
                     <strong>{tarea.nombre}</strong>
-                    <span className="ml-2 text-sm" style={{ color: 'var(--color-text-secondary)' }}>
+                    <span className="ml-2 text-sm text-(--color-text-secondary)">
                       {tarea.terreno?.nombre}
                     </span>
                   </div>

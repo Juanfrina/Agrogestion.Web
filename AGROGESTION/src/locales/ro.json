@@ -196,7 +196,15 @@
     "assignPending": "În așteptare",
     "assignAccepted": "Acceptată",
     "assignRejected": "Respinsă",
-    "assignCompleted": "Finalizată"
+    "assignCompleted": "Finalizată",
+    "allStatuses": "Toate stările",
+    "capataz": "Maistru",
+    "noAssigned": "Neatribuit",
+    "newTask": "Sarcină Nouă",
+    "editTask": "Editează Sarcina",
+    "edit": "Editează",
+    "savedOk": "Sarcina salvată cu succes",
+    "filterByStatus": "Filtrează după stare"
   },
   "team": {
     "title": "Echipa Mea",
@@ -221,6 +229,28 @@
     "errorLoading": "Eroare la încărcarea echipei",
     "errorAdding": "Eroare la adăugarea în echipă",
     "errorRemoving": "Eroare la eliminarea din echipă"
+  },
+  "terreno": {
+    "myTerrenos": "Terenurile Mele",
+    "newTerreno": "Teren Nou",
+    "editTerreno": "Editează Terenul",
+    "deleteTerreno": "Șterge Terenul",
+    "savedOk": "Teren salvat cu succes",
+    "deleted": "Teren șters",
+    "errorLoad": "Eroare la încărcarea terenurilor",
+    "errorDelete": "Eroare la ștergere",
+    "loadingTerrenos": "Se încarcă terenurile...",
+    "noTerrenos": "Nu ai terenuri încă",
+    "searchPlaceholder": "Caută terenuri...",
+    "confirmDelete": "Sigur vrei să ștergi",
+    "nombre": "Nume",
+    "ubicacion": "Locație",
+    "tipoCultivo": "Tip Cultură",
+    "estado": "Stare",
+    "acciones": "Acțiuni",
+    "edit": "Editează",
+    "delete": "Șterge",
+    "cancel": "Anulează"
   },
   "profile": {
     "title": "Profilul Meu",

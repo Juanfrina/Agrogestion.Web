@@ -36,6 +36,18 @@ interface InputFieldProps {
   hint?: string;
 }
 
+/** Mapa de nombres de campo a valores autocomplete estándar */
+const autoCompleteMap: Record<string, string> = {
+  nombre: 'given-name',
+  apellidos: 'family-name',
+  email: 'email',
+  dni: 'off',
+  tlf: 'tel',
+  direccion: 'street-address',
+  newPassword: 'new-password',
+  confirmPassword: 'new-password',
+};
+
 /**
  * Campo de formulario con label + input + error/hint.
  * Si type="password", muestra un botón para alternar visibilidad.
@@ -60,9 +72,9 @@ export default function InputField({
 
   return (
     <div className="flex flex-col gap-1">
-      <label htmlFor={name} className="font-medium" style={{ color: 'var(--color-text-primary)' }}>
+      <label htmlFor={name} className="font-medium text-(--color-text-primary)">
         {label}
-        {required && <span style={{ color: 'var(--color-error)' }}> *</span>}
+        {required && <span className="text-(--color-error)"> *</span>}
       </label>
 
       <div className={`input-wrapper ${isPassword ? 'input-wrapper--password' : ''}`}>
@@ -77,7 +89,7 @@ export default function InputField({
           required={required}
           maxLength={maxLength}
           className={inputClass}
-          autoComplete={isPassword ? 'current-password' : name}
+          autoComplete={isPassword ? 'current-password' : autoCompleteMap[name] || 'off'}
         />
         {isPassword && (
           <button

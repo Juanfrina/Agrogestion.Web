@@ -90,4 +90,5 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 }
 
 /** Hook para acceder al contexto de auth (por si lo necesitamos en el futuro) */
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => useContext(AuthContext);

@@ -64,6 +64,7 @@ export default function MisTareasList() {
 
   useEffect(() => {
     cargarTareas();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [perfil]);
 
   /** Traduce el estado de asignación */
@@ -194,7 +195,7 @@ export default function MisTareasList() {
 
       {mensaje && <Alert type={mensaje.tipo} message={mensaje.texto} onClose={() => setMensaje(null)} />}
 
-      <Table columns={columnas} data={tareas} emptyMessage={t('tarea.noTasks')} />
+      <Table<TareaConAsignacion> columns={columnas} data={tareas} emptyMessage={t('tarea.noTasks')} />
 
       {/* Modal de comentarios */}
       <Modal isOpen={modalComentarios} onClose={() => setModalComentarios(false)} title={t('tarea.comments')}>

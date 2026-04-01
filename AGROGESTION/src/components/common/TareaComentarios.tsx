@@ -45,6 +45,7 @@ export default function TareaComentarios({ tareaId, autorId }: TareaComentariosP
 
   useEffect(() => {
     cargar();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tareaId]);
 
   const enviar = async () => {
@@ -71,24 +72,20 @@ export default function TareaComentarios({ tareaId, autorId }: TareaComentariosP
       )}
 
       {/* Historial de comentarios */}
-      <div className="space-y-3" style={{ maxHeight: '300px', overflowY: 'auto' }}>
+      <div className="space-y-3 max-h-75 overflow-y-auto">
         {comentarios.length === 0 ? (
-          <p style={{ color: 'var(--color-text-secondary)' }}>{t('tarea.noComments')}</p>
+          <p className="text-(--color-text-secondary)">{t('tarea.noComments')}</p>
         ) : (
           comentarios.map((c) => (
             <div
               key={c.id_comentario}
-              className="p-3 rounded-[var(--radius-md)]"
-              style={{
-                backgroundColor: 'var(--color-bg-main)',
-                border: '1px solid var(--color-border)',
-              }}
+              className="p-3 rounded-md bg-(--color-bg-main) border border-(--color-border)"
             >
               <div className="flex justify-between items-center mb-1">
                 <span className="font-semibold text-sm">
                   {c.autor.nombre} {c.autor.apellidos}
                 </span>
-                <span className="text-xs" style={{ color: 'var(--color-text-secondary)' }}>
+                <span className="text-xs text-(--color-text-secondary)">
                   {new Date(c.created_at).toLocaleString()}
                 </span>
               </div>

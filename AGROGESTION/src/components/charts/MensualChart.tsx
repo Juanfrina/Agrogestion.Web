@@ -40,13 +40,10 @@ export default function MensualChart({ data }: MensualChartProps) {
           {/* Barra */}
           <div className="flex-1">
             <div
-              className="rounded"
+              className="rounded h-6 bg-(--color-primary) transition-[width] duration-300 ease-in-out"
               style={{
                 width: `${(item.valor / maxValor) * 100}%`,
-                height: '24px',
-                backgroundColor: 'var(--color-primary, #4a7c59)',
                 minWidth: item.valor > 0 ? '4px' : '0',
-                transition: 'width 0.3s ease',
               }}
             />
           </div>
