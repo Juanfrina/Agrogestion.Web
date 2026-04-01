@@ -31,55 +31,51 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const { setSession, setPerfil, setLoading, reset } = useAuthStore();
 
   useEffect(() => {
-    // Al montar: miramos si hay sesión guardada en sessionStorage
-    AuthRepository.getSession()
-      .then(async (session) => {
-        if (session?.user) {
-          setSession(session);
-          try {
-            const perfil = await AuthRepository.getPerfil(session.user.id);
-            setPerfil(perfil);
-          } catch {
-            // Si falla traer el perfil, limpiamos todo
-            reset();
-          }
-        }
-      })
-      .catch(() => {
-        // Si falla la sesión, dejamos todo limpio
-        reset();
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    let mounted = true;
 
-    // Nos suscribimos a los cambios de auth de Supabase
-    // Esto se dispara cuando el usuario hace login, logout o se refresca el token
+    // Usamos SOLO onAuthStateChange — Supabase v2 lanza INITIAL_SESSION
+    // como primer evento, así que no necesitamos getSession() por separado.
+    // Esto elimina la condición de carrera que causaba el loading infinito.
     const { data: { subscription } } = AuthRepository.onAuthStateChange(
       async (event, session) => {
+        if (!mounted) return;
         const typedSession = session as import('@supabase/supabase-js').Session | null;
-        setSession(typedSession);
-
-        // Si acaba de hacer login, cargamos su perfil
-        if (event === 'SIGNED_IN' && typedSession?.user) {
-          try {
-            const perfil = await AuthRepository.getPerfil(typedSession.user.id);
-            setPerfil(perfil);
-          } catch {
-            // Si falla cargar el perfil en el listener, limpiamos todo
-            reset();
-          }
-        }
 
         // Si cierra sesión, limpiamos todo el store
         if (event === 'SIGNED_OUT') {
           reset();
+          return;
         }
+
+        // Para cualquier evento con sesión válida, sincronizamos sesión + perfil
+        if (typedSession?.user) {
+          setSession(typedSession);
+          try {
+            const perfil = await AuthRepository.getPerfil(typedSession.user.id);
+            if (mounted) setPerfil(perfil);
+          } catch {
+            if (mounted) reset();
+          }
+        }
+
+        if (mounted) setLoading(false);
       }
     );
 
+    // Safety net: si onAuthStateChange nunca dispara (p.ej. error de red),
+    // aseguramos que loading se ponga a false tras 5 segundos para no bloquear la UI
+    const timeout = setTimeout(() => {
+      if (mounted && useAuthStore.getState().loading) {
+        setLoading(false);
+      }
+    }, 5000);
+
     // Al desmontar el componente, nos desuscribimos para evitar memory leaks
-    return () => subscription.unsubscribe();
+    return () => {
+      mounted = false;
+      clearTimeout(timeout);
+      subscription.unsubscribe();
+    };
   }, [setSession, setPerfil, setLoading, reset]);
 
   return (

@@ -8,6 +8,7 @@
 
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../hooks/useAuth';
 import { TerrenoRepository } from '../../database/repositories/TerrenoRepository';
 import { TareaRepository } from '../../database/repositories/TareaRepository';
@@ -28,6 +29,7 @@ import Alert from '../common/Alert';
 export default function GerenteDashboard() {
   const { perfil } = useAuth();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [terrenos, setTerrenos] = useState<Terreno[]>([]);
   const [tareas, setTareas] = useState<Tarea[]>([]);
   const [loading, setLoading] = useState(true);
@@ -56,7 +58,7 @@ export default function GerenteDashboard() {
     cargar();
   }, [perfil]);
 
-  if (loading) return <Spinner size="lg" text="Cargando dashboard..." />;
+  if (loading) return <Spinner size="lg" text={t('dashboard.loadingDashboard')} />;
   if (error) return <Alert type="error" message={error} />;
 
   /** Cuenta tareas por estado */
@@ -70,20 +72,20 @@ export default function GerenteDashboard() {
 
   return (
     <div className="space-y-6 p-6">
-      <h2 className="text-2xl font-bold">Dashboard Gerente</h2>
+      <h2 className="text-2xl font-bold">{t('dashboard.title')}</h2>
 
       {/* Estadísticas */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <Card title="Terrenos">
+        <Card title={t('dashboard.terrenos')}>
           <p className="text-3xl font-bold">{terrenos.length}</p>
         </Card>
-        <Card title="Total Tareas">
+        <Card title={t('dashboard.totalTareas')}>
           <p className="text-3xl font-bold">{tareas.length}</p>
         </Card>
-        <Card title="En Progreso">
+        <Card title={t('dashboard.inProgress')}>
           <p className="text-3xl font-bold">{tareasEstado('EN_PROGRESO')}</p>
         </Card>
-        <Card title="Completadas">
+        <Card title={t('dashboard.completed')}>
           <p className="text-3xl font-bold">{tareasEstado('COMPLETADA')}</p>
         </Card>
       </div>
@@ -91,31 +93,31 @@ export default function GerenteDashboard() {
       {/* Acciones rápidas */}
       <div className="flex gap-3">
         <Button variant="primary" onClick={() => navigate('/gerente/terrenos')}>
-          Nuevo Terreno
+          {t('terreno.newTerreno')}
         </Button>
         <Button variant="accent" onClick={() => navigate('/gerente/tareas')}>
-          Nueva Tarea
+          {t('tarea.newTask')}
         </Button>
       </div>
 
       {/* Tareas recientes */}
       <div>
-        <h3 className="mb-3 text-xl font-semibold">Tareas Recientes</h3>
+        <h3 className="mb-3 text-xl font-semibold">{t('dashboard.recentTasks')}</h3>
         {tareasRecientes.length === 0 ? (
-          <p className="text-gray-500">No hay tareas creadas todavía</p>
+          <p className="text-(--color-text-muted)">{t('dashboard.noTasks')}</p>
         ) : (
           <div className="space-y-2">
-            {tareasRecientes.map((t) => (
-              <Card key={t.id_tarea}>
+            {tareasRecientes.map((tarea) => (
+              <Card key={tarea.id_tarea}>
                 <div className="flex items-center justify-between">
-                  <div>
-                    <strong>{t.nombre}</strong>
-                    <span className="ml-2 text-sm text-gray-500">
-                      {t.terreno?.nombre ?? 'Sin terreno'}
+                  <div className="flex items-center gap-2">
+                    <strong>{tarea.nombre}</strong>
+                    <span className="text-sm text-(--color-text-muted)">
+                      {tarea.terreno?.nombre ?? t('dashboard.noTerreno')}
                     </span>
                   </div>
-                  <Badge variant={t.estado?.nombre === 'COMPLETADA' ? 'success' : 'warning'}>
-                    {t.estado?.nombre ?? 'PENDIENTE'}
+                  <Badge variant={tarea.estado?.nombre === 'COMPLETADA' ? 'success' : 'warning'}>
+                    {tarea.estado?.nombre ?? t('tarea.statusPendiente')}
                   </Badge>
                 </div>
               </Card>

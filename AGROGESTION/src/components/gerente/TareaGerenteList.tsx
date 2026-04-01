@@ -123,9 +123,9 @@ export default function TareaGerenteList() {
 
   return (
     <div className="space-y-4 p-6">
-      <div className="flex items-center justify-between">
+      <div className="mt-2 flex items-center justify-between">
         <h2 className="text-2xl font-bold">{t('tarea.myTasks')}</h2>
-        <Button variant="primary" onClick={() => { setTareaEditar(undefined); setModalForm(true); }}>
+        <Button variant="accent" onClick={() => { setTareaEditar(undefined); setModalForm(true); }}>
           {t('tarea.newTask')}
         </Button>
       </div>

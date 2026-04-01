@@ -94,7 +94,7 @@
     "featureLanguagesDesc": "Disponibil în spaniolă, engleză și română. Echipa ta poate lucra în limba preferată.",
     "howTitle": "Cum funcționează?",
     "step1Title": "Înregistrează-te",
-    "step1Desc": "Creează-ți contul în câteva secunde. Administratorul îți va atribui rolul.",
+    "step1Desc": "Creează-ți contul în câteva secunde și alege rolul: manager, maistru sau muncitor.",
     "step2Title": "Configurează ferma",
     "step2Desc": "Managerii înregistrează terenurile și definesc structura echipei.",
     "step3Title": "Atribuie sarcini",
@@ -263,5 +263,17 @@
     "confirmNewPassword": "Confirmă parola",
     "passwordUpdated": "Parolă actualizată cu succes",
     "errorChangePassword": "Eroare la schimbarea parolei"
+  },
+  "dashboard": {
+    "title": "Panou Manager",
+    "terrenos": "Terenuri",
+    "totalTareas": "Total Sarcini",
+    "inProgress": "În Desfășurare",
+    "completed": "Finalizate",
+    "recentTasks": "Sarcini Recente",
+    "noTasks": "Nu există sarcini create încă",
+    "loadingDashboard": "Se încarcă panoul...",
+    "noTerreno": "Fără teren",
+    "errorLoadData": "Eroare la încărcarea datelor"
   }
 }

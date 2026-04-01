@@ -145,6 +145,15 @@ textarea {
   width: 100%;
 }
 
+input[type="checkbox"],
+input[type="radio"] {
+  width: auto;
+  padding: 0;
+  border: revert;
+  border-radius: revert;
+  background-color: revert;
+}
+
 input:focus,
 select:focus,
 textarea:focus {
@@ -368,10 +377,18 @@ textarea::placeholder {
   font-weight: 400;
   transition: var(--transition-fast);
 }
+.sidebar-link:hover {
+  background-color: var(--color-bg-main);
+  color: var(--color-primary);
+}
 .sidebar-link--active {
   background-color: var(--color-primary-light);
-  color: var(--color-primary-dark);
+  color: #fff;
   font-weight: 600;
+}
+.sidebar-link--active:hover {
+  background-color: var(--color-primary-light);
+  color: #fff;
 }
 
 /* Modal overlay */

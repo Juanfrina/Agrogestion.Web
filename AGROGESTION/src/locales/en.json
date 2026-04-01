@@ -94,7 +94,7 @@
     "featureLanguagesDesc": "Available in Spanish, English and Romanian. Your team can work in their preferred language.",
     "howTitle": "How does it work?",
     "step1Title": "Sign Up",
-    "step1Desc": "Create your account in seconds. The administrator will assign your role.",
+    "step1Desc": "Create your account in seconds and choose your role: manager, foreman or worker.",
     "step2Title": "Set up your farm",
     "step2Desc": "Managers register lands and define the team structure.",
     "step3Title": "Assign tasks",
@@ -263,5 +263,17 @@
     "confirmNewPassword": "Confirm password",
     "passwordUpdated": "Password updated successfully",
     "errorChangePassword": "Error changing password"
+  },
+  "dashboard": {
+    "title": "Manager Dashboard",
+    "terrenos": "Lands",
+    "totalTareas": "Total Tasks",
+    "inProgress": "In Progress",
+    "completed": "Completed",
+    "recentTasks": "Recent Tasks",
+    "noTasks": "No tasks created yet",
+    "loadingDashboard": "Loading dashboard...",
+    "noTerreno": "No land",
+    "errorLoadData": "Error loading data"
   }
 }

@@ -341,12 +341,12 @@ export default function RegistroForm({ onSuccess }: RegistroFormProps) {
       {/* Checkboxes legales */}
       <div className="flex flex-col gap-3 text-[0.88rem]">
         <div>
-          <label className="flex items-center gap-2 cursor-pointer">
+          <label className="flex items-start gap-2 cursor-pointer">
             <input
               type="checkbox"
               checked={acceptTerms}
               onChange={(e) => { setAcceptTerms(e.target.checked); if (e.target.checked) setErrors((p) => { const n = { ...p }; delete n.acceptTerms; return n; }); }}
-              className="accent-(--color-primary) w-4 h-4 shrink-0"
+              className="accent-(--color-primary) w-4 h-4 shrink-0 mt-0.5"
             />
             <span>
               {t('auth.acceptTermsPrefix')}{' '}
@@ -359,12 +359,12 @@ export default function RegistroForm({ onSuccess }: RegistroFormProps) {
         </div>
 
         <div>
-          <label className="flex items-center gap-2 cursor-pointer">
+          <label className="flex items-start gap-2 cursor-pointer">
             <input
               type="checkbox"
               checked={acceptCookies}
               onChange={(e) => { setAcceptCookies(e.target.checked); if (e.target.checked) setErrors((p) => { const n = { ...p }; delete n.acceptCookies; return n; }); }}
-              className="accent-(--color-primary) w-4 h-4 shrink-0"
+              className="accent-(--color-primary) w-4 h-4 shrink-0 mt-0.5"
             />
             <span>
               {t('auth.acceptCookiesPrefix')}{' '}

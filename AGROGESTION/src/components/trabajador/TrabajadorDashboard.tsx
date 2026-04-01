@@ -94,9 +94,9 @@ export default function TrabajadorDashboard() {
             {recientes.map((tarea) => (
               <Card key={tarea.id_tarea}>
                 <div className="flex items-center justify-between">
-                  <div>
+                  <div className="flex items-center gap-2">
                     <strong>{tarea.nombre}</strong>
-                    <span className="ml-2 text-sm text-(--color-text-secondary)">
+                    <span className="text-sm text-(--color-text-muted)">
                       {tarea.terreno?.nombre}
                     </span>
                   </div>

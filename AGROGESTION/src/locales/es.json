@@ -94,7 +94,7 @@
     "featureLanguagesDesc": "Disponible en español, inglés y rumano. Tu equipo puede trabajar en su idioma preferido.",
     "howTitle": "¿Cómo funciona?",
     "step1Title": "Regístrate",
-    "step1Desc": "Crea tu cuenta en segundos. El administrador te asignará tu rol.",
+    "step1Desc": "Crea tu cuenta en segundos y elige tu rol: gerente, capataz o trabajador.",
     "step2Title": "Configura tu finca",
     "step2Desc": "Los gerentes registran los terrenos y definen la estructura del equipo.",
     "step3Title": "Asigna tareas",
@@ -263,5 +263,17 @@
     "confirmNewPassword": "Confirmar contraseña",
     "passwordUpdated": "Contraseña actualizada correctamente",
     "errorChangePassword": "Error al cambiar la contraseña"
+  },
+  "dashboard": {
+    "title": "Dashboard Gerente",
+    "terrenos": "Terrenos",
+    "totalTareas": "Total Tareas",
+    "inProgress": "En Progreso",
+    "completed": "Completadas",
+    "recentTasks": "Tareas Recientes",
+    "noTasks": "No hay tareas creadas todavía",
+    "loadingDashboard": "Cargando dashboard...",
+    "noTerreno": "Sin terreno",
+    "errorLoadData": "Error al cargar datos"
   }
 }

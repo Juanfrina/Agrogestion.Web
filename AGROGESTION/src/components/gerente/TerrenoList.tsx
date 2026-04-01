@@ -129,9 +129,9 @@ export default function TerrenoList() {
 
   return (
     <div className="space-y-4 p-6">
-      <div className="flex items-center justify-between">
+      <div className="mt-2 flex items-center justify-between">
         <h2 className="text-2xl font-bold">{t('terreno.myTerrenos')}</h2>
-        <Button variant="primary" onClick={abrirCrear}>{t('terreno.newTerreno')}</Button>
+        <Button variant="accent" onClick={abrirCrear}>{t('terreno.newTerreno')}</Button>
       </div>
 
       {mensaje && <Alert type={mensaje.tipo} message={mensaje.texto} onClose={() => setMensaje(null)} />}

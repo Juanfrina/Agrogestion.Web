@@ -56,8 +56,18 @@ export function ProtectedRoute({ children, allowedRoles }: ProtectedRouteProps) 
     return <Navigate to="/login" replace />;
   }
 
+  // Si hay sesión pero el perfil aún no ha cargado, seguimos esperando
+  if (!perfil) {
+    return (
+      <div className="loading-screen">
+        <div className="spinner" />
+        <span>{t('common.loadingProfile')}</span>
+      </div>
+    );
+  }
+
   // Si hay sesión pero el rol no está en la lista de permitidos → a la landing
-  if (allowedRoles && perfil && !allowedRoles.includes(perfil.id_rol)) {
+  if (allowedRoles && !allowedRoles.includes(perfil.id_rol)) {
     return <Navigate to="/" replace />;
   }
 
