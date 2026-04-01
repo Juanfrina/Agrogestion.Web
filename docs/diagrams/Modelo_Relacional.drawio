@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" type="device">
+  <diagram name="Modelo Relacional" id="er-diagram">
+    <mxGraphModel dx="1900" dy="1200" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1300" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- TITULO -->
+        <mxCell id="title" value="MODELO RELACIONAL — AGROGESTIÓN" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=20;fontStyle=1;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="550" y="10" width="420" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- =============== ROL =============== -->
+        <mxCell id="t_rol" value="ROL" style="swimlane;fontStyle=1;align=center;startSize=28;html=1;whiteSpace=wrap;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="100" y="70" width="260" height="108" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_rol_pk" value="PK  id_rol : INTEGER" style="text;strokeColor=none;fillColor=#f0f0f0;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;fontStyle=1;" vertex="1" parent="t_rol">
+          <mxGeometry y="28" width="260" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_rol_sep" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=left;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1" parent="t_rol">
+          <mxGeometry y="52" width="260" height="8" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_rol_r1" value="nombre : VARCHAR(50) UNIQUE" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;" vertex="1" parent="t_rol">
+          <mxGeometry y="60" width="260" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_rol_r2" value="descripcion : VARCHAR(255)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;" vertex="1" parent="t_rol">
+          <mxGeometry y="84" width="260" height="24" as="geometry"/>
+        </mxCell>
+
+        <!-- =============== ESTADOS_TAREA =============== -->
+        <mxCell id="t_est" value="ESTADOS_TAREA" style="swimlane;fontStyle=1;align=center;startSize=28;html=1;whiteSpace=wrap;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="1200" y="70" width="260" height="108" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_est_pk" value="PK  id_estado : SERIAL" style="text;strokeColor=none;fillColor=#f0f0f0;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;fontStyle=1;" vertex="1" parent="t_est">
+          <mxGeometry y="28" width="260" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_est_sep" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=left;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1" parent="t_est">
+          <mxGeometry y="52" width="260" height="8" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_est_r1" value="nombre : VARCHAR(50) UNIQUE" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;" vertex="1" parent="t_est">
+          <mxGeometry y="60" width="260" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_est_r2" value="descripcion : VARCHAR(255)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;" vertex="1" parent="t_est">
+          <mxGeometry y="84" width="260" height="24" as="geometry"/>
+        </mxCell>
+
+        <!-- =============== PERFILES =============== -->
+        <mxCell id="t_per" value="PERFILES" style="swimlane;fontStyle=1;align=center;startSize=28;html=1;whiteSpace=wrap;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="240" width="300" height="276" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_per_pk" value="PK  id : UUID (FK → auth.users)" style="text;strokeColor=none;fillColor=#f0f0f0;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;fontStyle=1;" vertex="1" parent="t_per">
+          <mxGeometry y="28" width="300" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_per_sep" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=left;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1" parent="t_per">
+          <mxGeometry y="52" width="300" height="8" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_per_r1" value="nombre : VARCHAR(100) NOT NULL" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;" vertex="1" parent="t_per">
+          <mxGeometry y="60" width="300" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_per_r2" value="apellidos : VARCHAR(100) NOT NULL" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;" vertex="1" parent="t_per">
+          <mxGeometry y="84" width="300" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_per_r3" value="dni : VARCHAR(9) UNIQUE NOT NULL" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;" vertex="1" parent="t_per">
+          <mxGeometry y="108" width="300" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_per_r4" value="email : VARCHAR(100) UNIQUE NOT NULL" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;" vertex="1" parent="t_per">
+          <mxGeometry y="132" width="300" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_per_r5" value="tlf : VARCHAR(15) NOT NULL" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;" vertex="1" parent="t_per">
+          <mxGeometry y="156" width="300" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_per_r6" value="direccion : VARCHAR(255) NOT NULL" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;" vertex="1" parent="t_per">
+          <mxGeometry y="180" width="300" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_per_r7" value="FK  id_rol : INTEGER → rol" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;fontStyle=2;" vertex="1" parent="t_per">
+          <mxGeometry y="204" width="300" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_per_r8" value="fecha_baja : DATE" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;" vertex="1" parent="t_per">
+          <mxGeometry y="228" width="300" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_per_r9" value="created_at : TIMESTAMPTZ DEFAULT now()" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;" vertex="1" parent="t_per">
+          <mxGeometry y="252" width="300" height="24" as="geometry"/>
+        </mxCell>
+
+        <!-- =============== TAREA =============== -->
+        <mxCell id="t_tar" value="TAREA" style="swimlane;fontStyle=1;align=center;startSize=28;html=1;whiteSpace=wrap;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="520" y="240" width="320" height="324" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_tar_pk" value="PK  id_tarea : SERIAL" style="text;strokeColor=none;fillColor=#f0f0f0;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;fontStyle=1;" vertex="1" parent="t_tar">
+          <mxGeometry y="28" width="320" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_tar_sep" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=left;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1" parent="t_tar">
+          <mxGeometry y="52" width="320" height="8" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_tar_r1" value="nombre : VARCHAR(200) NOT NULL" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;" vertex="1" parent="t_tar">
+          <mxGeometry y="60" width="320" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_tar_r2" value="descripcion : TEXT" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;" vertex="1" parent="t_tar">
+          <mxGeometry y="84" width="320" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_tar_r3" value="fecha_inicio : DATE NOT NULL" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;" vertex="1" parent="t_tar">
+          <mxGeometry y="108" width="320" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_tar_r4" value="fecha_fin : DATE NOT NULL" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;" vertex="1" parent="t_tar">
+          <mxGeometry y="132" width="320" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_tar_r5" value="FK  id_terreno : INTEGER → terreno" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;fontStyle=2;" vertex="1" parent="t_tar">
+          <mxGeometry y="156" width="320" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_tar_r6" value="FK  id_gerente : UUID → perfiles" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;fontStyle=2;" vertex="1" parent="t_tar">
+          <mxGeometry y="180" width="320" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_tar_r7" value="FK  id_capataz : UUID → perfiles" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;fontStyle=2;" vertex="1" parent="t_tar">
+          <mxGeometry y="204" width="320" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_tar_r8" value="FK  id_estado : INTEGER → estados_tarea" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;fontStyle=2;" vertex="1" parent="t_tar">
+          <mxGeometry y="228" width="320" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_tar_r9" value="fecha_baja : DATE" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;" vertex="1" parent="t_tar">
+          <mxGeometry y="252" width="320" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_tar_r10" value="created_at : TIMESTAMPTZ" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;" vertex="1" parent="t_tar">
+          <mxGeometry y="276" width="320" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_tar_r11" value="updated_at : TIMESTAMPTZ" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;" vertex="1" parent="t_tar">
+          <mxGeometry y="300" width="320" height="24" as="geometry"/>
+        </mxCell>
+
+        <!-- =============== TERRENO =============== -->
+        <mxCell id="t_ter" value="TERRENO" style="swimlane;fontStyle=1;align=center;startSize=28;html=1;whiteSpace=wrap;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="240" width="290" height="228" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_ter_pk" value="PK  id_terreno : SERIAL" style="text;strokeColor=none;fillColor=#f0f0f0;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;fontStyle=1;" vertex="1" parent="t_ter">
+          <mxGeometry y="28" width="290" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_ter_sep" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=left;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1" parent="t_ter">
+          <mxGeometry y="52" width="290" height="8" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_ter_r1" value="nombre : VARCHAR(200) NOT NULL" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;" vertex="1" parent="t_ter">
+          <mxGeometry y="60" width="290" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_ter_r2" value="ubicacion : VARCHAR(255) NOT NULL" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;" vertex="1" parent="t_ter">
+          <mxGeometry y="84" width="290" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_ter_r3" value="tipo_cultivo : VARCHAR(100) NOT NULL" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;" vertex="1" parent="t_ter">
+          <mxGeometry y="108" width="290" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_ter_r4" value="estado : VARCHAR(50) DEFAULT 'ACTIVO'" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;" vertex="1" parent="t_ter">
+          <mxGeometry y="132" width="290" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_ter_r5" value="FK  id_gestor : UUID → perfiles" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;fontStyle=2;" vertex="1" parent="t_ter">
+          <mxGeometry y="156" width="290" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_ter_r6" value="fecha_baja : DATE" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;" vertex="1" parent="t_ter">
+          <mxGeometry y="180" width="290" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_ter_r7" value="created_at : TIMESTAMPTZ" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;" vertex="1" parent="t_ter">
+          <mxGeometry y="204" width="290" height="24" as="geometry"/>
+        </mxCell>
+
+        <!-- =============== GERENTE_CAPATAZ =============== -->
+        <mxCell id="t_gc" value="GERENTE_CAPATAZ" style="swimlane;fontStyle=1;align=center;startSize=28;html=1;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=13;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="630" width="290" height="104" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_gc_pk1" value="PK FK  id_gerente : UUID → perfiles" style="text;strokeColor=none;fillColor=#f0f0f0;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;fontStyle=1;" vertex="1" parent="t_gc">
+          <mxGeometry y="28" width="290" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_gc_pk2" value="PK FK  id_capataz : UUID → perfiles" style="text;strokeColor=none;fillColor=#f0f0f0;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;fontStyle=1;" vertex="1" parent="t_gc">
+          <mxGeometry y="52" width="290" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_gc_sep" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=left;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1" parent="t_gc">
+          <mxGeometry y="76" width="290" height="4" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_gc_r1" value="created_at : TIMESTAMPTZ" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;" vertex="1" parent="t_gc">
+          <mxGeometry y="80" width="290" height="24" as="geometry"/>
+        </mxCell>
+
+        <!-- =============== TAREA_TRABAJADOR =============== -->
+        <mxCell id="t_tt" value="TAREA_TRABAJADOR" style="swimlane;fontStyle=1;align=center;startSize=28;html=1;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=13;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="440" y="630" width="300" height="152" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_tt_pk1" value="PK FK  id_tarea : INTEGER → tarea" style="text;strokeColor=none;fillColor=#f0f0f0;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;fontStyle=1;" vertex="1" parent="t_tt">
+          <mxGeometry y="28" width="300" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_tt_pk2" value="PK FK  id_trabajador : UUID → perfiles" style="text;strokeColor=none;fillColor=#f0f0f0;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;fontStyle=1;" vertex="1" parent="t_tt">
+          <mxGeometry y="52" width="300" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_tt_sep" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=left;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1" parent="t_tt">
+          <mxGeometry y="76" width="300" height="4" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_tt_r1" value="FK  id_capataz : UUID → perfiles" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;fontStyle=2;" vertex="1" parent="t_tt">
+          <mxGeometry y="80" width="300" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_tt_r2" value="aceptada : BOOLEAN" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;" vertex="1" parent="t_tt">
+          <mxGeometry y="104" width="300" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_tt_r3" value="created_at : TIMESTAMPTZ" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;" vertex="1" parent="t_tt">
+          <mxGeometry y="128" width="300" height="24" as="geometry"/>
+        </mxCell>
+
+        <!-- =============== CAPATAZ_TRABAJADOR =============== -->
+        <mxCell id="t_ct" value="CAPATAZ_TRABAJADOR" style="swimlane;fontStyle=1;align=center;startSize=28;html=1;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=13;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="850" y="630" width="300" height="104" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_ct_pk1" value="PK FK  id_capataz : UUID → perfiles" style="text;strokeColor=none;fillColor=#f0f0f0;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;fontStyle=1;" vertex="1" parent="t_ct">
+          <mxGeometry y="28" width="300" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_ct_pk2" value="PK FK  id_trabajador : UUID → perfiles" style="text;strokeColor=none;fillColor=#f0f0f0;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;fontStyle=1;" vertex="1" parent="t_ct">
+          <mxGeometry y="52" width="300" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_ct_sep" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=left;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1" parent="t_ct">
+          <mxGeometry y="76" width="300" height="4" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_ct_r1" value="created_at : TIMESTAMPTZ" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;" vertex="1" parent="t_ct">
+          <mxGeometry y="80" width="300" height="24" as="geometry"/>
+        </mxCell>
+
+        <!-- =============== COMENTARIOS_TAREA =============== -->
+        <mxCell id="t_com" value="COMENTARIOS_TAREA" style="swimlane;fontStyle=1;align=center;startSize=28;html=1;whiteSpace=wrap;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=13;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="260" y="860" width="300" height="152" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_com_pk" value="PK  id_comentario : SERIAL" style="text;strokeColor=none;fillColor=#f0f0f0;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;fontStyle=1;" vertex="1" parent="t_com">
+          <mxGeometry y="28" width="300" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_com_sep" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=left;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1" parent="t_com">
+          <mxGeometry y="52" width="300" height="4" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_com_r1" value="FK  id_tarea : INTEGER → tarea" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;fontStyle=2;" vertex="1" parent="t_com">
+          <mxGeometry y="56" width="300" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_com_r2" value="FK  id_autor : UUID → perfiles" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;fontStyle=2;" vertex="1" parent="t_com">
+          <mxGeometry y="80" width="300" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_com_r3" value="contenido : TEXT NOT NULL" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;" vertex="1" parent="t_com">
+          <mxGeometry y="104" width="300" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_com_r4" value="created_at : TIMESTAMPTZ" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;" vertex="1" parent="t_com">
+          <mxGeometry y="128" width="300" height="24" as="geometry"/>
+        </mxCell>
+
+        <!-- =============== NOTIFICACIONES =============== -->
+        <mxCell id="t_not" value="NOTIFICACIONES" style="swimlane;fontStyle=1;align=center;startSize=28;html=1;whiteSpace=wrap;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=13;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="700" y="860" width="290" height="196" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_not_pk" value="PK  id_notificacion : SERIAL" style="text;strokeColor=none;fillColor=#f0f0f0;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;fontStyle=1;" vertex="1" parent="t_not">
+          <mxGeometry y="28" width="290" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_not_sep" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=left;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1" parent="t_not">
+          <mxGeometry y="52" width="290" height="4" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_not_r1" value="FK  id_usuario : UUID → perfiles" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;fontStyle=2;" vertex="1" parent="t_not">
+          <mxGeometry y="56" width="290" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_not_r2" value="tipo : VARCHAR(50) NOT NULL" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;" vertex="1" parent="t_not">
+          <mxGeometry y="80" width="290" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_not_r3" value="mensaje : TEXT NOT NULL" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;" vertex="1" parent="t_not">
+          <mxGeometry y="104" width="290" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_not_r4" value="leida : BOOLEAN DEFAULT FALSE" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;" vertex="1" parent="t_not">
+          <mxGeometry y="128" width="290" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_not_r5" value="id_referencia : INTEGER" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;" vertex="1" parent="t_not">
+          <mxGeometry y="152" width="290" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_not_r6" value="created_at : TIMESTAMPTZ" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fontSize=11;" vertex="1" parent="t_not">
+          <mxGeometry y="176" width="290" height="24" as="geometry"/>
+        </mxCell>
+
+        <!-- =============== RELACIONES =============== -->
+
+        <!-- PERFILES.id_rol → ROL -->
+        <mxCell id="e1" value="N:1" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=1;strokeColor=#6c8ebf;fontSize=9;endArrow=block;endFill=1;" edge="1" parent="1" source="t_per" target="t_rol">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- TAREA.id_estado → ESTADOS_TAREA -->
+        <mxCell id="e2" value="N:1" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=1;strokeColor=#6c8ebf;fontSize=9;endArrow=block;endFill=1;" edge="1" parent="1" source="t_tar" target="t_est">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- TAREA.id_terreno → TERRENO -->
+        <mxCell id="e3" value="N:1" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=1;strokeColor=#82b366;fontSize=9;endArrow=block;endFill=1;" edge="1" parent="1" source="t_tar" target="t_ter">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- TAREA.id_gerente/id_capataz → PERFILES -->
+        <mxCell id="e4" value="gerente / capataz" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=1;strokeColor=#82b366;fontSize=9;endArrow=block;endFill=1;" edge="1" parent="1" source="t_tar" target="t_per">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- TERRENO.id_gestor → PERFILES -->
+        <mxCell id="e5" value="id_gestor" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=1;strokeColor=#82b366;fontSize=9;endArrow=block;endFill=1;" edge="1" parent="1" source="t_ter" target="t_per">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- GERENTE_CAPATAZ → PERFILES -->
+        <mxCell id="e6" value="N:M" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=1;strokeColor=#d6b656;fontSize=9;endArrow=block;endFill=1;" edge="1" parent="1" source="t_gc" target="t_per">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- CAPATAZ_TRABAJADOR → PERFILES -->
+        <mxCell id="e7" value="N:M" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=1;strokeColor=#d6b656;fontSize=9;endArrow=block;endFill=1;" edge="1" parent="1" source="t_ct" target="t_per">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1000" y="810"/>
+              <mxPoint x="210" y="810"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- TAREA_TRABAJADOR → TAREA -->
+        <mxCell id="e8" value="FK tarea" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=1;strokeColor=#d6b656;fontSize=9;endArrow=block;endFill=1;" edge="1" parent="1" source="t_tt" target="t_tar">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- TAREA_TRABAJADOR → PERFILES -->
+        <mxCell id="e9" value="FK trabajador" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=1;strokeColor=#d6b656;fontSize=9;endArrow=block;endFill=1;dashed=1;" edge="1" parent="1" source="t_tt" target="t_per">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- COMENTARIOS_TAREA → TAREA -->
+        <mxCell id="e10" value="FK tarea" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=1;strokeColor=#9673a6;fontSize=9;endArrow=block;endFill=1;" edge="1" parent="1" source="t_com" target="t_tar">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- COMENTARIOS_TAREA → PERFILES -->
+        <mxCell id="e11" value="FK autor" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=1;strokeColor=#9673a6;fontSize=9;endArrow=block;endFill=1;dashed=1;" edge="1" parent="1" source="t_com" target="t_per">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- NOTIFICACIONES → PERFILES -->
+        <mxCell id="e12" value="FK usuario" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=1;strokeColor=#9673a6;fontSize=9;endArrow=block;endFill=1;" edge="1" parent="1" source="t_not" target="t_per">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="845" y="1100"/>
+              <mxPoint x="210" y="1100"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- LEYENDA -->
+        <mxCell id="legend" value="Leyenda:  Azul = Catálogo  |  Verde = Entidad principal  |  Naranja = Relación N:M  |  Morado = Funcionalidad" style="text;html=1;align=left;verticalAlign=top;spacingLeft=10;spacingRight=10;spacingTop=6;overflow=hidden;rounded=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="1130" width="700" height="30" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
