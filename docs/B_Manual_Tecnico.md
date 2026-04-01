@@ -2,32 +2,17 @@
 
 ## Índice
 
-1. Introducción
-2. Arquitectura de la aplicación
-   - 2.1. Frontend
-     - 2.1.1. Tecnologías usadas
-     - 2.1.2. Entorno de desarrollo
-   - 2.2. Backend
-     - 2.2.1. Tecnologías usadas
-     - 2.2.2. Entorno de desarrollo
-3. Documentación técnica
-   - 3.1. Análisis
-     - 3.1.1. Requisitos funcionales
-     - 3.1.2. Requisitos no funcionales
-     - 3.1.3. Modelo de datos (Base de datos)
-     - 3.1.4. Diagrama Entidad-Relación
-     - 3.1.5. Diccionario de datos
-     - 3.1.6. Casos de uso
-   - 3.2. Desarrollo (Diagramas de secuencia)
-   - 3.3. Pruebas realizadas
-4. Proceso de despliegue
-   - 4.1. Requisitos de sistema
-   - 4.2. Configuración de Supabase
-   - 4.3. Subida de la aplicación a producción
-5. Propuestas de mejoras
-   - 5.1. Mejoras aplicadas durante el desarrollo
-   - 5.2. Mejoras propuestas para futuras versiones
-6. Bibliografía
+1. [Introducción](#1-introducción)
+2. [Arquitectura de la aplicación](#2-arquitectura-de-la-aplicación)
+   - [2.1. Frontend](#21-frontend)
+   - [2.2. Backend](#22-backend)
+3. [Documentación técnica](#3-documentación-técnica)
+   - [3.1. Análisis](#31-análisis)
+   - [3.2. Desarrollo (Diagramas de secuencia)](#32-desarrollo-diagramas-de-secuencia)
+   - [3.3. Pruebas realizadas](#33-pruebas-realizadas)
+4. [Proceso de despliegue](#4-proceso-de-despliegue)
+5. [Propuestas de mejoras](#5-propuestas-de-mejoras)
+6. [Bibliografía](#6-bibliografía)
 
 ---
 
@@ -41,13 +26,16 @@ La aplicación se ha desarrollado siguiendo una arquitectura moderna de tipo **S
 
 ### Objetivos del proyecto
 
-- Permitir el registro y autenticación de usuarios.
+- Permitir el registro y autenticación de usuarios con selección de rol.
 - Implementar un sistema de roles jerárquico (ADMIN, GERENTE, CAPATAZ, TRABAJADOR).
 - Gestionar terrenos agrícolas (alta, baja lógica, edición).
 - Crear, asignar y hacer seguimiento de tareas agrícolas.
 - Establecer relaciones entre gerentes-capataces y capataces-trabajadores.
 - Garantizar la seguridad de los datos mediante políticas RLS (Row Level Security).
-- Ofrecer una interfaz responsive accesible desde cualquier dispositivo.
+- Ofrecer una interfaz responsive accesible desde cualquier dispositivo (escritorio, tablet y móvil).
+- Permitir la edición de perfil personal por parte de cada usuario.
+- Proporcionar estadísticas visuales con tarjetas de resumen y gráficos.
+- Soportar internacionalización en tres idiomas: español, inglés y rumano.
 
 ---
 
@@ -131,18 +119,18 @@ Agrogestión utiliza una arquitectura **cliente-servidor desacoplada**:
 
 | ID    | Requisito                                                                                   | Prioridad |
 |-------|---------------------------------------------------------------------------------------------|-----------|
-| RF-01 | El sistema debe permitir el registro de nuevos usuarios mediante email y contraseña.        | Alta      |
+| RF-01 | El sistema debe permitir el registro de nuevos usuarios con selección de rol.       | Alta      |
 | RF-02 | El sistema debe permitir el inicio de sesión con autenticación segura.                      | Alta      |
 | RF-03 | El sistema debe asignar un panel diferente a cada usuario según su rol.                     | Alta      |
-| RF-04 | El administrador debe poder ver, crear, editar y desactivar usuarios.                       | Alta      |
-| RF-05 | El administrador debe poder asignar roles a los usuarios.                                   | Alta      |
+| RF-04 | El administrador debe poder ver, editar y desactivar/reactivar usuarios.                    | Alta      |
+| RF-05 | El administrador debe poder asignar y cambiar roles a los usuarios.                         | Alta      |
 | RF-06 | El gerente debe poder gestionar terrenos (alta, baja lógica, edición).                      | Alta      |
 | RF-07 | El gerente debe poder crear tareas agrícolas asociadas a terrenos.                          | Alta      |
 | RF-08 | El gerente debe poder asignar tareas a capataces.                                           | Alta      |
 | RF-09 | El gerente debe poder consultar el estado de las tareas.                                    | Alta      |
 | RF-10 | El gerente debe poder asociar y desasociar capataces a su equipo.                           | Media     |
 | RF-11 | El capataz debe poder ver las tareas que le han sido asignadas.                             | Alta      |
-| RF-12 | El capataz debe poder cambiar el estado de una tarea (pendiente → en progreso → completada).| Alta      |
+| RF-12 | El capataz debe poder cambiar el estado de una tarea (pendiente → asignada → aceptada → en progreso → completada).| Alta      |
 | RF-13 | El capataz debe poder asignar trabajadores de apoyo a tareas concretas.                     | Media     |
 | RF-14 | El capataz debe poder gestionar su equipo de trabajadores habituales.                       | Media     |
 | RF-15 | El trabajador debe poder ver las tareas en las que participa.                               | Alta      |
@@ -151,6 +139,14 @@ Agrogestión utiliza una arquitectura **cliente-servidor desacoplada**:
 | RF-18 | El sistema debe incluir una landing page informativa con acceso a login y registro.         | Baja      |
 | RF-19 | El sistema debe permitir cerrar sesión de forma segura.                                     | Alta      |
 | RF-20 | Cada usuario solo debe poder acceder a los datos que le corresponden según su rol.          | Alta      |
+| RF-21 | Cada usuario debe poder editar su perfil personal (nombre, apellidos, email, teléfono, dirección). | Media |
+| RF-22 | El sistema debe permitir la recuperación de contraseña por email.                           | Alta      |
+| RF-23 | El administrador debe poder visualizar estadísticas globales con gráficos.                  | Media     |
+| RF-24 | El sistema debe soportar internacionalización en español, inglés y rumano.                  | Media     |
+| RF-25 | La interfaz debe ser responsive con menú hamburguesa en dispositivos móviles.               | Media     |
+| RF-26 | Los usuarios involucrados en una tarea deben poder añadir comentarios.                      | Media     |
+| RF-27 | El sistema debe generar notificaciones automáticas al asignar tareas o trabajadores.        | Media     |
+| RF-28 | El trabajador debe poder aceptar o rechazar su asignación a una tarea.                      | Media     |
 
 #### 3.1.2. Requisitos no funcionales
 
@@ -172,164 +168,244 @@ Agrogestión utiliza una arquitectura **cliente-servidor desacoplada**:
 
 #### 3.1.3. Modelo de datos (Base de datos)
 
-La base de datos se implementa en PostgreSQL gestionado por Supabase. Se compone de 8 tablas principales interrelacionadas.
+La base de datos se implementa en PostgreSQL gestionado por Supabase. Se compone de **10 tablas** principales interrelacionadas.
 
 **Tablas del sistema:**
 
-| Tabla              | Descripción                                                         |
-|--------------------|---------------------------------------------------------------------|
-| rol                | Tipos de usuario: ADMIN, GERENTE, CAPATAZ, TRABAJADOR.              |
-| usuario            | Perfil extendido del usuario (nombre, apellidos, rol, etc.).        |
-| terreno            | Terrenos gestionados por los gerentes.                              |
-| estados_tarea      | Estados posibles de una tarea (pendiente, en progreso, completada). |
-| tarea              | Tareas agrícolas vinculadas a terrenos, gerentes y capataces.       |
-| gerente_capataz    | Relación N:M entre gerentes y capataces.                            |
-| tarea_trabajador   | Trabajadores que ayudan a un capataz en una tarea concreta.         |
-| capataz_trabajador | Relación estable entre capataz y sus trabajadores habituales.       |
+| Tabla              | Descripción                                                                      |
+|--------------------|-----------------------------------------------------------------------------------|
+| rol                | Tipos de usuario: ADMIN (1), GERENTE (2), CAPATAZ (3), TRABAJADOR (4).            |
+| perfiles           | Perfil extendido del usuario (nombre, apellidos, dni, email, tlf, dirección, rol).|
+| terreno            | Terrenos gestionados por los gerentes.                                            |
+| estados_tarea      | Flujo de estados: pendiente, asignada, aceptada, rechazada, en progreso, completada. |
+| tarea              | Tareas agrícolas vinculadas a terrenos, gerentes y capataces.                    |
+| gerente_capataz    | Relación N:M entre gerentes y capataces.                                         |
+| tarea_trabajador   | Trabajadores asignados a tareas con estado de aceptación.                         |
+| capataz_trabajador | Relación estable entre capataz y sus trabajadores habituales.                    |
+| comentarios_tarea  | Comentarios de usuarios en tareas concretas.                                      |
+| notificaciones     | Notificaciones automáticas generadas por triggers (asignación, cambio de estado). |
 
 #### 3.1.4. Diagrama Entidad-Relación
 
 ```
 ┌──────────┐       ┌──────────────┐       ┌──────────────────┐
-│   ROL    │1────N │   USUARIO    │       │   ESTADOS_TAREA  │
+│   ROL    │1────N │   PERFILES   │       │   ESTADOS_TAREA  │
 │          │       │              │       │                  │
-│ id(PK)   │       │ id(PK)       │       │ id(PK)           │
+│id_rol(PK)│       │ id(PK)       │       │ id_estado(PK)    │
 │ nombre   │       │ nombre       │       │ nombre           │
-│          │       │ apellidos    │       │ descripcion      │
-└──────────┘       │ email        │       └────────┬─────────┘
-                   │ id_rol(FK)   │                │1
-                   │ activo       │                │
+│ descrip. │       │ apellidos    │       │ descripcion      │
+└──────────┘       │ dni          │       └────────┬─────────┘
+                   │ email        │                │1
+                   │ tlf          │                │
+                   │ direccion    │                │
+                   │ id_rol(FK)   │                │
+                   │ fecha_baja   │                │
                    │ created_at   │                │
-                   └──────┬───────┘                │
-                          │                        │
-              ┌───────────┼───────────┐            │
-              │           │           │            │
-         ┌────▼────┐ ┌────▼────┐ ┌────▼─────┐      │
-         │GERENTE  │ │CAPATAZ  │ │TRABAJADOR│      │
-         └────┬────┘ └────┬────┘ └────┬─────┘      │
-              │           │           │            │
-              │N         M│           │            │
-         ┌────▼───────────▼────┐      │            │
-         │  GERENTE_CAPATAZ    │      │            │
-         │                     │      │            │
-         │ id_gerente(FK)      │      │            │
-         │ id_capataz(FK)      │      │            │
-         └─────────────────────┘      │            │
-              │                       │            │
-              │1                      │            │
-         ┌────▼─────────┐             │            │
-         │   TERRENO    │             │            │
-         │              │             │            │
-         │ id(PK)       │             │            │
-         │ nombre       │             │            │
-         │ ubicacion    │             │            │
-         │ superficie   │             │            │
-         │id_gerente(FK)│             │            │
-         │ activo       │             │            │
-         └────┬─────────┘             │            │
-              │1                      │            │
-              │                       │            │
-         ┌────▼─────────────────┐     │            │
-         │       TAREA          │     │            │
-         │                      │─────┘N           │
-         │ id(PK)               │                  │
-         │ descripcion          │──────────────────┘N
-         │ id_terreno(FK)       │
-         │ id_gerente(FK)       │
-         │ id_capataz(FK)       │
-         │ id_estado(FK)        │
-         │ fecha_creacion       │
-         └────────┬─────────────┘
-                  │1
-                  │
-         ┌────────▼──────────────┐
-         │   TAREA_TRABAJADOR    │
-         │                       │
-         │ id_tarea(FK)          │
-         │ id_trabajador(FK)     │
-         └───────────────────────┘
-
-         ┌───────────────────────┐
-         │  CAPATAZ_TRABAJADOR   │
-         │                       │
-         │ id_capataz(FK)        │
-         │ id_trabajador(FK)     │
-         └───────────────────────┘
+                   └──┬──┬──┬─────┘                │
+                      │  │  │                      │
+          ┌───────────┘  │  └──────────┐           │
+          │              │             │           │
+     ┌────▼────┐    ┌────▼────┐   ┌────▼─────┐     │
+     │GERENTE  │    │CAPATAZ  │   │TRABAJADOR│     │
+     └──┬──┬───┘    └──┬──┬───┘   └──┬──┬────┘     │
+        │  │           │  │          │  │          │
+        │  │N         M│  │          │  │          │
+        │  └───┐  ┌────┘  │          │  │          │
+        │      │  │       │          │  │          │
+        │ ┌────▼──▼────────┐         │  │          │
+        │ │GERENTE_CAPATAZ │         │  │          │
+        │ │                │         │  │          │
+        │ │id_gerente(FK)  │         │  │          │
+        │ │id_capataz(FK)  │         │  │          │
+        │ │fecha_asignacion│         │  │          │
+        │ │fecha_baja      │         │  │          │
+        │ └────────────────┘         │  │          │
+        │                  ┌─────────┘  │          │
+        │                  │            │          │
+        │            ┌─────▼────────────▼───┐      │
+        │            │  CAPATAZ_TRABAJADOR  │      │
+        │            │                      │      │
+        │            │ id_capataz(FK)       │      │
+        │            │ id_trabajador(FK)    │      │
+        │            │ fecha_asignacion     │      │
+        │            │ fecha_baja           │      │
+        │            └──────────────────────┘      │
+        │                                          │
+   ┌────▼──────────┐                               │
+   │   TERRENO     │                               │
+   │               │                               │
+   │ id_terreno(PK)│                               │
+   │ nombre        │                               │
+   │ ubicacion     │                               │
+   │ tipo_cultivo  │                               │
+   │ estado        │                               │
+   │ id_gestor(FK) │                               │
+   │ fecha_baja    │                               │
+   └────┬──────────┘                               │
+        │1                                         │
+        │                                          │
+   ┌────▼───────────────────────┐                  │
+   │         TAREA              │                  │
+   │                            │──────────────────┘N
+   │ id_tarea(PK)               │
+   │ nombre                     │
+   │ descripcion                │
+   │ fecha_inicio               │
+   │ fecha_fin                  │
+   │ id_terreno(FK)→terreno     │
+   │ id_gerente(FK)→perfiles    │
+   │ id_capataz(FK)→perfiles    │
+   │ id_estado(FK)→estados_tarea│
+   │ fecha_baja                 │
+   │ created_at                 │
+   │ updated_at                 │
+   └──┬────────┬────────────────┘
+      │1       │1
+      │        │
+      │   ┌────▼──────────────────┐
+      │   │  TAREA_TRABAJADOR     │
+      │   │                       │
+      │   │ id_tarea(FK)→tarea    │
+      │   │ id_trabajador(FK)     │
+      │   │ id_capataz_asigna(FK) │
+      │   │ estado                │
+      │   │ fecha_asignacion      │
+      │   │ fecha_respuesta       │
+      │   │ fecha_baja            │
+      │   └───────────────────────┘
+      │
+      ├────────────────────────────┐
+      │                            │
+ ┌────▼──────────────────┐   ┌─────▼─────────────────┐
+ │  COMENTARIOS_TAREA    │   │    NOTIFICACIONES     │
+ │                       │   │                       │
+ │ id_comentario(PK)     │   │ id_notificacion(PK)   │
+ │ id_tarea(FK)→tarea    │   │ id_destinatario(FK)   │
+ │ id_autor(FK)→perfiles │   │   →perfiles           │
+ │ contenido             │   │ tipo                  │
+ │ created_at            │   │ titulo                │
+ └───────────────────────┘   │ mensaje               │
+                             │ id_tarea(FK)→tarea    │
+                             │ leida                 │
+                             │ created_at            │
+                             └───────────────────────┘
 ```
 
 #### 3.1.5. Diccionario de datos
 
 **Tabla: rol**
 
-| Campo   | Tipo         | Restricciones   | Descripción                         |
-|---------|--------------|-----------------|-------------------------------------|
-| id      | SERIAL       | PK, NOT NULL    | Identificador único del rol.        |
-| nombre  | VARCHAR(50)  | NOT NULL, UNIQUE| Nombre del rol (ADMIN, GERENTE...). |
+| Campo       | Tipo         | Restricciones                  | Descripción                         |
+|-------------|--------------|--------------------------------|-------------------------------------|
+| id_rol      | INTEGER      | PK, NOT NULL, CHECK (1,2,3,4) | Identificador único del rol.        |
+| nombre      | VARCHAR(50)  | NOT NULL, UNIQUE               | Nombre del rol (ADMIN, GERENTE...). |
+| descripcion | VARCHAR(255) |                                | Descripción del rol.                |
 
-**Tabla: usuario**
+**Tabla: perfiles**
 
-| Campo     | Tipo         | Restricciones       | Descripción                              |
-|-----------|--------------|---------------------|------------------------------------------|
-| id        | UUID         | PK, NOT NULL        | Identificador único (vinculado a Auth).  |
-| nombre    | VARCHAR(100) | NOT NULL            | Nombre del usuario.                      |
-| apellidos | VARCHAR(150) | NOT NULL            | Apellidos del usuario.                   |
-| email     | VARCHAR(255) | NOT NULL, UNIQUE    | Correo electrónico.                      |
-| id_rol    | INTEGER      | FK → rol(id)        | Rol asignado al usuario.                 |
-| activo    | BOOLEAN      | DEFAULT TRUE        | Indica si la cuenta está activa.         |
-| created_at| TIMESTAMP    | DEFAULT NOW()       | Fecha de creación del registro.          |
+| Campo     | Tipo         | Restricciones             | Descripción                                  |
+|-----------|--------------|---------------------------|----------------------------------------------|
+| id        | UUID         | PK, NOT NULL, FK → auth.users(id) ON DELETE CASCADE | Identificador único (vinculado a auth.users).|
+| nombre    | VARCHAR(100) | NOT NULL                  | Nombre del usuario.                          |
+| apellidos | VARCHAR(100) | NOT NULL                  | Apellidos del usuario.                       |
+| dni       | VARCHAR(9)   | UNIQUE, NOT NULL          | Documento nacional de identidad.             |
+| email     | VARCHAR(100) | UNIQUE, NOT NULL          | Correo electrónico.                          |
+| tlf       | VARCHAR(15)  | NOT NULL                  | Teléfono de contacto.                        |
+| direccion | VARCHAR(255) | NOT NULL                  | Dirección postal.                            |
+| id_rol    | INTEGER      | NOT NULL, DEFAULT 4, FK → rol(id_rol) | Rol asignado al usuario.            |
+| fecha_baja| DATE         | DEFAULT NULL              | Si no es null, el usuario está dado de baja. |
+| created_at| TIMESTAMPTZ  | DEFAULT NOW()             | Fecha de creación del registro.              |
 
 **Tabla: terreno**
 
-| Campo      | Tipo          | Restricciones       | Descripción                              |
-|------------|---------------|---------------------|------------------------------------------|
-| id         | SERIAL        | PK, NOT NULL        | Identificador único del terreno.         |
-| nombre     | VARCHAR(150)  | NOT NULL            | Nombre del terreno.                      |
-| ubicacion  | VARCHAR(255)  |                     | Dirección o referencia geográfica.       |
-| superficie | DECIMAL(10,2) |                     | Superficie en hectáreas.                 |
-| id_gerente | UUID          | FK → usuario(id)    | Gerente que gestiona el terreno.         |
-| activo     | BOOLEAN       | DEFAULT TRUE        | Estado activo/inactivo (baja lógica).    |
-| created_at | TIMESTAMP     | DEFAULT NOW()       | Fecha de creación.                       |
+| Campo       | Tipo          | Restricciones              | Descripción                              |
+|-------------|---------------|----------------------------|------------------------------------------|
+| id_terreno  | SERIAL        | PK, NOT NULL               | Identificador único del terreno.         |
+| nombre      | VARCHAR(100)  | NOT NULL                   | Nombre del terreno.                      |
+| ubicacion   | VARCHAR(255)  | NOT NULL                   | Dirección o referencia geográfica.       |
+| tipo_cultivo| VARCHAR(100)  | NOT NULL                   | Tipo de cultivo (olivo, viña, cereal…).  |
+| estado      | VARCHAR(20)   | NOT NULL, DEFAULT 'activo' | Estado actual del terreno.               |
+| id_gestor   | UUID          | NOT NULL, FK → perfiles(id)| Gerente que gestiona el terreno.         |
+| fecha_baja  | DATE          | DEFAULT NULL               | Si no es null, el terreno está de baja.  |
+| created_at  | TIMESTAMPTZ   | DEFAULT NOW()              | Fecha de creación.                       |
 
 **Tabla: estados_tarea**
 
-| Campo      | Tipo         | Restricciones    | Descripción                                |
-|------------|--------------|------------------|--------------------------------------------|
-| id         | SERIAL       | PK, NOT NULL     | Identificador del estado.                  |
-| nombre     | VARCHAR(50)  | NOT NULL, UNIQUE | Nombre: pendiente, en progreso, completada.|
-| descripcion| TEXT         |                  | Descripción del estado.                    |
+| Campo      | Tipo         | Restricciones    | Descripción                                        |
+|------------|--------------|------------------|----------------------------------------------------|
+| id_estado  | SERIAL       | PK, NOT NULL     | Identificador del estado.                          |
+| nombre     | VARCHAR(50)  | NOT NULL, UNIQUE | Nombre: pendiente, asignada, aceptada, rechazada, en progreso, completada. |
+| descripcion| VARCHAR(255) |                  | Descripción del estado.                            |
 
 **Tabla: tarea**
 
 | Campo         | Tipo      | Restricciones         | Descripción                              |
 |---------------|-----------|-----------------------|------------------------------------------|
-| id            | SERIAL    | PK, NOT NULL          | Identificador de la tarea.               |
-| descripcion   | TEXT      | NOT NULL              | Descripción de la tarea a realizar.      |
-| id_terreno    | INTEGER   | FK → terreno(id)      | Terreno donde se realiza.                |
-| id_gerente    | UUID      | FK → usuario(id)      | Gerente que creó la tarea.               |
-| id_capataz    | UUID      | FK → usuario(id)      | Capataz asignado a ejecutar la tarea.    |
-| id_estado     | INTEGER   | FK → estados_tarea(id)| Estado actual de la tarea.               |
-| fecha_creacion| TIMESTAMP | DEFAULT NOW()         | Fecha de creación.                       |
+| id_tarea      | SERIAL       | PK, NOT NULL                    | Identificador de la tarea.               |
+| nombre        | VARCHAR(100) | NOT NULL                        | Nombre descriptivo de la tarea.          |
+| descripcion   | TEXT         |                                 | Descripción detallada de la tarea.       |
+| fecha_inicio  | DATE         | NOT NULL                        | Fecha prevista de inicio.                |
+| fecha_fin     | DATE         | NOT NULL, CHECK (≥ fecha_inicio)| Fecha prevista de finalización.          |
+| id_terreno    | INTEGER      | NOT NULL, FK → terreno(id_terreno)| Terreno donde se realiza.              |
+| id_gerente    | UUID         | NOT NULL, FK → perfiles(id)     | Gerente que creó la tarea.               |
+| id_capataz    | UUID         | FK → perfiles(id)               | Capataz asignado a ejecutar la tarea.    |
+| id_estado     | INTEGER      | DEFAULT 1, FK → estados_tarea(id_estado)| Estado actual de la tarea.         |
+| fecha_baja    | DATE         | DEFAULT NULL                    | Si no es null, la tarea está eliminada.  |
+| created_at    | TIMESTAMPTZ  | DEFAULT NOW()                   | Fecha de creación.                       |
+| updated_at    | TIMESTAMPTZ  | DEFAULT NOW()                   | Última modificación.                     |
 
 **Tabla: gerente_capataz**
 
-| Campo       | Tipo | Restricciones            | Descripción                              |
-|-------------|------|--------------------------|------------------------------------------|
-| id_gerente  | UUID | FK → usuario(id), PK     | Gerente de la relación.                  |
-| id_capataz  | UUID | FK → usuario(id), PK     | Capataz asociado al gerente.             |
+| Campo            | Tipo | Restricciones              | Descripción                              |
+|------------------|------|----------------------------|------------------------------------------|
+| id_gerente       | UUID | PK, FK → perfiles(id)      | Gerente de la relación.                  |
+| id_capataz       | UUID | PK, FK → perfiles(id)      | Capataz asociado al gerente.             |
+| fecha_asignacion | DATE | DEFAULT CURRENT_DATE       | Fecha en que se creó la asociación.      |
+| fecha_baja       | DATE | DEFAULT NULL               | Si no es null, la relación está de baja. |
 
 **Tabla: tarea_trabajador**
 
-| Campo          | Tipo    | Restricciones            | Descripción                             |
-|----------------|---------|--------------------------|-----------------------------------------|
-| id_tarea       | INTEGER | FK → tarea(id), PK       | Tarea en la que participa.              |
-| id_trabajador  | UUID    | FK → usuario(id), PK     | Trabajador asignado como apoyo.         |
+| Campo             | Tipo        | Restricciones                 | Descripción                                     |
+|-------------------|-------------|-------------------------------|--------------------------------------------------|
+| id_tarea          | INTEGER     | PK, FK → tarea(id_tarea)      | Tarea en la que participa.                       |
+| id_trabajador     | UUID        | PK, FK → perfiles(id)         | Trabajador asignado como apoyo.                  |
+| id_capataz_asigna | UUID        | NOT NULL, FK → perfiles(id)   | Capataz que realizó la asignación.               |
+| estado            | VARCHAR(20) | NOT NULL, DEFAULT 'PENDIENTE' | Estado: PENDIENTE, ACEPTADA, RECHAZADA, COMPLETADA. |
+| fecha_asignacion  | DATE        | DEFAULT CURRENT_DATE          | Fecha en que se asignó al trabajador.            |
+| fecha_respuesta   | TIMESTAMPTZ |                               | Fecha en que el trabajador aceptó/rechazó.       |
+| fecha_baja        | DATE        | DEFAULT NULL                  | Si no es null, la asignación está de baja.       |
 
 **Tabla: capataz_trabajador**
 
-| Campo          | Tipo | Restricciones            | Descripción                              |
-|----------------|------|--------------------------|------------------------------------------|
-| id_capataz     | UUID | FK → usuario(id), PK     | Capataz de la relación.                  |
-| id_trabajador  | UUID | FK → usuario(id), PK     | Trabajador habitual del capataz.         |
+| Campo            | Tipo | Restricciones              | Descripción                              |
+|------------------|------|----------------------------|------------------------------------------|
+| id_capataz       | UUID | PK, FK → perfiles(id)      | Capataz de la relación.                  |
+| id_trabajador    | UUID | PK, FK → perfiles(id)      | Trabajador habitual del capataz.         |
+| fecha_asignacion | DATE | DEFAULT CURRENT_DATE       | Fecha en que se creó la asociación.      |
+| fecha_baja       | DATE | DEFAULT NULL               | Si no es null, la relación está de baja. |
+
+**Tabla: comentarios_tarea**
+
+| Campo         | Tipo        | Restricciones                              | Descripción                              |
+|---------------|-------------|--------------------------------------------|------------------------------------------|
+| id_comentario | SERIAL      | PK, NOT NULL                               | Identificador único del comentario.      |
+| id_tarea      | INTEGER     | NOT NULL, FK → tarea(id_tarea) ON DELETE CASCADE | Tarea a la que pertenece el comentario.  |
+| id_autor      | UUID        | NOT NULL, FK → perfiles(id)                | Autor del comentario.                    |
+| contenido     | TEXT        | NOT NULL                                   | Texto del comentario.                    |
+| created_at    | TIMESTAMPTZ | DEFAULT NOW()                              | Fecha de creación.                       |
+
+**Tabla: notificaciones**
+
+| Campo           | Tipo        | Restricciones                              | Descripción                                      |
+|-----------------|-------------|--------------------------------------------|--------------------------------------------------|
+| id_notificacion | SERIAL      | PK, NOT NULL                               | Identificador único de la notificación.          |
+| id_destinatario | UUID        | NOT NULL, FK → perfiles(id)                | Usuario destinatario.                            |
+| tipo            | VARCHAR(50) | NOT NULL, CHECK (tipos válidos)             | Tipo: TAREA_ASIGNADA, TAREA_ACEPTADA, COMENTARIO_NUEVO… |
+| titulo          | VARCHAR(200)| NOT NULL                                   | Título breve de la notificación.                 |
+| mensaje         | TEXT        |                                            | Mensaje descriptivo (opcional).                  |
+| id_tarea        | INTEGER     | FK → tarea(id_tarea) ON DELETE CASCADE      | Tarea relacionada (opcional).                    |
+| leida           | BOOLEAN     | DEFAULT FALSE                              | Indica si la notificación ha sido leída.          |
+| created_at      | TIMESTAMPTZ | DEFAULT NOW()                              | Fecha de creación.                               |
 
 #### 3.1.6. Casos de uso
 
@@ -359,12 +435,20 @@ La base de datos se implementa en PostgreSQL gestionado por Supabase. Se compone
 | CU-10 | Asignar tarea a capataz   | Gerente              | El gerente asigna una tarea pendiente a un capataz.           |
 | CU-11 | Ver estado de tareas      | Gerente              | El gerente consulta el estado de las tareas.                  |
 | CU-12 | Asociar capataz           | Gerente              | El gerente asocia un capataz a su equipo.                     |
-| CU-13 | Tomar tarea               | Capataz              | El capataz cambia una tarea de pendiente a en progreso.       |
+| CU-13 | Aceptar/Rechazar tarea    | Capataz              | El capataz acepta o rechaza una tarea asignada.               |
 | CU-14 | Completar tarea           | Capataz              | El capataz marca una tarea como completada.                   |
 | CU-15 |Asignar trabajador a tarea | Capataz              | El capataz asigna un trabajador de apoyo a una tarea.         |
 | CU-16 |Gestionar trabajadores     | Capataz              | El capataz administra su equipo de trabajadores habituales.   |
 | CU-17 |Ver mis tareas asignadas   | Trabajador           | El trabajador consulta las tareas en las que participa.       |
 | CU-18 | Filtrar tareas            | Gerente, Capataz     | Filtrado de tareas por terreno, estado o usuario.             |
+| CU-19 | Editar perfil personal    | Todos (autenticados) | El usuario modifica su nombre, apellidos, teléfono y dirección.|
+| CU-20 | Recuperar contraseña      | Visitante            | Solicita restablecimiento de contraseña por email.            |
+| CU-21 | Admin: editar datos de usuario | Admin           | El admin edita nombre, apellidos, email, tlf, dirección y rol de cualquier usuario mediante un modal. |
+| CU-22 | Seleccionar rol en registro | Visitante          | Durante el registro, el usuario elige su rol (Gerente, Capataz o Trabajador). |
+| CU-23 | Cambiar idioma            | Todos                | El usuario cambia el idioma de la interfaz (ES / EN / RO).    |
+| CU-24 | Añadir comentario a tarea | Gerente, Capataz, Trabajador | El usuario deja un comentario en una tarea en la que participa.|
+| CU-25 | Aceptar/Rechazar asignación | Trabajador         | El trabajador acepta o rechaza su asignación a una tarea.     |
+| CU-26 | Ver notificaciones        | Todos (autenticados) | El usuario consulta las notificaciones automáticas recibidas. |
 
 **Diagrama de casos de uso (representación textual):**
 
@@ -388,8 +472,14 @@ La base de datos se implementa en PostgreSQL gestionado por Supabase. Se compone
 │  Gestión    Terrenos   Tomar     Ver mis         │
 │  usuarios   Tareas     tareas    tareas          │
 │  y roles    Capataces  Completar                 │
-│                        Asignar                   │
-│                        trabajadores              │
+│  Editar     Mi equipo  Asignar   Editar          │
+│  usuarios              trabajad. perfil          │
+│  Estadíst.  Editar                               │
+│             perfil   Editar perfil               │
+│                                                  │
+│  ┌──────────────────────────────────────────┐    │
+│  │     Cambiar idioma (ES / EN / RO)        │    │
+│  └──────────────────────────────────────────┘    │
 │                                                  │
 │  ┌──────────────────────────────────────────┐    │
 │  │           Cerrar sesión                  │    │
@@ -445,9 +535,9 @@ Visitante        Frontend (React)        Supabase Auth         Base de datos
   │                    │                       │                      │
   │                    │  ◄── Usuario creado   │                      │
   │                    │                       │                      │
-  │                    │  INSERT en tabla      │                      │
-  │                    │  usuario (perfil)     │                      │
-  │                    │─────────────────────────────────────────────►│
+  │                    │  Trigger: INSERT en   │                      │
+  │                    │  tabla perfiles       │                      │
+  │                    │                       │─────────────────────►│
   │                    │                       │                      │
   │                    │  ◄── Perfil creado    │                      │
   │                    │                       │                      │
@@ -532,6 +622,13 @@ Capataz          Frontend (React)          Supabase API          Base de datos
 | PF-13 | Capataz: asignar trabajador a tarea      | El trabajador aparece asociado a la tarea.           | ✅ OK  |
 | PF-14 | Trabajador: ver tareas asignadas         | Se muestran solo las tareas del trabajador.          | ✅ OK  |
 | PF-15 | Acceso no autorizado a datos de otro rol | Supabase RLS bloquea el acceso.                      | ✅ OK  |
+| PF-16 | Admin: editar datos de usuario           | Se abre modal, se guardan cambios y la tabla se actualiza.| ✅ OK  |
+| PF-17 | Editar perfil personal                   | El usuario modifica nombre, apellidos, tlf, dirección. | ✅ OK  |
+| PF-18 | Recuperar contraseña                     | Se envía email de restablecimiento y se actualiza.   | ✅ OK  |
+| PF-19 | Registro con selección de rol            | El usuario se registra eligiendo Gerente, Capataz o Trabajador.| ✅ OK  |
+| PF-20 | Añadir comentario en tarea                 | El comentario aparece visible para los participantes de la tarea.| ✅ OK  |
+| PF-21 | Notificación automática al asignar tarea    | El capataz recibe notificación al ser asignado a una tarea.| ✅ OK  |
+| PF-22 | Trabajador acepta/rechaza asignación        | El estado de la asignación cambia a ACEPTADA o RECHAZADA. | ✅ OK  |
 
 #### 3.3.2. Pruebas de interfaz / Responsive
 
@@ -542,6 +639,10 @@ Capataz          Frontend (React)          Supabase API          Base de datos
 | PI-03 | Visualización en móvil (375x667)                 | Chrome (DevTools)     | ✅ OK    |
 | PI-04 | Navegación con menú hamburguesa en móvil         | Chrome (DevTools)     | ✅ OK    |
 | PI-05 | Formularios responsive                           | Edge                  | ✅ OK    |
+| PI-06 | Menú hamburguesa y overlay en móvil              | Chrome (DevTools)     | ✅ OK    |
+| PI-07 | Cambio de idioma (ES / EN / RO)                  | Chrome, Firefox       | ✅ OK    |
+| PI-08 | Tarjetas de estadísticas coloreadas (Admin)      | Chrome                | ✅ OK    |
+| PI-09 | Gráfico de distribución de roles (Admin)         | Chrome                | ✅ OK    |
 
 #### 3.3.3. Pruebas de seguridad
 
@@ -594,12 +695,22 @@ VITE_SUPABASE_ANON_KEY=tu_clave_anon_publica
 #### Opción A: Despliegue en Vercel
 
 1. Crear una cuenta en [https://vercel.com](https://vercel.com).
-2. Conectar el repositorio de GitHub (Juanfrina/Agrogestion.Web).
-3. Configurar las variables de entorno en el panel de Vercel:
+2. Conectar el repositorio de GitHub (`Juanfrina/Agrogestion.Web`).
+3. En **Settings → General**, configurar:
+   - **Framework Preset:** Vite
+   - **Root Directory:** `AGROGESTION` (la aplicación no está en la raíz del repositorio)
+   - **Build Command:** `npm run build`
+   - **Output Directory:** `dist`
+4. Configurar las variables de entorno en **Settings → Environment Variables**:
    - `VITE_SUPABASE_URL`
    - `VITE_SUPABASE_ANON_KEY`
-4. Vercel detectará automáticamente que es un proyecto Vite y lo construirá.
-5. La URL de producción estará disponible tras el despliegue.
+5. El proyecto incluye un archivo `vercel.json` con la configuración de reescritura SPA:
+   ```json
+   { "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }] }
+   ```
+   Esto garantiza que las rutas del lado del cliente (React Router) funcionen correctamente.
+6. Vercel detectará automáticamente que es un proyecto Vite y lo construirá.
+7. La URL de producción estará disponible tras el despliegue.
 
 #### Opción B: Despliegue en Netlify
 
@@ -631,10 +742,19 @@ VITE_SUPABASE_ANON_KEY=tu_clave_anon_publica
 | TailwindCSS v4                       | Uso de la última versión de Tailwind con mejor rendimiento.                                               |
 | Variables de entorno con Vite        | Uso de `import.meta.env` para gestionar variables sensibles.                                              |
 | Patrón Repository                    | Capa de abstracción para acceso a datos con implementaciones Supabase.                                    |
-| Internacionalización (i18n)          | Soporte multi-idioma (español e inglés) con i18next.                                                      |
+| Internacionalización (i18n)          | Soporte multi-idioma (español, inglés y rumano) con i18next y react-i18next.                              |
 | Recuperación de contraseña           | Flujo de restablecimiento de contraseña con Supabase Auth.                                                |
 | Store de estado global (Zustand)     | Gestión centralizada del estado de autenticación con Zustand.                                             |
 | Gráficos mensuales                   | Componente `MensualChart` para visualización de datos con gráficos de barras mensuales.                   |
+| Diseño responsive con hamburguesa    | Sidebar colapsable con menú hamburguesa, overlay en móvil y adaptación completa a pantallas pequeñas.     |
+| Edición de usuarios por Admin        | Modal de edición con campos nombre, apellidos, email, teléfono, dirección y rol; con validaciones.        |
+| Edición de perfil personal           | Cualquier usuario puede editar su nombre, apellidos, teléfono y dirección desde "Mi Perfil".              |
+| Tarjetas de estadísticas coloreadas  | Panel de Admin con tarjetas (usuarios, terrenos, tareas, roles) con colores diferenciados por categoría.  |
+| Gráfico de distribución de roles     | Componente `RoleDistributionChart` que muestra la cantidad de usuarios por rol con colores asignados.     |
+| Selección de rol en registro         | El usuario elige su rol (Gerente, Capataz, Trabajador) al registrarse, sin intervención del administrador.|
+| Comentarios en tareas                | Tabla `comentarios_tarea` con políticas RLS para que solo participantes de la tarea puedan comentar.      |
+| Notificaciones automáticas           | Triggers en PostgreSQL que generan notificaciones al asignar tareas o trabajadores.                       |
+| Flujo de aceptación de trabajadores  | Los trabajadores pueden aceptar o rechazar su asignación a una tarea (estado en `tarea_trabajador`).      |
 
 ### 5.2. Mejoras propuestas para futuras versiones
 
@@ -644,7 +764,7 @@ VITE_SUPABASE_ANON_KEY=tu_clave_anon_publica
 | Exportación de informes en PDF   | Generar informes de tareas y terrenos en formato PDF.                  |
 | Geolocalización de terrenos      |Integrar un mapa interactivo (Leaflet/Google Maps) para ubicar terrenos.|
 | Sistema de comentarios en tareas | Permitir que capataces y trabajadores añadan comentarios.              |
-| Dashboard con estadísticas       | Ampliar el panel de gráficos con más métricas y filtros avanzados.     |
+| Dashboard avanzado con filtros    | Ampliar estadísticas con filtros por fecha, terreno y rol.             |
 | Modo offline con Service Worker  | Cachear datos para poder consultar información sin conexión.           |
 | Tests automatizados              | Implementar testing con Vitest y React Testing Library.                |
 | Carga de imágenes                | Subir fotos de terrenos o tareas usando Supabase Storage.              |
@@ -669,6 +789,9 @@ VITE_SUPABASE_ANON_KEY=tu_clave_anon_publica
 | Node.js – Documentación oficial          | <https://nodejs.org>                                      |
 | npm – Documentación oficial              | <https://docs.npmjs.com>                                  |
 | MDN Web Docs – Referencia web            | <https://developer.mozilla.org>                           |
+| i18next – Framework de internacionalización | <https://www.i18next.com>                              |
+| react-i18next – Integración React        | <https://react.i18next.com>                               |
+| Zustand – Gestión de estado              | <https://zustand-demo.pmnd.rs>                            |
 | Vercel – Plataforma de despliegue        | <https://vercel.com/docs>                                 |
 | Netlify – Plataforma de despliegue       | <https://docs.netlify.com>                                |
 
@@ -677,4 +800,5 @@ VITE_SUPABASE_ANON_KEY=tu_clave_anon_publica
 **Agrogestión — Manual Técnico**
 Autor: Juan Francisco Hurtado Pérez
 Ciclo: CFGS Desarrollo de Aplicaciones Web (DAW)
+Curso: 2024/2025 – 2025/2026
 Centro: IES Albarregas – Mérida (España)

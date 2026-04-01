@@ -2,18 +2,19 @@
 
 ## Índice
 
-1. Introducción
-2. Requisitos para usar la aplicación
-3. Acceso a la aplicación
-4. Registro de nuevo usuario
-5. Inicio de sesión (Login)
-6. Panel del Administrador
-7. Panel del Gerente
-8. Panel del Capataz
-9. Panel del Trabajador
-10. Landing Page (Página de inicio)
-11. Navegación general y zonas de la interfaz
-12. Preguntas frecuentes
+1. [Introducción](#1-introducción)
+2. [Requisitos para usar la aplicación](#2-requisitos-para-usar-la-aplicación)
+3. [Acceso a la aplicación](#3-acceso-a-la-aplicación)
+4. [Registro de nuevo usuario](#4-registro-de-nuevo-usuario)
+5. [Inicio de sesión (Login)](#5-inicio-de-sesión-login)
+6. [Perfil de usuario](#6-perfil-de-usuario)
+7. [Panel del Administrador](#7-panel-del-administrador)
+8. [Panel del Gerente](#8-panel-del-gerente)
+9. [Panel del Capataz](#9-panel-del-capataz)
+10. [Panel del Trabajador](#10-panel-del-trabajador)
+11. [Landing Page (Página de inicio)](#11-landing-page-página-de-inicio)
+12. [Navegación general y zonas de la interfaz](#12-navegación-general-y-zonas-de-la-interfaz)
+13. [Preguntas frecuentes](#13-preguntas-frecuentes)
 
 ---
 
@@ -22,6 +23,8 @@
 Agrogestión es una aplicación web diseñada para digitalizar y facilitar la gestión del trabajo en explotaciones agrícolas. Permite coordinar las actividades diarias entre distintos roles: administradores, gerentes, capataces y trabajadores.
 
 Este manual está dirigido a cualquier usuario que desee utilizar la aplicación, independientemente de sus conocimientos técnicos. Se describen paso a paso todas las pantallas, funciones y operaciones disponibles.
+
+La aplicación está disponible en tres idiomas: **español**, **inglés** y **rumano**.
 
 ---
 
@@ -33,7 +36,7 @@ Para utilizar Agrogestión solo necesitas:
 - Un navegador web actualizado (Google Chrome, Mozilla Firefox, Microsoft Edge o Safari).
 - No es necesario instalar ningún programa adicional.
 
-La aplicación es **responsive**, es decir, se adapta automáticamente al tamaño de la pantalla del dispositivo que estés utilizando.
+La aplicación es **responsive**, es decir, se adapta automáticamente al tamaño de la pantalla del dispositivo que estés utilizando. En dispositivos móviles, el menú lateral se convierte en un menú tipo hamburguesa (☰) y las tablas permiten desplazamiento horizontal.
 
 ---
 
@@ -44,15 +47,21 @@ La aplicación es **responsive**, es decir, se adapta automáticamente al tamañ
 Al abrir la aplicación en tu navegador, llegarás a la **Landing Page** o página de inicio. Esta pantalla presenta:
 
 - **Logotipo y nombre** de la aplicación: "Agrogestión".
-- **Descripción breve** del propósito de la aplicación.
+- **Eslogan** y descripción del propósito de la aplicación.
+- **Sección Hero** con los botones principales de acceso.
+- **Sección de características** destacadas de la aplicación.
 - **Botón "Iniciar sesión"**: Te llevará a la pantalla de login.
 - **Botón "Registrarse"**: Te llevará al formulario de registro.
+- **Selector de idioma**: Permite cambiar entre español, inglés y rumano.
 
-| Zona de la pantalla  | Descripción                                               |
-|----------------------|-----------------------------------------------------------|
-| Cabecera (Header)    | Logo, nombre de la app y enlaces de navegación.           |
-| Cuerpo central       | Descripción de la aplicación y botones de acceso.         |
-| Pie de página        | Información del autor, curso y centro educativo.          |
+*(Captura: Landing Page completa — vista escritorio)*
+
+| Zona de la pantalla  | Descripción                                                       |
+|----------------------|-------------------------------------------------------------------|
+| Cabecera (Header)    | Logo, nombre de la app, botones de login/registro, selector de idioma. |
+| Sección Hero         | Logo grande, eslogan y botones de acceso.                         |
+| Características      | Resumen visual de las funcionalidades principales.                |
+| Pie de página        | Información del autor, curso, centro educativo y enlaces legales. |
 
 ---
 
@@ -60,28 +69,36 @@ Al abrir la aplicación en tu navegador, llegarás a la **Landing Page** o pági
 
 Si es la primera vez que accedes a Agrogestión, necesitarás crear una cuenta.
 
+*(Captura: Formulario de registro)*
+
 ### Pasos para registrarse:
 
 1. Desde la Landing Page, pulsa el botón **"Registrarse"**.
 2. Se abrirá el formulario de registro con los siguientes campos:
 
-| Campo               | Descripción                                                  |Obligatorio |
-|---------------------|--------------------------------------------------------------|:----------:|
-| Nombre              | Tu nombre real.                                              |Sí          |
-| Apellidos           | Tus apellidos.                                               |Sí          |
-| Correo electrónico  | Email válido que usarás para iniciar sesión.                 |Sí          |
-| Contraseña          | Mínimo 6 caracteres. Se recomienda usar letras y números.    |Sí          |
-| Confirmar contraseña| Repite la contraseña para evitar errores de escritura.       |Sí          |
+| Campo               | Descripción                                                  | Obligatorio |
+|---------------------|--------------------------------------------------------------|:-----------:|
+| Nombre              | Tu nombre real.                                              | Sí          |
+| Apellidos           | Tus apellidos.                                               | Sí          |
+| Correo electrónico  | Email válido que usarás para iniciar sesión.                 | Sí          |
+| Teléfono            | Tu número de teléfono de contacto.                           | No          |
+| Dirección           | Tu dirección postal.                                         | No          |
+| DNI                 | Tu documento nacional de identidad.                          | No          |
+| Rol                 | Selecciona tu rol: Gerente, Capataz o Trabajador.           | Sí          |
+| Contraseña          | Mínimo 6 caracteres. Se recomienda usar letras y números.   | Sí          |
+| Confirmar contraseña| Repite la contraseña para evitar errores de escritura.       | Sí          |
 
 3. Pulsa el botón **"Registrarse"**.
 4. Si los datos son correctos, recibirás un mensaje de confirmación y podrás iniciar sesión.
-5. Si hay algún error (correo ya registrado, contraseñas que no coinciden, etc.), se mostrará un mensaje en pantalla indicando el problema.
+5. Si hay algún error (correo ya registrado, contraseñas que no coinciden, etc.), se mostrará un **mensaje de alerta** en pantalla indicando el problema.
 
-> **Nota:** El rol de usuario (gerente, capataz, trabajador) será asignado por el administrador del sistema una vez creada la cuenta. Por defecto, tras el registro el usuario no tendrá acceso a ningún panel hasta que se le asigne un rol.
+> **Nota:** Durante el registro puedes seleccionar el rol que desees (Gerente, Capataz o Trabajador). El administrador puede modificar tu rol posteriormente si es necesario.
 
 ---
 
 ## 5. Inicio de sesión (Login)
+
+*(Captura: Pantalla de login)*
 
 ### Pasos para iniciar sesión:
 
@@ -115,237 +132,385 @@ Si has olvidado tu contraseña:
 
 ### Cerrar sesión
 
-En cualquier panel, encontrarás un botón o enlace de **"Cerrar sesión"** en la zona de cabecera (header). Al pulsarlo:
+En cualquier panel, encontrarás un botón de **"Cerrar sesión"** en la barra lateral (sidebar). Al pulsarlo:
 - Se cierra tu sesión de forma segura.
 - Serás redirigido a la Landing Page.
 
 ---
 
-## 6. Panel del Administrador
+## 6. Perfil de usuario
 
-El administrador tiene el nivel de permisos más alto. Desde su panel puede gestionar todos los usuarios del sistema.
+Todos los usuarios, independientemente de su rol, pueden acceder a su perfil personal desde el menú lateral.
 
-### 6.1. Pantalla principal del Administrador
+*(Captura: Pantalla de perfil de usuario)*
 
-| Zona                   | Descripción                                                          |
-|------------------------|----------------------------------------------------------------------|
-| Cabecera               | Logo, nombre del usuario logueado, botón de cerrar sesión.           |
-| Menú lateral/superior  | Accesos directos a: Usuarios, Roles, Configuración.                  |
-| Área de contenido      | Tablas y formularios para gestionar los datos.                       |
+### Datos del perfil
 
-### 6.2. Gestión de usuarios
+Desde la sección **"Mi Perfil"** puedes consultar y editar tus datos personales:
 
-El administrador puede:
+| Campo              | Descripción                              | Editable |
+|--------------------|------------------------------------------|:--------:|
+| Nombre             | Tu nombre real.                          | Sí       |
+| Apellidos          | Tus apellidos.                           | Sí       |
+| Correo electrónico | El email con el que te registraste.      | Sí       |
+| Teléfono           | Tu número de contacto.                   | Sí       |
+| Dirección          | Tu dirección postal.                     | Sí       |
+| DNI                | Tu documento de identidad.               | No       |
+| Rol                | Tu rol en el sistema.                    | No       |
 
-- **Ver la lista completa de usuarios** registrados en el sistema, con nombre, apellidos, email y rol asignado.
-- **Asignar o cambiar el rol** de un usuario (GERENTE, CAPATAZ, TRABAJADOR).
-- **Dar de baja** un usuario (desactivar su cuenta sin eliminarla de la base de datos).
-- **Buscar usuarios** por nombre o email mediante un campo de búsqueda.
+Para guardar los cambios, pulsa el botón **"Guardar"**. Se mostrará un mensaje de confirmación si la actualización fue exitosa.
 
-### 6.3. Gestión de roles
+> **Nota:** El rol solo puede ser modificado por el administrador del sistema.
 
-El administrador puede consultar los roles disponibles en el sistema:
+---
+
+## 7. Panel del Administrador
+
+El administrador tiene el nivel de permisos más alto. Desde su panel puede gestionar todos los usuarios del sistema y visualizar estadísticas globales.
+
+*(Captura: Dashboard del administrador — vista completa)*
+
+### 7.1. Dashboard del Administrador
+
+La pantalla principal del administrador muestra:
+
+| Zona                        | Descripción                                                          |
+|-----------------------------|----------------------------------------------------------------------|
+| Cabecera                    | Nombre del usuario, rol, selector de idioma y botón de cerrar sesión.|
+| Menú lateral (Sidebar)      | Accesos a: Dashboard, Usuarios, Mi Perfil, Cerrar sesión.           |
+| Tarjetas de estadísticas    | Resumen visual de usuarios totales y desglose por rol.               |
+| Gráficos                    | Registros mensuales y distribución de roles.                         |
+
+#### Tarjetas de estadísticas
+
+En la parte superior del dashboard se muestran **tarjetas con colores diferenciados** que resumen:
+
+| Tarjeta         | Color de fondo | Información                    |
+|-----------------|----------------|--------------------------------|
+| Total usuarios  | Verde claro    | Número total de usuarios activos. |
+| Administradores | Azul claro     | Cantidad de administradores.   |
+| Gerentes        | Verde lima     | Cantidad de gerentes.          |
+| Capataces       | Amarillo claro | Cantidad de capataces.         |
+| Trabajadores    | Marrón claro   | Cantidad de trabajadores.      |
+
+*(Captura: Tarjetas de estadísticas del admin)*
+
+#### Gráficos
+
+Debajo de las tarjetas se muestran dos gráficos:
+
+- **Registros mensuales:** Gráfico de barras que muestra cuántos usuarios se han registrado cada mes.
+- **Distribución de roles:** Gráfico que visualiza la proporción de usuarios por rol.
+
+*(Captura: Gráficos del dashboard del admin)*
+
+### 7.2. Gestión de usuarios
+
+*(Captura: Tabla de usuarios del admin)*
+
+El administrador puede acceder a la tabla completa de usuarios desde el menú lateral. Las funciones disponibles son:
+
+- **Ver la lista completa de usuarios** registrados en el sistema, con nombre, apellidos, email, teléfono, rol y estado (activo/inactivo).
+- **Buscar usuarios** por nombre o email mediante la barra de búsqueda en tiempo real.
+- **Editar los datos de un usuario** pulsando el botón **"Editar"** (color acento dorado). Se abrirá un modal con los campos editables:
+
+| Campo    | Descripción                              |
+|----------|------------------------------------------|
+| Nombre   | Nombre del usuario.                      |
+| Apellidos| Apellidos del usuario.                   |
+| Email    | Correo electrónico.                      |
+| Teléfono | Número de teléfono.                      |
+| Dirección| Dirección postal.                        |
+| DNI      | Documento de identidad.                  |
+
+*(Captura: Modal de edición de usuario)*
+
+- **Cambiar el rol** de un usuario pulsando **"Cambiar Rol"**. Se abrirá un modal donde seleccionar el nuevo rol (Admin, Gerente, Capataz, Trabajador).
+- **Desactivar un usuario** pulsando **"Desactivar"**, lo que realiza una baja lógica sin eliminar sus datos.
+- **Reactivar un usuario** previamente desactivado pulsando **"Reactivar"**.
+
+### 7.3. Roles del sistema
 
 | Rol         | Descripción                                                   |
 |-------------|---------------------------------------------------------------|
-| ADMIN       | Gestión global del sistema.                                   |
-| GERENTE     | Gestión de terrenos y creación de tareas.                     |
+| ADMIN       | Gestión global del sistema y usuarios.                        |
+| GERENTE     | Gestión de terrenos, tareas y equipo de capataces.            |
 | CAPATAZ     | Ejecución de tareas y gestión de trabajadores.                |
 | TRABAJADOR  | Participación en tareas asignadas.                            |
 
 ---
 
-## 7. Panel del Gerente
+## 8. Panel del Gerente
 
 El gerente es el responsable de la gestión de terrenos y de la creación y supervisión de tareas agrícolas.
 
-### 7.1. Pantalla principal del Gerente
+*(Captura: Dashboard del gerente)*
 
-| Zona                   | Descripción                                                          |
-|------------------------|----------------------------------------------------------------------|
-| Cabecera               | Logo, nombre del gerente, botón de cerrar sesión.                    |
-| Menú lateral/superior  | Accesos a: Terrenos, Tareas, Capataces.                              |
-| Área de contenido      | Tablas con terrenos, tareas y relaciones con capataces.              |
+### 8.1. Dashboard del Gerente
 
-### 7.2. Gestión de terrenos
+La pantalla principal del gerente muestra un resumen con:
+
+| Zona                        | Descripción                                                          |
+|-----------------------------|----------------------------------------------------------------------|
+| Cabecera                    | Nombre del usuario, rol, selector de idioma.                         |
+| Menú lateral (Sidebar)      | Accesos a: Dashboard, Terrenos, Tareas, Mi Equipo, Mi Perfil, Cerrar sesión. |
+| Tarjetas de estadísticas    | Resumen de terrenos activos, tareas pendientes, en progreso y completadas. |
+| Gráfico                     | Evolución mensual de tareas.                                         |
+
+### 8.2. Gestión de terrenos
+
+*(Captura: Lista de terrenos del gerente)*
 
 El gerente puede:
 
-- **Ver la lista de terrenos** que gestiona, con información como nombre, ubicación, superficie y estado.
-- **Dar de alta un nuevo terreno** rellenando un formulario con los datos del terreno.
+- **Ver la lista de terrenos** que gestiona, con información como nombre, descripción y estado.
+- **Dar de alta un nuevo terreno** pulsando **"Nuevo Terreno"** y rellenando el formulario.
 - **Editar un terreno existente** para modificar sus datos.
-- **Dar de baja (baja lógica)** un terreno que ya no se utilice, sin eliminarlo permanentemente.
+- **Dar de baja (baja lógica)** un terreno que ya no se utilice pulsando **"Eliminar"**, sin eliminarlo permanentemente.
 
-| Campo del terreno | Descripción                            |
-|-------------------|----------------------------------------|
-| Nombre            | Nombre identificativo del terreno.     |
-| Ubicación         | Dirección o referencia geográfica.     |
-| Superficie        | Extensión del terreno (en hectáreas).  |
-| Estado            | Activo / Inactivo.                     |
+*(Captura: Formulario de nuevo terreno)*
 
-### 7.3. Gestión de tareas
+| Campo del terreno | Descripción                            | Obligatorio |
+|-------------------|----------------------------------------|:-----------:|
+| Nombre            | Nombre identificativo del terreno.     | Sí          |
+| Ubicación         | Dirección o referencia geográfica.      | Sí          |
+| Tipo de cultivo   | Tipo de cultivo (olivo, viña, cereal…).| Sí          |
+
+### 8.3. Gestión de tareas
+
+*(Captura: Lista de tareas del gerente)*
 
 El gerente puede:
 
-- **Crear tareas agrícolas** asociadas a un terreno concreto.
-- **Asignar una tarea** a un capataz para que la ejecute.
-- **Ver el estado** de cada tarea (pendiente, en progreso, completada).
+- **Crear tareas agrícolas** asociadas a un terreno concreto pulsando **"Nueva Tarea"**.
+- **Asignar una tarea** a un capataz de su equipo para que la ejecute.
+- **Ver el estado** de cada tarea (pendiente, en progreso, completada) mediante **badges** de colores.
 - **Filtrar tareas** por terreno, estado o capataz asignado.
+- **Eliminar tareas** que ya no sean necesarias.
 
-| Campo de la tarea   | Descripción                                          |
-|---------------------|------------------------------------------------------|
-| Nombre / Descripción| Qué se debe hacer.                                   |
-| Terreno             | Terreno donde se realiza la tarea.                   |
-| Capataz asignado    | Capataz responsable de ejecutar la tarea.            |
-| Estado              | Pendiente / En progreso / Completada.                |
-| Fecha de creación   | Fecha en que se creó la tarea.                       |
+*(Captura: Formulario de nueva tarea)*
 
-### 7.4. Gestión de capataces
+| Campo de la tarea   | Descripción                                          | Obligatorio |
+|---------------------|------------------------------------------------------|:-----------:|
+| Nombre              | Título descriptivo de la tarea.                      | Sí          |
+| Descripción         | Qué se debe hacer en detalle.                        | No          |
+| Terreno             | Terreno donde se realiza la tarea (selector).        | Sí          |
+| Capataz asignado    | Capataz responsable de ejecutar la tarea (selector). | Sí          |
+| Fecha inicio        | Fecha prevista de inicio.                            | Sí          |
+| Fecha fin           | Fecha prevista de finalización.                      | Sí          |
+
+### 8.4. Gestión de equipo (Mi Equipo)
+
+*(Captura: Mi Equipo del gerente)*
 
 El gerente puede:
 
-- **Ver la lista de capataces** asociados a él.
-- **Asociar o desasociar capataces** de su equipo.
+- **Ver la lista de capataces** asociados a su equipo.
+- **Asociar nuevos capataces** a su equipo.
+- **Desasociar capataces** que ya no trabajan con él.
 
 ---
 
-## 8. Panel del Capataz
+## 9. Panel del Capataz
 
 El capataz se encarga de ejecutar las tareas que le asignan los gerentes y de coordinar a los trabajadores.
 
-### 8.1. Pantalla principal del Capataz
+*(Captura: Dashboard del capataz)*
 
-| Zona                   | Descripción                                                          |
-|------------------------|----------------------------------------------------------------------|
-| Cabecera               | Logo, nombre del capataz, botón de cerrar sesión.                    |
-| Menú lateral/superior  | Accesos a: Mis Tareas, Trabajadores.                                 |
-| Área de contenido      | Lista de tareas asignadas y opciones de gestión.                     |
+### 9.1. Dashboard del Capataz
 
-### 8.2. Mis Tareas
+La pantalla principal del capataz muestra:
+
+| Zona                        | Descripción                                                          |
+|-----------------------------|----------------------------------------------------------------------|
+| Cabecera                    | Nombre del usuario, rol, selector de idioma.                         |
+| Menú lateral (Sidebar)      | Accesos a: Dashboard, Mis Tareas, Mi Equipo, Mi Perfil, Cerrar sesión. |
+| Tarjetas de estadísticas    | Resumen de tareas pendientes, en progreso y completadas.             |
+| Gráfico                     | Evolución mensual de tareas.                                         |
+
+### 9.2. Mis Tareas
+
+*(Captura: Lista de tareas del capataz)*
 
 El capataz puede:
 
 - **Ver las tareas asignadas** por los gerentes.
 - **Tomar una tarea** pendiente (cambiar su estado a "En progreso").
 - **Marcar una tarea como completada** cuando se haya terminado.
-- **Asignar trabajadores de apoyo** a una tarea concreta.
+- **Asignar trabajadores de apoyo** a una tarea concreta pulsando el botón de asignación.
 
 ### Flujo del estado de una tarea:
 
 ```
-PENDIENTE  →  EN PROGRESO  →  COMPLETADA
+PENDIENTE → ASIGNADA → ACEPTADA → EN PROGRESO → COMPLETADA
+                         ↓
+                     RECHAZADA
 ```
 
-- **Pendiente:** La tarea ha sido creada por el gerente pero aún no se ha comenzado.
-- **En progreso:** El capataz ha tomado la tarea y está trabajando en ella.
-- **Completada:** La tarea se ha finalizado correctamente.
+| Estado        | Significado                                                    | Color del badge |
+|---------------|----------------------------------------------------------------|-----------------|
+| Pendiente     | La tarea ha sido creada pero aún no se ha asignado.            | Amarillo        |
+| Asignada      | La tarea ha sido asignada a un capataz.                        | Naranja         |
+| Aceptada      | El capataz ha aceptado la tarea.                               | Azul claro      |
+| Rechazada     | El capataz ha rechazado la tarea.                              | Rojo            |
+| En progreso   | El capataz está trabajando activamente en la tarea.            | Azul            |
+| Completada    | La tarea se ha finalizado correctamente.                       | Verde           |
 
-### 8.3. Gestión de trabajadores
+### 9.3. Gestión de equipo (Mi Equipo)
+
+*(Captura: Mi Equipo del capataz)*
 
 El capataz puede:
 
 - **Ver la lista de sus trabajadores habituales** (relación estable capataz-trabajador).
-- **Asignar trabajadores** a tareas concretas como apoyo.
-- **Desasignar trabajadores** de una tarea.
+- **Asociar nuevos trabajadores** a su equipo.
+- **Desasociar trabajadores** de su equipo.
+- **Asignar trabajadores** a tareas concretas como apoyo desde la lista de tareas.
 
 ---
 
-## 9. Panel del Trabajador
+## 10. Panel del Trabajador
 
 El trabajador es el rol con menos permisos. Su función principal es consultar las tareas en las que participa.
 
-### 9.1. Pantalla principal del Trabajador
+*(Captura: Dashboard del trabajador)*
 
-| Zona                   | Descripción                                                          |
-|------------------------|----------------------------------------------------------------------|
-| Cabecera               | Logo, nombre del trabajador, botón de cerrar sesión.                 |
-| Área de contenido      | Lista de tareas en las que participa el trabajador.                  |
+### 10.1. Dashboard del Trabajador
 
-### 9.2. Mis Tareas
+| Zona                        | Descripción                                                          |
+|-----------------------------|----------------------------------------------------------------------|
+| Cabecera                    | Nombre del usuario, rol, selector de idioma.                         |
+| Menú lateral (Sidebar)      | Accesos a: Dashboard, Mis Tareas, Mi Perfil, Cerrar sesión.         |
+| Tarjetas de estadísticas    | Resumen de tareas en las que participa.                              |
+
+### 10.2. Mis Tareas
+
+*(Captura: Lista de tareas del trabajador)*
 
 El trabajador puede:
 
 - **Ver las tareas** en las que ha sido asignado como apoyo.
-- **Consultar los detalles** de cada tarea: descripción, terreno, capataz responsable y estado actual.
-- **Registrar su progreso** si la funcionalidad está habilitada.
+- **Aceptar o rechazar** una tarea que le han asignado (el estado pasa a ACEPTADA o RECHAZADA).
+- **Consultar los detalles** de cada tarea: nombre, descripción, terreno, capataz responsable, fechas y estado actual.
+- **Añadir comentarios** en las tareas en las que participa.
+
+> **Nota:** El trabajador no puede modificar el estado general de las tareas, solo aceptar/rechazar su asignación y añadir comentarios.
 
 ---
 
-## 10. Landing Page (Página de inicio)
+## 11. Landing Page (Página de inicio)
 
 La Landing Page es la primera pantalla visible al acceder a la URL de la aplicación. Está diseñada para presentar Agrogestión a usuarios nuevos y proporcionar acceso rápido a las funciones de login y registro.
 
+*(Captura: Landing Page completa)*
+
 ### Elementos de la Landing Page:
 
-| Elemento              | Descripción                                                |
-|-----------------------|------------------------------------------------------------|
-| Logo "Agrogestión"    | Identidad visual de la aplicación.                         |
-| Título y subtítulo    | "Gestión agrícola web" y descripción del propósito.        |
-| Botón "Iniciar sesión"| Lleva al formulario de login.                              |
-| Botón "Registrarse"   | Lleva al formulario de registro.                           |
-| Pie de página         | Créditos del autor y centro educativo.                     |
+| Elemento                  | Descripción                                                        |
+|---------------------------|--------------------------------------------------------------------|
+| Cabecera                  | Logo, nombre de la app, botones de login/registro, selector de idioma. |
+| Sección Hero              | Logo grande, eslogan, descripción y botones de acceso principal.   |
+| Sección de características| Tarjetas con las funcionalidades principales de la aplicación.     |
+| Pie de página             | Créditos del autor, centro educativo y enlaces legales.            |
 
 ---
 
-## 11. Navegación general y zonas de la interfaz
+## 12. Navegación general y zonas de la interfaz
 
-### 11.1. Estructura común de todas las pantallas
+### 12.1. Estructura común de todas las pantallas
 
-Todas las pantallas de la aplicación comparten una estructura visual coherente:
+Todas las pantallas de la aplicación (excepto la Landing Page y las de autenticación) comparten una estructura visual coherente:
 
 ```
 ┌──────────────────────────────────────────────────┐
 │                   CABECERA                       │
-│ [Logo]  Agrogestión    [Usuario]  [Cerrar sesión]│
+│ [☰]  Agrogestión    [Usuario]  [Idioma]          │
 ├──────────────┬───────────────────────────────────┤
 │              │                                   │
 │   MENÚ       │        ÁREA DE CONTENIDO          │
 │  LATERAL     │                                   │
-│              │   (Tablas, formularios, listas)   │
+│  (Sidebar)   │   (Tablas, formularios, listas,   │
+│              │    tarjetas, gráficos)             │
 │              │                                   │
 ├──────────────┴───────────────────────────────────┤
 │                 PIE DE PÁGINA                    │
 └──────────────────────────────────────────────────┘
 ```
 
-### 11.2. Cabecera (Header)
+*(Captura: Estructura general de la interfaz — escritorio)*
 
-- Logo y nombre de la aplicación (siempre visible).
-- Nombre del usuario logueado y su rol.
-- Selector de idioma (español / inglés).
-- Botón de cerrar sesión.
+### 12.2. Cabecera (Header)
 
-### 11.3. Cambio de idioma
+La cabecera se muestra en la parte superior de todas las pantallas y contiene:
 
-La aplicación soporta dos idiomas: **español** e **inglés**. Puedes cambiar el idioma en cualquier momento pulsando el selector de idioma en la cabecera. La interfaz se traducirá automáticamente sin necesidad de recargar la página.
+- **Botón hamburguesa (☰):** Solo visible en móviles. Abre/cierra el menú lateral.
+- **Logo y nombre** de la aplicación (siempre visible).
+- **Nombre y apellidos** del usuario logueado (oculto en móviles para ahorrar espacio).
+- **Selector de idioma:** Permite cambiar entre español, inglés y rumano.
 
-### 11.4. Menú de navegación
+### 12.3. Menú lateral (Sidebar)
 
-- Cambia según el rol del usuario.
-- Permite acceder a las diferentes secciones del panel.
+- Se muestra de forma permanente en pantallas de escritorio (≥768px).
+- En dispositivos móviles, se oculta y se abre pulsando el botón hamburguesa (☰).
+- Al navegar a otra sección en móvil, el menú se cierra automáticamente.
+- Un **overlay oscuro** cubre el fondo cuando el menú está abierto en móvil.
 
-### 11.4. Área de contenido
+El contenido del menú lateral cambia según el rol del usuario:
+
+| Rol         | Secciones en el menú                                         |
+|-------------|--------------------------------------------------------------|
+| ADMIN       | Dashboard, Usuarios, Mi Perfil, Cerrar sesión.               |
+| GERENTE     | Dashboard, Terrenos, Tareas, Mi Equipo, Mi Perfil, Cerrar sesión. |
+| CAPATAZ     | Dashboard, Mis Tareas, Mi Equipo, Mi Perfil, Cerrar sesión.  |
+| TRABAJADOR  | Dashboard, Mis Tareas, Mi Perfil, Cerrar sesión.             |
+
+### 12.4. Cambio de idioma
+
+La aplicación soporta tres idiomas: **español**, **inglés** y **rumano**. Puedes cambiar el idioma en cualquier momento pulsando el selector de idioma en la cabecera. La interfaz se traducirá automáticamente sin necesidad de recargar la página.
+
+### 12.5. Área de contenido
 
 - Es la zona central donde se muestran los datos.
-- Contiene tablas, formularios, botones de acción y mensajes informativos.
+- Contiene tarjetas de estadísticas, tablas, formularios, gráficos, botones de acción y mensajes informativos.
+- Las tablas tienen desplazamiento horizontal en dispositivos móviles para mostrar todas las columnas.
+- Los formularios se abren en **ventanas modales** (pop-ups) que se superponen al contenido, con desplazamiento vertical si el contenido es largo.
 
-### 11.5. Pie de página (Footer)
+### 12.6. Pie de página (Footer)
 
-- Información del autor y del proyecto.
+- Información del autor, centro educativo y proyecto.
+- Texto en blanco sobre fondo verde oscuro.
 
-### 11.6. Diseño responsive
+### 12.7. Componentes comunes de la interfaz
+
+| Componente     | Descripción                                                          |
+|----------------|----------------------------------------------------------------------|
+| Tarjetas (Card)| Contenedores con borde y fondo que agrupan información.              |
+| Tabla (Table)  | Muestra datos en filas y columnas con scroll horizontal en móvil.    |
+| Badge          | Etiqueta de color que indica un estado (pendiente, en progreso, etc.).|
+| Botón primario | Color verde — acciones principales (crear, guardar).                 |
+| Botón secundario| Color tierra — acciones secundarias (cancelar, volver).             |
+| Botón acento   | Color dorado — acciones especiales (editar).                         |
+| Botón peligro  | Color rojo — acciones destructivas (eliminar, desactivar).           |
+| Modal          | Ventana emergente para formularios y confirmaciones.                 |
+| Alerta         | Mensajes de éxito, error o información que aparecen temporalmente.   |
+| Barra de búsqueda| Campo de texto para filtrar listas y tablas en tiempo real.        |
+| Spinner        | Indicador de carga mientras se obtienen datos del servidor.          |
+
+### 12.8. Diseño responsive
 
 La interfaz se adapta automáticamente a distintos tamaños de pantalla:
 
-| Dispositivo  | Comportamiento                                         |
-|--------------|--------------------------------------------------------|
-| Escritorio   | Menú lateral visible, tablas con columnas completas.   |
-| Tablet       | Menú colapsable, tablas adaptadas.                     |
-| Móvil        | Menú tipo hamburguesa, contenido en una sola columna.  |
+| Dispositivo  | Comportamiento                                                     |
+|--------------|--------------------------------------------------------------------|
+| Escritorio   | Menú lateral visible permanentemente, tablas completas, padding amplio. |
+| Tablet       | Menú lateral oculto (hamburguesa), tablas con scroll, padding medio.|
+| Móvil        | Menú hamburguesa, títulos y botones apilados, tablas con scroll horizontal, padding reducido. |
+
+*(Captura: Comparativa escritorio vs. móvil de una misma pantalla)*
 
 ---
 
-## 12. Preguntas frecuentes
+## 13. Preguntas frecuentes
 
 ### ¿Qué hago si olvido mi contraseña?
 Desde la pantalla de login, pulsa **"¿Olvidaste tu contraseña?"** e introduce tu correo electrónico. Recibirás un email con un enlace para restablecer tu contraseña.
@@ -353,17 +518,26 @@ Desde la pantalla de login, pulsa **"¿Olvidaste tu contraseña?"** e introduce 
 ### ¿Puedo tener más de un rol?
 No. Cada usuario tiene un único rol asignado en el sistema.
 
+### ¿Puedo cambiar mis datos personales?
+Sí. Accede a **"Mi Perfil"** desde el menú lateral y podrás editar tu nombre, apellidos, email, teléfono, dirección y DNI.
+
 ### ¿Puedo usar la aplicación desde el móvil?
-Sí. La aplicación es responsive y funciona correctamente en cualquier dispositivo con navegador web.
+Sí. La aplicación es responsive y funciona correctamente en cualquier dispositivo con navegador web. El menú se convierte en un botón hamburguesa (☰) y las tablas permiten desplazamiento horizontal.
 
 ### ¿En qué idiomas está disponible?
-La aplicación está disponible en español e inglés. Puedes cambiar el idioma desde el selector en la cabecera.
+La aplicación está disponible en **español**, **inglés** y **rumano**. Puedes cambiar el idioma desde el selector en la cabecera en cualquier momento.
 
-### ¿Quién me asigna el rol después de registrarme?
-El administrador del sistema revisa los nuevos registros y asigna el rol correspondiente.
+### ¿Quién decide mi rol?
+Durante el registro tú eliges tu rol (Gerente, Capataz o Trabajador). Si necesitas cambiarlo posteriormente, el administrador del sistema puede modificarlo desde su panel.
 
 ### ¿Mis datos están seguros?
-Sí. La aplicación utiliza Supabase como backend, que implementa autenticación segura y políticas de seguridad a nivel de fila (RLS) para que cada usuario solo pueda acceder a los datos que le corresponden según su rol.
+Sí. La aplicación utiliza Supabase como backend, que implementa autenticación segura mediante JWT y políticas de seguridad a nivel de fila (RLS) para que cada usuario solo pueda acceder a los datos que le corresponden según su rol.
+
+### ¿Qué navegadores son compatibles?
+Google Chrome, Mozilla Firefox, Microsoft Edge y Safari en sus versiones más recientes.
+
+### ¿Puedo eliminar mi cuenta?
+No directamente. El administrador puede desactivar tu cuenta (baja lógica), pero los datos no se eliminan permanentemente de la base de datos.
 
 ---
 
@@ -371,3 +545,4 @@ Sí. La aplicación utiliza Supabase como backend, que implementa autenticación
 Autor: Juan Francisco Hurtado Pérez
 Ciclo: CFGS Desarrollo de Aplicaciones Web (DAW)
 Centro: IES Albarregas – Mérida (España)
+Curso: 2024/2025 – 2025/2026

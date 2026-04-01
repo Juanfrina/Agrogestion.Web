@@ -2,33 +2,37 @@
 
 ## Índice
 
-1. Introducción y contexto del proyecto
-2. Objetivos del proyecto
-3. Planificación y metodología
-4. Primer trimestre: Análisis y diseño
-   - 4.1. Estudio de viabilidad
-   - 4.2. Análisis de requisitos
-   - 4.3. Diseño de la base de datos
-   - 4.4. Diseño de la arquitectura
-   - 4.5. Diseño de la interfaz (mockups)
-   - 4.6. Elección de tecnologías
-5. Segundo trimestre: Desarrollo e implementación
-   - 5.1. Configuración del entorno de desarrollo
-   - 5.2. Configuración de Supabase
-   - 5.3. Desarrollo del frontend
-   - 5.4. Integración con Supabase
-   - 5.5. Implementación de autenticación
-   - 5.6. Implementación de roles y paneles
-   - 5.7. Gestión de terrenos
-   - 5.8. Gestión de tareas
-   - 5.9. Relaciones gerente-capataz y capataz-trabajador
-   - 5.10. Políticas de seguridad (RLS)
-   - 5.11. Pruebas y corrección de errores
-   - 5.12. Documentación
-6. Cronograma del proyecto
-7. Problemas encontrados y soluciones
-8. Conclusiones
-9. Agradecimientos
+1. [Introducción y contexto del proyecto](#1-introducción-y-contexto-del-proyecto)
+2. [Objetivos del proyecto](#2-objetivos-del-proyecto)
+3. [Planificación y metodología](#3-planificación-y-metodología)
+4. [Primer trimestre: Análisis y diseño](#4-primer-trimestre-análisis-y-diseño)
+   - [4.1. Estudio de viabilidad](#41-estudio-de-viabilidad)
+   - [4.2. Análisis de requisitos](#42-análisis-de-requisitos)
+   - [4.3. Diseño de la base de datos](#43-diseño-de-la-base-de-datos)
+   - [4.4. Diseño de la arquitectura](#44-diseño-de-la-arquitectura)
+   - [4.5. Diseño de la interfaz (mockups)](#45-diseño-de-la-interfaz-mockups)
+   - [4.6. Elección de tecnologías](#46-elección-de-tecnologías)
+5. [Segundo trimestre: Desarrollo e implementación](#5-segundo-trimestre-desarrollo-e-implementación)
+   - [5.1. Configuración del entorno de desarrollo](#51-configuración-del-entorno-de-desarrollo)
+   - [5.2. Configuración de Supabase](#52-configuración-de-supabase)
+   - [5.3. Desarrollo del frontend](#53-desarrollo-del-frontend)
+   - [5.4. Integración con Supabase](#54-integración-con-supabase)
+   - [5.5. Implementación de autenticación](#55-implementación-de-autenticación)
+   - [5.6. Implementación de roles y paneles](#56-implementación-de-roles-y-paneles)
+   - [5.7. Gestión de terrenos](#57-gestión-de-terrenos)
+   - [5.8. Gestión de tareas](#58-gestión-de-tareas)
+   - [5.9. Relaciones gerente-capataz y capataz-trabajador](#59-relaciones-gerente-capataz-y-capataz-trabajador)
+   - [5.10. Políticas de seguridad (RLS)](#510-políticas-de-seguridad-rls)
+   - [5.11. Internacionalización (i18n)](#511-internacionalización-i18n)
+   - [5.12. Comentarios en tareas](#512-comentarios-en-tareas)
+   - [5.13. Sistema de notificaciones](#513-sistema-de-notificaciones)
+   - [5.14. Flujo de aceptación/rechazo de trabajadores](#514-flujo-de-aceptaciónrechazo-de-trabajadores)
+   - [5.15. Pruebas y corrección de errores](#515-pruebas-y-corrección-de-errores)
+   - [5.16. Documentación](#516-documentación)
+6. [Cronograma del proyecto](#6-cronograma-del-proyecto)
+7. [Problemas encontrados y soluciones](#7-problemas-encontrados-y-soluciones)
+8. [Conclusiones](#8-conclusiones)
+9. [Agradecimientos](#9-agradecimientos)
 
 ---
 
@@ -76,6 +80,9 @@ La aplicación se ha desarrollado a lo largo de dos trimestres académicos, abar
 | O8  | Aplicar políticas de seguridad RLS para proteger los datos según el rol.                         |
 | O9  | Documentar el proyecto de forma completa (usuario, técnico, despliegue).                         |
 | O10 | Desplegar la aplicación en un entorno accesible desde Internet.                                  |
+| O11 | Implementar internacionalización (i18n) con soporte para español, inglés y rumano.               |
+| O12 | Desarrollar un sistema de comentarios en tareas y notificaciones internas.                       |
+| O13 | Implementar un flujo de aceptación/rechazo de tareas por parte de los trabajadores.              |
 
 ---
 
@@ -131,34 +138,37 @@ Antes de comenzar el desarrollo, se realizó un estudio de viabilidad para valor
 
 Se identificaron los requisitos funcionales y no funcionales del sistema (detallados en el Manual Técnico):
 
-- **20 requisitos funcionales** que cubren: autenticación, gestión de usuarios, terrenos, tareas, relaciones entre roles y filtrado de datos.
-- **13 requisitos no funcionales** que cubren: usabilidad, rendimiento, seguridad, mantenibilidad, compatibilidad y disponibilidad.
+- **28 requisitos funcionales** que cubren: autenticación, gestión de usuarios, terrenos, tareas, relaciones entre roles, filtrado de datos, comentarios en tareas, notificaciones y flujo de aceptación/rechazo de trabajadores.
+- **9 requisitos no funcionales** que cubren: usabilidad, rendimiento, seguridad, mantenibilidad, compatibilidad y disponibilidad.
 
 Se identificaron **5 actores** del sistema: Visitante, Admin, Gerente, Capataz y Trabajador.
 
-Se definieron **18 casos de uso** que describen las interacciones de cada actor con el sistema.
+Se definieron **26 casos de uso** que describen las interacciones de cada actor con el sistema.
 
 ### 4.3. Diseño de la base de datos
 
-Se diseñó un modelo relacional compuesto por **8 tablas**:
+Se diseñó un modelo relacional compuesto por **10 tablas**:
 
-| Tabla              | Tipo                                                        |
-|--------------------|-------------------------------------------------------------|
-| rol                | Catálogo de roles del sistema.                              |
-| usuario            | Datos de perfil de cada usuario.                            |
-| terreno            | Terrenos agrícolas gestionados por gerentes.                |
-| estados_tarea      | Catálogo de estados (pendiente, en progreso, completada).   |
-| tarea              | Tareas agrícolas vinculadas a terrenos y usuarios.          |
-| gerente_capataz    | Relación N:M entre gerentes y capataces.                    |
-| tarea_trabajador   | Relación N:M entre tareas y trabajadores.                   |
-| capataz_trabajador | Relación estable N:M entre capataces y trabajadores.        |
+| Tabla              | Tipo                                                                     |
+|--------------------|--------------------------------------------------------------------------|
+| rol                | Catálogo de roles del sistema (ADMIN, GERENTE, CAPATAZ, TRABAJADOR).     |
+| perfiles           | Datos de perfil de cada usuario, vinculada a `auth.users`.               |
+| terreno            | Terrenos agrícolas gestionados por gerentes.                             |
+| estados_tarea      | Catálogo de 6 estados (PENDIENTE, ASIGNADA, ACEPTADA, RECHAZADA, EN_PROGRESO, COMPLETADA). |
+| tarea              | Tareas agrícolas vinculadas a terrenos y usuarios.                       |
+| gerente_capataz    | Relación N:M entre gerentes y capataces con fechas de asignación/baja.   |
+| tarea_trabajador   | Relación N:M entre tareas y trabajadores con estado de aceptación.       |
+| capataz_trabajador | Relación estable N:M entre capataces y trabajadores.                     |
+| comentarios_tarea  | Comentarios asociados a tareas por cualquier usuario participante.       |
+| notificaciones     | Sistema de notificaciones internas (asignaciones, cambios de estado).    |
 
 **Decisiones de diseño:**
 
-- Se utilizó **UUID** como clave primaria para la tabla `usuario`, vinculándola directamente con `auth.users` de Supabase.
-- Se implementó **borrado lógico** (campo `activo`) en lugar de borrado físico para terrenos y usuarios.
+- Se utilizó **UUID** como clave primaria para la tabla `perfiles`, vinculándola directamente con `auth.users` de Supabase mediante `ON DELETE CASCADE`.
+- Se implementó **borrado lógico** (campo `fecha_baja`) en lugar de borrado físico para terrenos, usuarios y relaciones.
 - Las relaciones N:M se resolvieron mediante tablas intermedias con claves primarias compuestas.
-- Se normalizaron los estados de tarea en una tabla separada para facilitar futuras ampliaciones.
+- Se normalizaron los estados de tarea en una tabla separada con 6 valores que soportan el flujo completo (incluyendo aceptación/rechazo de trabajadores).
+- Se añadieron **triggers** automáticos para generar notificaciones al asignar tareas a capataces y trabajadores.
 
 ### 4.4. Diseño de la arquitectura
 
@@ -261,11 +271,12 @@ Se evaluaron varias alternativas antes de elegir las tecnologías definitivas:
 **Pasos realizados:**
 
 1. Creación de la cuenta y proyecto en Supabase.
-2. Ejecución del script SQL para crear las 8 tablas del modelo de datos.
-3. Inserción de datos iniciales: roles (ADMIN, GERENTE, CAPATAZ, TRABAJADOR) y estados de tarea (PENDIENTE, EN_PROGRESO, COMPLETADA).
+2. Ejecución del script `schema.sql` para crear las 10 tablas del modelo de datos, funciones, triggers y políticas RLS.
+3. Inserción de datos iniciales: roles (ADMIN, GERENTE, CAPATAZ, TRABAJADOR) y estados de tarea (PENDIENTE, ASIGNADA, ACEPTADA, RECHAZADA, EN_PROGRESO, COMPLETADA).
 4. Configuración del cliente Supabase en `src/database/supabase/Client.ts`.
 5. Creación del archivo `.env` con las credenciales.
-6. Verificación de la conexión desde el frontend.
+6. Ejecución de `seed_admin.sql` para crear el usuario administrador.
+7. Verificación de la conexión desde el frontend.
 
 ### 5.3. Desarrollo del frontend
 
@@ -296,7 +307,7 @@ src/
 ├── hooks/          → Custom hooks (useAuth, useTheme)
 ├── interfaces/     → Tipos TypeScript para las entidades del sistema
 ├── lib/            → Utilidades y configuración (constants, i18n)
-├── locales/        → Archivos de traducción (es.json, en.json)
+├── locales/        → Archivos de traducción (es.json, en.json, ro.json)
 ├── pages/          → Vistas/páginas de la aplicación
 ├── router/         → Configuración de rutas (AppRouter, ProtectedRoute, PublicRoute)
 ├── store/          → Gestión de estado global (authStore)
@@ -316,7 +327,8 @@ src/
 | Spinner                 | common       | Indicador de carga.                                              |
 | Alert                   | common       | Componente de mensajes y notificaciones.                         |
 | ThemeToggle             | common       | Selector de tema claro/oscuro.                                   |
-| LanguageSwitcher        | common       | Selector de idioma (español/inglés).                             |
+| TareaComentarios        | common       | Hilo de comentarios en una tarea con envío de mensajes.          |
+| LanguageSwitcher        | common       | Selector de idioma (español, inglés y rumano).                    |
 | LoginForm               | forms        | Formulario de inicio de sesión.                                  |
 | RegistroForm            | forms        | Formulario de registro de nuevo usuario.                         |
 | ResetPasswordForm       | forms        | Formulario de recuperación de contraseña.                        |
@@ -328,6 +340,7 @@ src/
 | Badge                   | ui           | Etiqueta visual para estados y categorías.                       |
 | Card                    | cards        | Tarjeta de información reutilizable.                             |
 | MensualChart            | charts       | Gráfico de barras con datos mensuales para visualización.        |
+| RoleDistributionChart   | charts       | Gráfico de distribución de usuarios por rol.                     |
 | Landing                 | home         | Contenido de la página de inicio.                                |
 | Profile                 | profile      | Vista del perfil de usuario.                                     |
 | AdminDashboard          | admin        | Panel principal del administrador.                               |
@@ -337,9 +350,11 @@ src/
 | TerrenoForm             | gerente      | Formulario de alta/edición de terrenos.                          |
 | TareaGerenteList        | gerente      | Listado de tareas del gerente.                                   |
 | TareaForm               | gerente      | Formulario de creación de tareas.                                |
+| MiEquipoGerente         | gerente      | Gestión del equipo de capataces del gerente.                     |
 | CapatazDashboard        | capataz      | Panel principal del capataz.                                     |
 | TareaCapatazList        | capataz      | Listado de tareas asignadas al capataz.                          |
 | TrabajadorAsignacion    | capataz      | Gestión de asignación de trabajadores a tareas.                  |
+| MiEquipoCapataz         | capataz      | Gestión del equipo de trabajadores del capataz.                  |
 | TrabajadorDashboard     | trabajador   | Panel principal del trabajador.                                  |
 | MisTareasList           | trabajador   | Listado de tareas del trabajador.                                |
 | ProtectedRoute          | router       | Componente que protege rutas según autenticación y rol.          |
@@ -381,8 +396,8 @@ export const TerrenoRepository = {
         const { data, error } = await supabase
             .from('terreno')
             .select('*')
-            .eq('id_gerente', idGerente)
-            .eq('activo', true);
+            .eq('id_gestor', idGerente)
+            .is('fecha_baja', null);
         if (error) throw error;
         return data;
     },
@@ -398,8 +413,8 @@ Se integró Supabase Auth para el sistema de autenticación:
 
 | Funcionalidad          | Implementación                                           |
 |------------------------|----------------------------------------------------------|
-| Registro               | `supabase.auth.signUp()` + INSERT en tabla `usuario`.    |
-| Login                  | `supabase.auth.signInWithPassword()`.                    |
+| Registro               | `supabase.auth.signUp()` + trigger crea fila en `perfiles`.  |
+| Login                  | `supabase.auth.signInWithPassword()`.                        |
 | Logout                 | `supabase.auth.signOut()`.                               |
 | Recuperar contraseña   | `supabase.auth.resetPasswordForEmail()`.                 |
 | Persistencia de sesión | Token JWT almacenado automáticamente por Supabase.       |
@@ -423,7 +438,7 @@ Se creó un sistema de redirección basado en el rol del usuario:
 
 Se implementó un componente `ProtectedRoute` que:
 1. Verifica si el usuario está autenticado.
-2. Consulta el rol del usuario en la tabla `usuario`.
+2. Consulta el rol del usuario en la tabla `perfiles`.
 3. Redirige al panel correspondiente o al login si no tiene sesión.
 
 También se implementó un componente `PublicRoute` que redirige a los usuarios ya autenticados a su panel correspondiente cuando intentan acceder a rutas públicas (login, registro).
@@ -439,7 +454,7 @@ Se implementó el CRUD completo de terrenos para el rol Gerente:
 | Listar        | Tabla con todos los terrenos activos del gerente.              |
 | Crear         | Formulario modal para dar de alta un nuevo terreno.            |
 | Editar        | Formulario modal precargado con los datos del terreno.         |
-| Baja lógica   | Botón para desactivar un terreno (campo `activo = false`).     |
+| Baja lógica   | Botón para desactivar un terreno (campo `fecha_baja`).         |
 
 ### 5.8. Gestión de tareas
 
@@ -478,22 +493,76 @@ Se configuraron políticas de Row Level Security en Supabase para cada tabla:
 
 | Tabla              | Políticas principales                                           |
 |--------------------|-----------------------------------------------------------------|
-| usuario            | Cada usuario ve su perfil; admin ve y edita todos.              |
+| perfiles           | Cada usuario ve su perfil; admin ve y edita todos.              |
 | terreno            | Solo el gerente propietario puede ver, crear y editar.          |
 | tarea              | Gerente ve las que creó; capataz ve las asignadas.              |
 | gerente_capataz    | Acceso según pertenencia a la relación.                         |
 | tarea_trabajador   | Acceso según participación en la tarea.                         |
 | capataz_trabajador | Acceso según pertenencia a la relación.                         |
+| comentarios_tarea  | Lectura/escritura para participantes de la tarea.               |
+| notificaciones     | Solo el destinatario puede ver y marcar como leída.             |
 | rol                | Lectura para todos los autenticados.                            |
 | estados_tarea      | Lectura para todos los autenticados.                            |
 
-### 5.11. Pruebas y corrección de errores
+Se configuraron aproximadamente **50 políticas RLS** en total, junto con **8 funciones auxiliares** (como `get_my_role()`, `is_admin()`, `tarea_ids_by_gerente()`, etc.) para evitar recursión en las políticas y optimizar las consultas de permisos.
+
+### 5.11. Internacionalización (i18n)
+
+Se implementó soporte multiidioma utilizando **i18next** y **react-i18next**:
+
+| Aspecto                  | Detalle                                                      |
+|--------------------------|--------------------------------------------------------------|
+| Librería                 | i18next 25.x + react-i18next 16.x                           |
+| Idiomas soportados       | Español (es), Inglés (en) y Rumano (ro).                     |
+| Archivos de traducción   | `src/locales/es.json`, `en.json`, `ro.json`.                 |
+| Detección automática     | Se detecta el idioma del navegador del usuario.              |
+| Persistencia             | El idioma seleccionado se guarda en `localStorage`.          |
+| Componente               | `LanguageSwitcher` permite cambiar de idioma en cualquier momento. |
+| Cobertura                | Toda la interfaz está traducida: menús, formularios, mensajes, botones, etc. |
+| Tipado                   | Declaración de tipos en `@types/i18next.d.ts` para autocompletado. |
+
+### 5.12. Comentarios en tareas
+
+Se implementó un sistema de comentarios dentro de cada tarea:
+
+| Aspecto                  | Detalle                                                      |
+|--------------------------|--------------------------------------------------------------|
+| Tabla                    | `comentarios_tarea` con FK a `tarea` (ON DELETE CASCADE) y `perfiles`. |
+| Componente               | `TareaComentarios` muestra el hilo de comentarios y permite enviar nuevos. |
+| Permisos                 | Pueden comentar todos los participantes de una tarea (gerente, capataz, trabajadores asignados). |
+| Visualización            | Los comentarios se muestran ordenados cronológicamente con el nombre del autor y la fecha. |
+
+### 5.13. Sistema de notificaciones
+
+Se implementó un sistema de notificaciones internas automáticas:
+
+| Aspecto                  | Detalle                                                      |
+|--------------------------|--------------------------------------------------------------|
+| Tabla                    | `notificaciones` con campos: tipo, título, mensaje, id_tarea, leída. |
+| Triggers                 | `trg_notif_tarea_asignada_capataz` (notifica al capataz cuando se le asigna tarea) y `trg_notif_trabajador_asignado` (notifica al trabajador cuando se le asigna a una tarea). |
+| Tipos de notificación    | 10 tipos: TAREA_ASIGNADA, TAREA_ACEPTADA, TAREA_RECHAZADA, TAREA_EN_PROGRESO, TAREA_COMPLETADA, TRABAJADOR_ASIGNADO, TRABAJADOR_ACEPTO, TRABAJADOR_RECHAZO, COMENTARIO_NUEVO, ASOCIACION_NUEVA. |
+| Lectura                  | El destinatario puede marcar notificaciones como leídas.     |
+| RLS                      | Solo el destinatario puede ver sus propias notificaciones.   |
+
+### 5.14. Flujo de aceptación/rechazo de trabajadores
+
+Se implementó un flujo completo para que los trabajadores puedan aceptar o rechazar las tareas que les asignan:
+
+| Aspecto                  | Detalle                                                      |
+|--------------------------|--------------------------------------------------------------|
+| Tabla                    | `tarea_trabajador` con campo `estado` (PENDIENTE, ACEPTADA, RECHAZADA, COMPLETADA). |
+| Asignación               | El capataz asigna trabajadores; el estado inicial es PENDIENTE. |
+| Aceptación/Rechazo       | El trabajador puede aceptar o rechazar desde su panel.       |
+| Registro                 | Se guardan `fecha_asignacion` y `fecha_respuesta`.           |
+| Notificación             | Al asignar un trabajador se genera automáticamente una notificación mediante trigger. |
+
+### 5.15. Pruebas y corrección de errores
 
 Se realizaron tres tipos de pruebas:
 
-1. **Pruebas funcionales (15 tests):** Verificación de cada caso de uso implementado.
-2. **Pruebas de interfaz/responsive (5 tests):** Comprobación en distintos dispositivos y navegadores.
-3. **Pruebas de seguridad (3 tests):** Verificación de las políticas RLS y protección de rutas.
+1. **Pruebas funcionales (22 tests):** Verificación de cada caso de uso implementado, incluyendo comentarios, notificaciones y flujo de aceptación/rechazo.
+2. **Pruebas de interfaz (5 tests):** Comprobación del diseño responsive, cambio de idioma y menú hamburguesa en distintos dispositivos y navegadores.
+3. **Pruebas de seguridad (4 tests):** Verificación de las políticas RLS, protección de rutas y aislamiento de datos entre roles.
 
 **Principales errores detectados y corregidos:**
 
@@ -506,8 +575,10 @@ Se realizaron tres tipos de pruebas:
 | Formularios no validaban campos vacíos | Se añadió validación en el frontend antes del envío.        |
 | Erratas en nombres de archivos         | Se corrigieron 7 nombres (LoginFrom→LoginForm, etc.).       |
 | Archivos de estructura faltantes       | Se crearon 37 archivos vacíos de scaffolding.               |
+| Recursión infinita en políticas RLS     | Se crearon funciones auxiliares (`get_my_role`, `is_admin`, etc.) con `SECURITY DEFINER` para evitar consultas recursivas. |
+| Conflicto de políticas en tarea_trabajador | Se reescribieron las políticas RLS de la tabla con script `fix_tarea_trabajador.sql`. |
 
-### 5.12. Documentación
+### 5.16. Documentación
 
 En la fase final del proyecto se elaboraron cuatro documentos:
 
@@ -550,11 +621,14 @@ En la fase final del proyecto se elaboraron cuatro documentos:
 | Semana 17 | Desarrollo: Panel del Gerente (tareas, asignación capataces).  |
 | Semana 18 | Desarrollo: Panel del Capataz (tareas, cambio de estado).      |
 | Semana 19 | Desarrollo: Panel del Capataz (trabajadores), Panel Trabajador.|
-| Semana 20 | Configuración de políticas RLS en Supabase.                    |
-| Semana 21 | Pruebas funcionales, de interfaz y de seguridad.               |
-| Semana 22 | Corrección de errores y ajustes finales.                       |
-| Semana 23 | Despliegue en producción.                                      |
-| Semana 24 | Redacción de documentación final (4 manuales).                 |
+| Semana 20 | Configuración de políticas RLS en Supabase (~50 políticas).    |
+| Semana 21 | Internacionalización (i18n): español, inglés y rumano.         |
+| Semana 22 | Comentarios en tareas y sistema de notificaciones.             |
+| Semana 23 | Flujo de aceptación/rechazo de trabajadores.                   |
+| Semana 24 | Pruebas funcionales, de interfaz y de seguridad.               |
+| Semana 25 | Corrección de errores y ajustes finales.                       |
+| Semana 26 | Despliegue en producción.                                      |
+| Semana 27 | Redacción de documentación final (4 manuales).                 |
 
 ---
 
@@ -577,8 +651,7 @@ En la fase final del proyecto se elaboraron cuatro documentos:
 |------------------------------------------------|-----------------------------------------------------------------------------|
 | Subestimación del tiempo para políticas RLS    | Se dedicó una semana completa adicional a la configuración de seguridad.    |
 | Complejidad de las relaciones N:M              | Se simplificó la interfaz para gestionar las relaciones de forma intuitiva. |
-| Documentación consumió más tiempo del previsto | Se comenzó la documentación en paralelo con las últimas fases de desarrollo.|
-
+| Documentación consumió más tiempo del previsto | Se comenzó la documentación en paralelo con las últimas fases de desarrollo.|| Internacionalización con 3 idiomas              | Se estructuraron los JSON de traducción por secciones para facilitar el mantenimiento. |
 ---
 
 ## 8. Conclusiones
@@ -597,6 +670,9 @@ En la fase final del proyecto se elaboraron cuatro documentos:
 | O8       | Políticas de seguridad RLS                               | ✅ Cumplido |
 | O9       | Documentación completa                                   | ✅ Cumplido |
 | O10      | Despliegue accesible desde Internet                      | ✅ Cumplido |
+| O11      | Internacionalización (i18n) en 3 idiomas                 | ✅ Cumplido |
+| O12      | Comentarios en tareas y notificaciones                   | ✅ Cumplido |
+| O13      | Flujo de aceptación/rechazo de trabajadores              | ✅ Cumplido |
 
 ### Valoración personal
 
@@ -608,7 +684,7 @@ El desarrollo de Agrogestión ha sido una experiencia muy formativa que ha permi
 - **Mejorar la capacidad de planificación** y gestión del tiempo en un proyecto de varios meses.
 - **Desarrollar habilidades de documentación** técnica, esenciales en el ámbito profesional.
 
-El proyecto cumple todos los objetivos planteados inicialmente y sienta las bases para futuras ampliaciones como notificaciones en tiempo real, geolocalización de terrenos, informes en PDF o una versión de aplicación móvil.
+El proyecto cumple todos los objetivos planteados inicialmente y sienta las bases para futuras ampliaciones como geolocalización de terrenos, informes en PDF, notificaciones push en tiempo real o una versión de aplicación móvil.
 
 ### Conocimientos aplicados del ciclo DAW
 
@@ -621,6 +697,7 @@ El proyecto cumple todos los objetivos planteados inicialmente y sienta las base
 | Desarrollo web en entorno servidor        | API REST de Supabase, autenticación, RLS.        |
 | Despliegue de aplicaciones web            | Configuración de Vite, build, despliegue.        |
 | Diseño de interfaces web                  | UX/UI con TailwindCSS, responsive design.        |
+| Empresa e iniciativa emprendedora         | Planificación, documentación y gestión del proyecto.|
 
 ---
 
@@ -638,3 +715,4 @@ Quiero agradecer:
 Autor: Juan Francisco Hurtado Pérez
 Ciclo: CFGS Desarrollo de Aplicaciones Web (DAW)
 Centro: IES Albarregas – Mérida (España)
+Curso: 2024/2025 – 2025/2026

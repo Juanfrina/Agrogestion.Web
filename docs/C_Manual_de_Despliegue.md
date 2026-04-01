@@ -2,32 +2,35 @@
 
 ## Índice
 
-1. Introducción
-2. Requisitos previos
-3. Obtener el código fuente
-4. Configurar Supabase (Backend)
-   - 4.1. Crear proyecto en Supabase
-   - 4.2. Crear las tablas de la base de datos
-   - 4.3. Configurar políticas RLS
-   - 4.4. Obtener credenciales de conexión
-5. Configurar el entorno local
-   - 5.1. Instalar Node.js
-   - 5.2. Instalar dependencias del proyecto
-   - 5.3. Configurar variables de entorno
-6. Ejecutar la aplicación en modo desarrollo
-7. Construir la aplicación para producción
-8. Desplegar en un servidor
-   - 8.1. Despliegue en Vercel (recomendado)
-   - 8.2. Despliegue en Netlify
-   - 8.3. Despliegue en servidor propio (Apache/Nginx)
-9. Verificación del despliegue
-10. Solución de problemas comunes
+1. [Introducción](#1-introducción)
+2. [Requisitos previos](#2-requisitos-previos)
+3. [Obtener el código fuente](#3-obtener-el-código-fuente)
+4. [Configurar Supabase (Backend)](#4-configurar-supabase-backend)
+   - [4.1. Crear proyecto en Supabase](#41-crear-proyecto-en-supabase)
+   - [4.2. Crear las tablas de la base de datos](#42-crear-las-tablas-de-la-base-de-datos)
+   - [4.3. Configurar políticas RLS](#43-configurar-políticas-rls)
+   - [4.4. Crear el usuario administrador](#44-crear-el-usuario-administrador)
+   - [4.5. Obtener credenciales de conexión](#45-obtener-credenciales-de-conexión)
+5. [Configurar el entorno local](#5-configurar-el-entorno-local)
+   - [5.1. Instalar Node.js](#51-instalar-nodejs)
+   - [5.2. Instalar dependencias del proyecto](#52-instalar-dependencias-del-proyecto)
+   - [5.3. Configurar variables de entorno](#53-configurar-variables-de-entorno)
+6. [Ejecutar la aplicación en modo desarrollo](#6-ejecutar-la-aplicación-en-modo-desarrollo)
+7. [Construir la aplicación para producción](#7-construir-la-aplicación-para-producción)
+8. [Desplegar en un servidor](#8-desplegar-en-un-servidor)
+   - [8.1. Despliegue en Vercel (recomendado)](#81-despliegue-en-vercel-recomendado)
+   - [8.2. Despliegue en Netlify](#82-despliegue-en-netlify)
+   - [8.3. Despliegue en servidor propio (Apache/Nginx)](#83-despliegue-en-servidor-propio-apachenginx)
+9. [Verificación del despliegue](#9-verificación-del-despliegue)
+10. [Solución de problemas comunes](#10-solución-de-problemas-comunes)
 
 ---
 
 ## 1. Introducción
 
 Este manual describe paso a paso todo lo necesario para poner en marcha la aplicación Agrogestión, tanto en un entorno de desarrollo local como en un servidor de producción.
+
+La aplicación cuenta con **10 tablas** en PostgreSQL, políticas RLS (Row Level Security) por rol, funciones auxiliares, triggers de notificación automática y soporte para 3 idiomas (español, inglés y rumano).
 
 Está dirigido a desarrolladores o técnicos encargados de instalar, configurar y desplegar la aplicación.
 
@@ -96,194 +99,89 @@ cd AGROGESTION
 
 ### 4.2. Crear las tablas de la base de datos
 
-Una vez creado el proyecto, ve a **SQL Editor** en el menú lateral izquierdo de Supabase y ejecuta el siguiente script SQL:
+Una vez creado el proyecto, ve a **SQL Editor** en el menú lateral izquierdo de Supabase.
+
+El proyecto incluye el script completo en el archivo `AGROGESTION/src/database/supabase/schema.sql`. Abre dicho archivo, copia **todo** su contenido y pégalo en el SQL Editor de Supabase.
+
+El script crea automáticamente:
+
+| Elemento                  | Cantidad | Descripción                                                              |
+|---------------------------|----------|--------------------------------------------------------------------------|
+| Tablas                    | 10       | rol, estados_tarea, perfiles, terreno, tarea, gerente_capataz, tarea_trabajador, capataz_trabajador, comentarios_tarea, notificaciones |
+| Funciones auxiliares      | 8        | get_my_role, is_admin, is_email_taken, handle_new_user, helpers RLS…     |
+| Triggers                  | 3        | Creación automática de perfil, notificación a capataz, notificación a trabajador |
+| Políticas RLS             | ~50      | Control de acceso por rol para todas las tablas                          |
+| Inserts de datos iniciales| —        | Los roles y estados se insertan desde la aplicación o manualmente        |
+
+**Insertar roles por defecto** (ejecutar en SQL Editor tras el schema):
 
 ```sql
--- =====================================================
--- SCRIPT DE CREACIÓN DE TABLAS — AGROGESTIÓN
--- =====================================================
-
--- Tabla de roles
-CREATE TABLE IF NOT EXISTS rol (
-    id SERIAL PRIMARY KEY,
-    nombre VARCHAR(50) NOT NULL UNIQUE
-);
-
--- Insertar roles por defecto
-INSERT INTO rol (nombre) VALUES ('ADMIN'), ('GERENTE'), ('CAPATAZ'), ('TRABAJADOR');
-
--- Tabla de usuarios (perfil extendido)
-CREATE TABLE IF NOT EXISTS usuario (
-    id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
-    nombre VARCHAR(100) NOT NULL,
-    apellidos VARCHAR(150) NOT NULL,
-    email VARCHAR(255) NOT NULL UNIQUE,
-    id_rol INTEGER REFERENCES rol(id),
-    activo BOOLEAN DEFAULT TRUE,
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-);
-
--- Tabla de terrenos
-CREATE TABLE IF NOT EXISTS terreno (
-    id SERIAL PRIMARY KEY,
-    nombre VARCHAR(150) NOT NULL,
-    ubicacion VARCHAR(255),
-    superficie DECIMAL(10,2),
-    id_gerente UUID REFERENCES usuario(id),
-    activo BOOLEAN DEFAULT TRUE,
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-);
-
--- Tabla de estados de tarea
-CREATE TABLE IF NOT EXISTS estados_tarea (
-    id SERIAL PRIMARY KEY,
-    nombre VARCHAR(50) NOT NULL UNIQUE,
-    descripcion TEXT
-);
-
--- Insertar estados por defecto
-INSERT INTO estados_tarea (nombre, descripcion) VALUES
-    ('PENDIENTE', 'La tarea ha sido creada pero no ha comenzado.'),
-    ('EN_PROGRESO', 'La tarea está siendo ejecutada por el capataz.'),
-    ('COMPLETADA', 'La tarea ha sido finalizada correctamente.');
-
--- Tabla de tareas
-CREATE TABLE IF NOT EXISTS tarea (
-    id SERIAL PRIMARY KEY,
-    descripcion TEXT NOT NULL,
-    id_terreno INTEGER REFERENCES terreno(id),
-    id_gerente UUID REFERENCES usuario(id),
-    id_capataz UUID REFERENCES usuario(id),
-    id_estado INTEGER REFERENCES estados_tarea(id) DEFAULT 1,
-    fecha_creacion TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-);
-
--- Tabla relación gerente-capataz (N:M)
-CREATE TABLE IF NOT EXISTS gerente_capataz (
-    id_gerente UUID REFERENCES usuario(id) ON DELETE CASCADE,
-    id_capataz UUID REFERENCES usuario(id) ON DELETE CASCADE,
-    PRIMARY KEY (id_gerente, id_capataz)
-);
-
--- Tabla relación tarea-trabajador (N:M)
-CREATE TABLE IF NOT EXISTS tarea_trabajador (
-    id_tarea INTEGER REFERENCES tarea(id) ON DELETE CASCADE,
-    id_trabajador UUID REFERENCES usuario(id) ON DELETE CASCADE,
-    PRIMARY KEY (id_tarea, id_trabajador)
-);
-
--- Tabla relación capataz-trabajador (N:M)
-CREATE TABLE IF NOT EXISTS capataz_trabajador (
-    id_capataz UUID REFERENCES usuario(id) ON DELETE CASCADE,
-    id_trabajador UUID REFERENCES usuario(id) ON DELETE CASCADE,
-    PRIMARY KEY (id_capataz, id_trabajador)
-);
+INSERT INTO rol (id_rol, nombre, descripcion) VALUES
+    (1, 'ADMIN',       'Administrador del sistema'),
+    (2, 'GERENTE',     'Gestor de terrenos y tareas'),
+    (3, 'CAPATAZ',     'Ejecutor de tareas y coordinador de trabajadores'),
+    (4, 'TRABAJADOR',  'Trabajador de apoyo en tareas');
 ```
 
-Pulsa **"Run"** para ejecutar el script. Deberías ver el mensaje "Success" sin errores.
+**Insertar estados de tarea por defecto:**
+
+```sql
+INSERT INTO estados_tarea (nombre, descripcion) VALUES
+    ('PENDIENTE',    'La tarea ha sido creada pero no asignada.'),
+    ('ASIGNADA',     'La tarea ha sido asignada a un capataz.'),
+    ('ACEPTADA',     'El capataz ha aceptado la tarea.'),
+    ('RECHAZADA',    'El capataz ha rechazado la tarea.'),
+    ('EN_PROGRESO',  'La tarea está siendo ejecutada.'),
+    ('COMPLETADA',   'La tarea ha sido finalizada correctamente.');
+```
+
+Pulsa **"Run"** para ejecutar cada bloque. Deberías ver el mensaje "Success" sin errores.
+
+> ⚠️ **IMPORTANTE:** Si ya tienes tablas de una versión anterior, descomenta y ejecuta primero la **Parte 0 (limpieza)** del script schema.sql para eliminar las tablas existentes.
 
 ### 4.3. Configurar políticas RLS
 
-En el menú lateral de Supabase, ve a **Authentication → Policies** (o en cada tabla desde **Table Editor**).
+Las políticas RLS (Row Level Security) **ya están incluidas** en el script `schema.sql` que ejecutaste en el paso anterior. No es necesario configurarlas manualmente.
 
-**Habilitar RLS en todas las tablas:**
+El script habilita RLS en las 10 tablas y crea ~50 políticas que controlan:
+
+| Tabla              | Políticas principales                                                         |
+|--------------------|-------------------------------------------------------------------------------|
+| perfiles           | Cada usuario ve su perfil; admin ve todos; gerente ve sus capataces; capataz ve sus trabajadores |
+| terreno            | Gerente gestiona sus terrenos; admin ve todos; capataz/trabajador ven los de sus tareas |
+| tarea              | Gerente ve/crea las suyas; capataz ve las asignadas; trabajador ve donde participa |
+| gerente_capataz    | Gerente/capataz ven sus relaciones; gerente inserta/elimina                   |
+| tarea_trabajador   | Capataz asigna; trabajador acepta/rechaza; gerente ve las de sus tareas       |
+| capataz_trabajador | Capataz gestiona; trabajador ve sus relaciones                                |
+| comentarios_tarea  | Participantes de la tarea pueden ver y crear; solo el autor puede eliminar    |
+| notificaciones     | Cada usuario solo ve sus propias notificaciones                               |
+| rol, estados_tarea | Solo lectura para usuarios autenticados                                       |
+
+**Para verificar** que las políticas se crearon correctamente, ve a **Authentication → Policies** en el dashboard de Supabase y comprueba que cada tabla tiene sus políticas listadas.
+
+### 4.4. Crear el usuario administrador
+
+El primer usuario con rol ADMIN debe crearse manualmente:
+
+1. En Supabase, ve a **Authentication → Users**.
+2. Pulsa **"Add User" → "Create new user"**.
+3. Rellena:
+   - **Email:** `admin@agrogestion.es` (o el email que desees)
+   - **Password:** (mínimo 6 caracteres)
+4. Marca ✅ **"Auto Confirm User"**.
+5. Pulsa **"Create User"**.
+6. Ve al **SQL Editor** y ejecuta:
 
 ```sql
--- Habilitar RLS
-ALTER TABLE usuario ENABLE ROW LEVEL SECURITY;
-ALTER TABLE terreno ENABLE ROW LEVEL SECURITY;
-ALTER TABLE tarea ENABLE ROW LEVEL SECURITY;
-ALTER TABLE gerente_capataz ENABLE ROW LEVEL SECURITY;
-ALTER TABLE tarea_trabajador ENABLE ROW LEVEL SECURITY;
-ALTER TABLE capataz_trabajador ENABLE ROW LEVEL SECURITY;
-ALTER TABLE rol ENABLE ROW LEVEL SECURITY;
-ALTER TABLE estados_tarea ENABLE ROW LEVEL SECURITY;
-
--- Política: Todos los usuarios autenticados pueden leer roles y estados
-CREATE POLICY "Roles visibles para usuarios autenticados"
-    ON rol FOR SELECT
-    TO authenticated
-    USING (true);
-
-CREATE POLICY "Estados visibles para usuarios autenticados"
-    ON estados_tarea FOR SELECT
-    TO authenticated
-    USING (true);
-
--- Política: Cada usuario puede ver su propio perfil
-CREATE POLICY "Usuario puede ver su propio perfil"
-    ON usuario FOR SELECT
-    TO authenticated
-    USING (auth.uid() = id);
-
--- Política: Admin puede ver todos los usuarios
-CREATE POLICY "Admin puede ver todos los usuarios"
-    ON usuario FOR SELECT
-    TO authenticated
-    USING (
-        EXISTS (
-            SELECT 1 FROM usuario u
-            WHERE u.id = auth.uid()
-            AND u.id_rol = (SELECT id FROM rol WHERE nombre = 'ADMIN')
-        )
-    );
-
--- Política: Admin puede actualizar usuarios
-CREATE POLICY "Admin puede actualizar usuarios"
-    ON usuario FOR UPDATE
-    TO authenticated
-    USING (
-        EXISTS (
-            SELECT 1 FROM usuario u
-            WHERE u.id = auth.uid()
-            AND u.id_rol = (SELECT id FROM rol WHERE nombre = 'ADMIN')
-        )
-    );
-
--- Política: Gerente puede ver sus terrenos
-CREATE POLICY "Gerente puede ver sus terrenos"
-    ON terreno FOR SELECT
-    TO authenticated
-    USING (id_gerente = auth.uid());
-
--- Política: Gerente puede crear terrenos
-CREATE POLICY "Gerente puede crear terrenos"
-    ON terreno FOR INSERT
-    TO authenticated
-    WITH CHECK (id_gerente = auth.uid());
-
--- Política: Gerente puede actualizar sus terrenos
-CREATE POLICY "Gerente puede actualizar sus terrenos"
-    ON terreno FOR UPDATE
-    TO authenticated
-    USING (id_gerente = auth.uid());
-
--- Política: Gerente puede ver las tareas que ha creado
-CREATE POLICY "Gerente puede ver sus tareas"
-    ON tarea FOR SELECT
-    TO authenticated
-    USING (id_gerente = auth.uid());
-
--- Política: Capataz puede ver sus tareas asignadas
-CREATE POLICY "Capataz puede ver sus tareas"
-    ON tarea FOR SELECT
-    TO authenticated
-    USING (id_capataz = auth.uid());
-
--- Política: Gerente puede crear tareas
-CREATE POLICY "Gerente puede crear tareas"
-    ON tarea FOR INSERT
-    TO authenticated
-    WITH CHECK (id_gerente = auth.uid());
-
--- Política: Capataz puede actualizar estado de sus tareas
-CREATE POLICY "Capataz puede actualizar sus tareas"
-    ON tarea FOR UPDATE
-    TO authenticated
-    USING (id_capataz = auth.uid());
+-- Asignar rol ADMIN al usuario creado
+UPDATE perfiles
+SET id_rol = 1
+WHERE email = 'admin@agrogestion.es';  -- Usa el email que elegiste
 ```
 
-### 4.4. Obtener credenciales de conexión
+> **Nota:** El trigger `on_auth_user_created` habrá creado automáticamente la fila en la tabla `perfiles` con nombre/apellidos/dni vacíos. Puedes completarlos con un UPDATE adicional si lo deseas.
+
+### 4.5. Obtener credenciales de conexión
 
 1. En Supabase, ve a **Settings → API** (en el menú lateral).
 2. Copia los siguientes valores:
@@ -319,18 +217,18 @@ Este comando descargará todas las dependencias definidas en `package.json`. Pue
 
 **Dependencias principales que se instalarán:**
 
-| Paquete                | Función                                       |
-|------------------------|-----------------------------------------------|
-| react, react-dom       | Librería de interfaz de usuario.              |
-| @supabase/supabase-js  | Cliente para comunicar con Supabase.          |
-| tailwindcss            | Framework CSS de utilidades.                  |
-| @tailwindcss/vite      | Plugin de TailwindCSS para Vite.              |
-| react-router-dom       | Enrutamiento y navegación SPA.                |
-| i18next, react-i18next | Internacionalización (español/inglés).        |
-| zustand                | Gestión de estado global ligera.              |
-| dotenv                 | Gestión de variables de entorno.              |
-| vite                   | Herramienta de build y servidor de desarrollo.|
-| typescript             | Compilador TypeScript.                        |
+| Paquete                | Función                                                 |
+|------------------------|--------------------------------------------------------|
+| react 19, react-dom 19 | Librería de interfaz de usuario.                        |
+| @supabase/supabase-js  | Cliente para comunicar con Supabase.                    |
+| tailwindcss 4          | Framework CSS de utilidades (v4, sintaxis nueva).       |
+| @tailwindcss/vite      | Plugin de TailwindCSS para Vite.                        |
+| react-router-dom 7     | Enrutamiento y navegación SPA.                          |
+| i18next, react-i18next | Internacionalización (español, inglés y rumano).          |
+| zustand                | Gestión de estado global ligera.                         |
+| dotenv                 | Gestión de variables de entorno.                         |
+| vite 7                 | Herramienta de build y servidor de desarrollo.           |
+| typescript 5.9         | Compilador TypeScript.                                   |
 
 ### 5.3. Configurar variables de entorno
 
@@ -419,6 +317,12 @@ Vercel es la plataforma recomendada para proyectos Vite/React.
    - Clave: `VITE_SUPABASE_ANON_KEY` → Valor: tu anon key
 6. Pulsa **"Deploy"**.
 7. En 1-2 minutos tendrás la URL de producción (ej: `https://agrogestion.vercel.app`).
+
+> **Nota:** El proyecto incluye un archivo `vercel.json` con la configuración de reescritura SPA:
+> ```json
+> { "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }] }
+> ```
+> Esto garantiza que las rutas del lado del cliente (React Router) funcionen correctamente al recargar cualquier página.
 
 **Despliegues posteriores:** Cada push a la rama `main` en GitHub desplegará automáticamente la nueva versión.
 
@@ -509,10 +413,14 @@ Una vez desplegada la aplicación, verifica lo siguiente:
 |--------------------------------------------|-----------------------------------------------------------------|
 | La página carga correctamente              | Accede a la URL y verifica que se muestra la landing page.      |
 | La conexión con Supabase funciona          | Intenta registrarte o iniciar sesión.                           |
+| El registro incluye selección de rol       | Al registrarse, verifica que aparecen Gerente, Capataz y Trabajador. |
 | Las rutas funcionan correctamente          | Navega entre páginas y recarga (F5) en cada una.                |
 | El diseño responsive es correcto           | Prueba en móvil o redimensiona el navegador.                    |
+| El menú hamburguesa funciona en móvil      | En pantalla pequeña, verifica que el sidebar se colapsa.        |
+| El cambio de idioma funciona               | Cambia entre español, inglés y rumano desde la interfaz.        |
 | No hay errores en la consola del navegador | Abre DevTools (F12) y revisa la pestaña Console.                |
 | Las políticas RLS funcionan                | Inicia sesión con distintos roles y verifica los datos visibles.|
+| Las notificaciones se generan              | Asigna una tarea a un capataz y verifica que recibe notificación.|
 
 ---
 
@@ -531,8 +439,8 @@ Una vez desplegada la aplicación, verifica lo siguiente:
 - **Solución:** Verifica los valores en `.env` comparándolos con los de Settings → API en Supabase.
 
 ### Error: "relation 'usuario' does not exist"
-- **Causa:** Las tablas no se han creado en Supabase.
-- **Solución:** Ejecuta el script SQL del paso 4.2 en el SQL Editor de Supabase.
+- **Causa:** Las tablas no se han creado o se usó un script antiguo que usa `usuario` en vez de `perfiles`.
+- **Solución:** Ejecuta el script `schema.sql` actualizado (ubicado en `AGROGESTION/src/database/supabase/schema.sql`) en el SQL Editor de Supabase. La tabla de usuarios se llama `perfiles`.
 
 ### La página se queda en blanco
 - **Causa:** Error de JavaScript. Puede ser un problema de rutas o de build.
@@ -571,4 +479,5 @@ Una vez desplegada la aplicación, verifica lo siguiente:
 **Agrogestión — Manual de Despliegue**
 Autor: Juan Francisco Hurtado Pérez
 Ciclo: CFGS Desarrollo de Aplicaciones Web (DAW)
+Curso: 2024/2025 – 2025/2026
 Centro: IES Albarregas – Mérida (España)
