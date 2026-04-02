@@ -161,7 +161,8 @@
     "name": "Nume",
     "email": "Email",
     "status": "Stare",
-    "role": "Rol"
+    "role": "Rol",
+    "unknown": "Utilizator necunoscut"
   },
   "tarea": {
     "myTasks": "🔍Sarcinile Mele",

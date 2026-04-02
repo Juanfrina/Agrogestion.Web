@@ -32,26 +32,37 @@ export default function TrabajadorDashboard() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    if (!perfil) return;
+    if (!perfil) {
+      setLoading(false);
+      return;
+    }
+    let cancelled = false;
     const cargar = async () => {
+      setLoading(true);
       try {
         const data = await TareaRepository.getTareasByTrabajador(perfil.id);
-        const aplanadas: TareaConAsignacion[] = data.map((row: Record<string, unknown>) => ({
-          ...(row.tarea as Tarea),
-          estadoAsignacion: row.estado as string,
-        }));
-        setTareas(aplanadas);
+        if (!cancelled) {
+          const aplanadas: TareaConAsignacion[] = data.map((row: Record<string, unknown>) => ({
+            ...(row.tarea as Tarea),
+            estadoAsignacion: row.estado as string,
+          }));
+          setTareas(aplanadas);
+        }
       } catch (err: unknown) {
-        const msg = err instanceof Error ? err.message
-          : (err && typeof err === 'object' && 'message' in err) ? String((err as { message: string }).message)
-          : t('tarea.errorLoad');
-        setError(msg);
+        if (!cancelled) {
+          const msg = err instanceof Error ? err.message
+            : (err && typeof err === 'object' && 'message' in err) ? String((err as { message: string }).message)
+            : t('tarea.errorLoad');
+          setError(msg);
+        }
       } finally {
-        setLoading(false);
+        if (!cancelled) setLoading(false);
       }
     };
     cargar();
-  }, [perfil, t]);
+    return () => { cancelled = true; };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [perfil?.id]);
 
   if (loading) return <Spinner size="lg" text={t('tarea.loadingTasks')} />;
   if (error) return <Alert type="error" message={error} />;

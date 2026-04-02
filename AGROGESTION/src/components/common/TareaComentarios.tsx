@@ -15,7 +15,7 @@ interface Comentario {
   id_comentario: number;
   contenido: string;
   created_at: string;
-  autor: { nombre: string; apellidos: string };
+  autor: { nombre: string; apellidos: string } | null;
 }
 
 interface TareaComentariosProps {
@@ -83,7 +83,7 @@ export default function TareaComentarios({ tareaId, autorId }: TareaComentariosP
             >
               <div className="flex justify-between items-center mb-1">
                 <span className="font-semibold text-sm">
-                  {c.autor.nombre} {c.autor.apellidos}
+                  {c.autor ? `${c.autor.nombre} ${c.autor.apellidos}` : t('common.unknown')}
                 </span>
                 <span className="text-xs text-(--color-text-secondary)">
                   {new Date(c.created_at).toLocaleString()}

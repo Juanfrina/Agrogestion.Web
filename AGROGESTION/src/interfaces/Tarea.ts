@@ -48,6 +48,7 @@ export interface Tarea {
   gerente?: { nombre: string; apellidos: string };
   capataz?: { nombre: string; apellidos: string };
   estado?: { nombre: string };
+  comentarios_tarea?: { count: number }[];
 }
 
 /**

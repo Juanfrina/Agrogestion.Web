@@ -18,7 +18,8 @@ const TAREA_SELECT = `
   terreno:terreno!id_terreno(nombre),
   gerente:perfiles!id_gerente(nombre, apellidos),
   capataz:perfiles!id_capataz(nombre, apellidos),
-  estado:estados_tarea!id_estado(nombre)
+  estado:estados_tarea!id_estado(nombre),
+  comentarios_tarea(count)
 `;
 
 export const TareaRepository = {

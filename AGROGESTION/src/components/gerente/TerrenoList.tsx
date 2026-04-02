@@ -58,9 +58,10 @@ export default function TerrenoList() {
   };
 
   useEffect(() => {
+    if (!perfil) { setLoading(false); return; }
     cargarTerrenos();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [perfil]);
+  }, [perfil?.id]);
 
   /** Filtra terrenos por nombre o ubicación */
   const terrenosFiltrados = terrenos.filter((t) => {

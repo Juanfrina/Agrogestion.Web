@@ -161,7 +161,8 @@
     "name": "Nombre",
     "email": "Email",
     "status": "Estado",
-    "role": "Rol"
+    "role": "Rol",
+    "unknown": "Usuario desconocido"
   },
   "tarea": {
     "myTasks": "Mis Tareas",

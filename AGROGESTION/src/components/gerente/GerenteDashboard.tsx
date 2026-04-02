@@ -37,26 +37,37 @@ export default function GerenteDashboard() {
 
   /** Carga terrenos y tareas del gerente al montar */
   useEffect(() => {
-    if (!perfil) return;
+    if (!perfil) {
+      setLoading(false);
+      return;
+    }
+    let cancelled = false;
     const cargar = async () => {
+      setLoading(true);
       try {
         const [terrenosData, tareasData] = await Promise.all([
           TerrenoRepository.getByGestor(perfil.id),
           TareaRepository.getByGerente(perfil.id),
         ]);
-        setTerrenos(terrenosData);
-        setTareas(tareasData);
+        if (!cancelled) {
+          setTerrenos(terrenosData);
+          setTareas(tareasData);
+        }
       } catch (err: unknown) {
-        const msg = err instanceof Error ? err.message
-          : (err && typeof err === 'object' && 'message' in err) ? String((err as { message: string }).message)
-          : 'Error al cargar datos';
-        setError(msg);
+        if (!cancelled) {
+          const msg = err instanceof Error ? err.message
+            : (err && typeof err === 'object' && 'message' in err) ? String((err as { message: string }).message)
+            : 'Error al cargar datos';
+          setError(msg);
+        }
       } finally {
-        setLoading(false);
+        if (!cancelled) setLoading(false);
       }
     };
     cargar();
-  }, [perfil]);
+    return () => { cancelled = true; };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [perfil?.id]);
 
   if (loading) return <Spinner size="lg" text={t('dashboard.loadingDashboard')} />;
   if (error) return <Alert type="error" message={error} />;

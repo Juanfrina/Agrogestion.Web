@@ -32,20 +32,29 @@ export default function CapatazDashboard() {
 
   /** Carga las tareas del capataz al montar */
   useEffect(() => {
-    if (!perfil) return;
+    if (!perfil) {
+      setLoading(false);
+      return;
+    }
+    let cancelled = false;
     const cargar = async () => {
+      setLoading(true);
       try {
         const data = await TareaRepository.getByCapataz(perfil.id);
-        setTareas(data);
+        if (!cancelled) setTareas(data);
       } catch (err: unknown) {
-        const msg = err instanceof Error ? err.message : 'Error al cargar tareas';
-        setError(msg);
+        if (!cancelled) {
+          const msg = err instanceof Error ? err.message : 'Error al cargar tareas';
+          setError(msg);
+        }
       } finally {
-        setLoading(false);
+        if (!cancelled) setLoading(false);
       }
     };
     cargar();
-  }, [perfil]);
+    return () => { cancelled = true; };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [perfil?.id]);
 
   if (loading) return <Spinner size="lg" text="Cargando dashboard..." />;
   if (error) return <Alert type="error" message={error} />;
@@ -89,9 +98,9 @@ export default function CapatazDashboard() {
             {tareasPendientes.map((t) => (
               <Card key={t.id_tarea}>
                 <div className="flex items-center justify-between">
-                  <div>
+                  <div className="flex items-baseline gap-2">
                     <strong>{t.nombre}</strong>
-                    <span className="ml-2 text-sm text-gray-500">{t.terreno?.nombre}</span>
+                    <span className="text-sm text-gray-500">{t.terreno?.nombre}</span>
                   </div>
                   <Badge variant="warning">Pendiente de aceptar</Badge>
                 </div>

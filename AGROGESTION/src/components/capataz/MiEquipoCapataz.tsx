@@ -53,9 +53,10 @@ export default function MiEquipoCapataz() {
   };
 
   useEffect(() => {
+    if (!perfil) { setLoading(false); return; }
     cargarEquipo();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [perfil]);
+  }, [perfil?.id]);
 
   const handleAñadir = async () => {
     if (!perfil || !seleccionado) return;

@@ -41,16 +41,30 @@ interface AuthState {
 }
 
 /** Store de autenticación — accesible desde cualquier componente */
-export const useAuthStore = create<AuthState>((set) => ({
+export const useAuthStore = create<AuthState>((set, get) => ({
   // Estado inicial: sin sesión, sin perfil, cargando
   session: null,
   perfil: null,
   loading: true,
 
-  // Setters que actualizan el estado
-  setSession: (session) => set({ session }),
-  setPerfil: (perfil) => set({ perfil }),
-  setLoading: (loading) => set({ loading }),
+  // Setters que actualizan el estado (evitan re-renders si el valor no cambió)
+  setSession: (session) => {
+    // Solo actualizar si realmente cambió el access_token
+    const current = get().session;
+    if (current?.access_token !== session?.access_token) {
+      set({ session });
+    }
+  },
+  setPerfil: (perfil) => {
+    // Solo actualizar si cambió el id del perfil
+    const current = get().perfil;
+    if (current?.id !== perfil?.id) {
+      set({ perfil });
+    }
+  },
+  setLoading: (loading) => {
+    if (get().loading !== loading) set({ loading });
+  },
 
   // Limpia todo el estado de auth (para cuando el usuario cierra sesión)
   reset: () => set({ session: null, perfil: null, loading: false }),

@@ -23,6 +23,7 @@ import Modal from '../common/Modal';
 import Spinner from '../common/Spinner';
 import Alert from '../common/Alert';
 import TareaForm from './TareaForm';
+import TareaComentarios from '../common/TareaComentarios';
 
 /**
  * Lista de tareas creadas por el gerente.
@@ -45,31 +46,42 @@ export default function TareaGerenteList() {
   const [modalForm, setModalForm] = useState(false);
   const [tareaEditar, setTareaEditar] = useState<Tarea | undefined>(undefined);
 
+  // Modal de comentarios
+  const [modalComentarios, setModalComentarios] = useState(false);
+  const [tareaComentarios, setTareaComentarios] = useState<number | null>(null);
+
   /** Carga todo lo necesario al montar */
   useEffect(() => {
-    if (!perfil) return;
+    if (!perfil) { setLoading(false); return; }
+    let cancelled = false;
     const cargar = async () => {
+      setLoading(true);
       try {
         const [tareasData, terrenosData, capatacesData] = await Promise.all([
           TareaRepository.getByGerente(perfil.id),
           TerrenoRepository.getByGestor(perfil.id),
           UsuarioRepository.getCapatacesByGerente(perfil.id),
         ]);
-        setTareas(tareasData);
-        setTerrenos(terrenosData);
-        setCapataces(capatacesData);
+        if (!cancelled) {
+          setTareas(tareasData);
+          setTerrenos(terrenosData);
+          setCapataces(capatacesData);
+        }
       } catch (err: unknown) {
-        const msg = err instanceof Error ? err.message
-          : (err && typeof err === 'object' && 'message' in err) ? String((err as { message: string }).message)
-          : t('tarea.errorLoad');
-        setError(msg);
+        if (!cancelled) {
+          const msg = err instanceof Error ? err.message
+            : (err && typeof err === 'object' && 'message' in err) ? String((err as { message: string }).message)
+            : t('tarea.errorLoad');
+          setError(msg);
+        }
       } finally {
-        setLoading(false);
+        if (!cancelled) setLoading(false);
       }
     };
     cargar();
+    return () => { cancelled = true; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [perfil]);
+  }, [perfil?.id]);
 
   /** Recarga solo las tareas */
   const recargarTareas = async () => {
@@ -95,7 +107,19 @@ export default function TareaGerenteList() {
 
   /** Columnas de la tabla */
   const columnas = [
-    { key: 'nombre', header: t('tarea.name') },
+    { key: 'nombre', header: t('tarea.name'), render: (row: Tarea) => {
+      const numComentarios = row.comentarios_tarea?.[0]?.count ?? 0;
+      return (
+        <div className="flex items-center gap-2">
+          <span>{row.nombre}</span>
+          {numComentarios > 0 && (
+            <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 px-2 py-0.5 text-xs font-semibold text-amber-800" title={`${numComentarios} ${t('tarea.comments').toLowerCase()}`}>
+              💬 {numComentarios}
+            </span>
+          )}
+        </div>
+      );
+    }},
     { key: 'terreno', header: t('tarea.terrain'), render: (row: Tarea) => row.terreno?.nombre ?? '—' },
     { key: 'capataz', header: t('tarea.capataz'), render: (row: Tarea) => row.capataz ? `${row.capataz.nombre} ${row.capataz.apellidos}` : t('tarea.noAssigned') },
     {
@@ -111,9 +135,16 @@ export default function TareaGerenteList() {
       key: 'acciones',
       header: t('tarea.actions'),
       render: (row: Tarea) => (
-        <Button variant="secondary" onClick={() => { setTareaEditar(row); setModalForm(true); }}>
-          {t('tarea.edit')}
-        </Button>
+        <div className="flex gap-2 flex-wrap">
+          <Button variant="secondary" onClick={() => { setTareaEditar(row); setModalForm(true); }}>
+            {t('tarea.edit')}
+          </Button>
+          {row.estado?.nombre !== 'PENDIENTE' && (
+            <Button variant="secondary" onClick={() => { setTareaComentarios(row.id_tarea); setModalComentarios(true); }}>
+              {t('tarea.comments')}
+            </Button>
+          )}
+        </div>
       ),
     },
   ];
@@ -156,6 +187,13 @@ export default function TareaGerenteList() {
           }}
           onCancel={() => setModalForm(false)}
         />
+      </Modal>
+
+      {/* Modal de comentarios */}
+      <Modal isOpen={modalComentarios} onClose={() => setModalComentarios(false)} title={t('tarea.comments')}>
+        {tareaComentarios && perfil && (
+          <TareaComentarios tareaId={tareaComentarios} autorId={perfil.id} />
+        )}
       </Modal>
     </div>
   );

@@ -161,7 +161,8 @@
     "name": "Name",
     "email": "Email",
     "status": "Status",
-    "role": "Role"
+    "role": "Role",
+    "unknown": "Unknown user"
   },
   "tarea": {
     "myTasks": "My Tasks",

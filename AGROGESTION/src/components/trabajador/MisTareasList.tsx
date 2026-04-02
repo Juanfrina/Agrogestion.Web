@@ -63,9 +63,10 @@ export default function MisTareasList() {
   };
 
   useEffect(() => {
+    if (!perfil) { setLoading(false); return; }
     cargarTareas();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [perfil]);
+  }, [perfil?.id]);
 
   /** Traduce el estado de asignación */
   const getAsignLabel = (estado: string): string => {
@@ -137,8 +138,19 @@ export default function MisTareasList() {
   };
 
   const columnas = [
-    { key: 'nombre', header: t('tarea.name') },
-    { key: 'descripcion', header: t('tarea.description'), render: (row: TareaConAsignacion) => row.descripcion ?? '—' },
+    { key: 'nombre', header: t('tarea.name'), render: (row: TareaConAsignacion) => {
+      const numComentarios = row.comentarios_tarea?.[0]?.count ?? 0;
+      return (
+        <div className="flex items-center gap-2">
+          <span>{row.nombre}</span>
+          {numComentarios > 0 && (
+            <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 px-2 py-0.5 text-xs font-semibold text-amber-800" title={`${numComentarios} ${t('tarea.comments').toLowerCase()}`}>
+              💬 {numComentarios}
+            </span>
+          )}
+        </div>
+      );
+    }},
     { key: 'terreno', header: t('tarea.terrain'), render: (row: TareaConAsignacion) => row.terreno?.nombre ?? '—' },
     { key: 'fechas', header: t('tarea.dates'), render: (row: TareaConAsignacion) => `${row.fecha_inicio} — ${row.fecha_fin}` },
     {

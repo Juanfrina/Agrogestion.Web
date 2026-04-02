@@ -56,9 +56,10 @@ export default function TareaCapatazList() {
   };
 
   useEffect(() => {
+    if (!perfil) { setLoading(false); return; }
     cargarTareas();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [perfil]);
+  }, [perfil?.id]);
 
   /** Traduce el id_estado a texto */
   const getEstadoLabel = (id: number): string => {
@@ -116,7 +117,19 @@ export default function TareaCapatazList() {
   };
 
   const columnas = [
-    { key: 'nombre', header: t('tarea.name') },
+    { key: 'nombre', header: t('tarea.name'), render: (tarea: Tarea) => {
+      const numComentarios = tarea.comentarios_tarea?.[0]?.count ?? 0;
+      return (
+        <div className="flex items-center gap-2">
+          <span>{tarea.nombre}</span>
+          {numComentarios > 0 && (
+            <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 px-2 py-0.5 text-xs font-semibold text-amber-800" title={`${numComentarios} ${t('tarea.comments').toLowerCase()}`}>
+              💬 {numComentarios}
+            </span>
+          )}
+        </div>
+      );
+    }},
     { key: 'terreno', header: t('tarea.terrain'), render: (tarea: Tarea) => tarea.terreno?.nombre ?? '—' },
     {
       key: 'estado',

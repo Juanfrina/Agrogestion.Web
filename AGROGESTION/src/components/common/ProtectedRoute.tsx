@@ -17,7 +17,9 @@
 
 import { Navigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useEffect, useRef } from 'react';
 import { useAuthStore } from '../../store/authStore';
+import { AuthRepository } from '../../database/repositories/AuthRepository';
 import type { ReactNode } from 'react';
 
 /**
@@ -40,6 +42,21 @@ interface ProtectedRouteProps {
 export function ProtectedRoute({ children, allowedRoles }: ProtectedRouteProps) {
   const { session, perfil, loading } = useAuthStore();
   const { t } = useTranslation();
+  const retryRef = useRef(false);
+
+  // Auto-recuperación: si tenemos sesión pero perdimos el perfil
+  // (puede pasar por HMR, race conditions, etc.), lo intentamos recargar.
+  useEffect(() => {
+    if (session?.user && !perfil && !loading && !retryRef.current) {
+      retryRef.current = true;
+      AuthRepository.getPerfil(session.user.id)
+        .then((p) => {
+          if (p) useAuthStore.getState().setPerfil(p);
+        })
+        .catch(() => {})
+        .finally(() => { retryRef.current = false; });
+    }
+  }, [session, perfil, loading]);
 
   // Mientras se comprueba la sesión, mostramos un spinner
   if (loading) {
