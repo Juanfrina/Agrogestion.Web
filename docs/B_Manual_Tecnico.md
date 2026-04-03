@@ -144,9 +144,11 @@ Agrogestión utiliza una arquitectura **cliente-servidor desacoplada**:
 | RF-23 | El administrador debe poder visualizar estadísticas globales con gráficos.                  | Media     |
 | RF-24 | El sistema debe soportar internacionalización en español, inglés y rumano.                  | Media     |
 | RF-25 | La interfaz debe ser responsive con menú hamburguesa en dispositivos móviles.               | Media     |
-| RF-26 | Los usuarios involucrados en una tarea deben poder añadir comentarios.                      | Media     |
+| RF-26 | Los usuarios involucrados en una tarea deben poder añadir y ver comentarios, con indicador visual 💬 del número de comentarios. | Media     |
 | RF-27 | El sistema debe generar notificaciones automáticas al asignar tareas o trabajadores.        | Media     |
 | RF-28 | El trabajador debe poder aceptar o rechazar su asignación a una tarea.                      | Media     |
+| RF-29 | Los capataces y trabajadores deben ver una campanita 🔔 con contador de notificaciones no leídas en la cabecera. | Media     |
+| RF-30 | Los usuarios deben poder marcar notificaciones como leídas (individualmente o todas a la vez). | Media     |
 
 #### 3.1.2. Requisitos no funcionales
 
@@ -448,7 +450,8 @@ La base de datos se implementa en PostgreSQL gestionado por Supabase. Se compone
 | CU-23 | Cambiar idioma            | Todos                | El usuario cambia el idioma de la interfaz (ES / EN / RO).    |
 | CU-24 | Añadir comentario a tarea | Gerente, Capataz, Trabajador | El usuario deja un comentario en una tarea en la que participa.|
 | CU-25 | Aceptar/Rechazar asignación | Trabajador         | El trabajador acepta o rechaza su asignación a una tarea.     |
-| CU-26 | Ver notificaciones        | Todos (autenticados) | El usuario consulta las notificaciones automáticas recibidas. |
+| CU-26 | Ver notificaciones        | Capataz, Trabajador  | El usuario pulsa la campanita 🔔 en la cabecera para ver sus notificaciones con contador de no leídas. |
+| CU-27 | Marcar notificaciones leídas | Capataz, Trabajador | El usuario marca notificaciones como leídas (individualmente o todas a la vez). |
 
 **Diagrama de casos de uso (representación textual):**
 

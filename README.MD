@@ -41,8 +41,8 @@ Agrogestión digitaliza la organización del trabajo en explotaciones agrícolas
 - **Control de terrenos** con alta, baja lógica y edición.
 - **Creación y seguimiento de tareas agrícolas** con 6 estados (pendiente, asignada, aceptada, rechazada, en progreso, completada).
 - **Relaciones entre gerentes y capataces**, y asignación de trabajadores a tareas concretas.
-- **Comentarios en tareas** para comunicación entre participantes.
-- **Notificaciones automáticas** mediante triggers al asignar tareas y trabajadores.
+- **Comentarios en tareas** para comunicación entre participantes, con indicador visual 💬 de número de comentarios.
+- **Notificaciones automáticas** mediante triggers al asignar tareas y trabajadores, con **campanita 🔔 en la cabecera** para capataces y trabajadores (contador de no leídas, modal con historial y marcar como leídas).
 - **Flujo de aceptación/rechazo** de tareas por parte de los trabajadores.
 - **Internacionalización (i18n):** soporte para español, inglés y rumano.
 - **Recuperación de contraseña** mediante Supabase Auth.
@@ -100,7 +100,7 @@ AGROGESTION/
 │   │   ├── capataz/            # CapatazDashboard, TareaCapatazList, MiEquipoCapataz, TrabajadorAsignacion
 │   │   ├── cards/              # Card
 │   │   ├── charts/             # MensualChart, RoleDistributionChart
-│   │   ├── common/             # Header, Footer, Layout, Sidebar, Modal, Alert, Spinner, LanguageSwitcher, ThemeToggle...
+│   │   ├── common/             # Header, Footer, Layout, Sidebar, Modal, Alert, Spinner, LanguageSwitcher, NotificationBell, TareaComentarios...
 │   │   ├── forms/              # LoginForm, RegistroForm, ResetPasswordForm, InputField
 │   │   ├── gerente/            # GerenteDashboard, TerrenoList, TerrenoForm, TareaForm, TareaGerenteList, MiEquipoGerente
 │   │   ├── home/               # Landing page
@@ -202,9 +202,9 @@ El proyecto incluye un archivo `vercel.json` con la configuración SPA necesaria
 | Rol        | Permisos principales                                                                      |
 |------------|-------------------------------------------------------------------------------------------|
 | ADMIN      | Gestiona usuarios (crear, editar, cambiar rol, desactivar/reactivar), estadísticas globales. |
-| GERENTE    | Gestiona terrenos, crea tareas, supervisa capataces, gestiona su equipo.                  |
-| CAPATAZ    | Toma tareas, actualiza estados, asigna trabajadores de apoyo, gestiona su equipo.         |
-| TRABAJADOR | Ve tareas en las que participa y consulta sus detalles.                                   |
+| GERENTE    | Gestiona terrenos, crea tareas, ve y escribe comentarios, supervisa capataces, gestiona su equipo. |
+| CAPATAZ    | Toma tareas, actualiza estados, asigna trabajadores, comentarios, notificaciones con campanita. |
+| TRABAJADOR | Ve tareas, acepta/rechaza asignaciones, comentarios, notificaciones con campanita.        |
 
 ---
 
@@ -251,8 +251,9 @@ El proyecto incluye un archivo `vercel.json` con la configuración SPA necesaria
 - ✅ Cambio de estado de tareas (6 estados: pendiente → asignada → aceptada → en progreso → completada / rechazada).
 - ✅ Asignación de trabajadores a tareas concretas.
 - ✅ Flujo de aceptación/rechazo de tareas por parte de los trabajadores.
-- ✅ Comentarios en tareas entre participantes.
-- ✅ Notificaciones automáticas (asignación de tareas y trabajadores).
+- ✅ Comentarios en tareas entre participantes (gerente, capataz y trabajador) con indicador 💬.
+- ✅ Notificaciones automáticas (asignación de tareas y trabajadores) con campanita 🔔 en la cabecera.
+- ✅ Campanita de notificaciones con contador de no leídas y modal para capataz y trabajador.
 - ✅ Relaciones gerente-capataz y capataz-trabajador.
 - ✅ Gestión de equipos (gerente → capataces, capataz → trabajadores).
 - ✅ Listados filtrados por terreno, estado y usuario.

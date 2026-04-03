@@ -58,14 +58,16 @@ El administrador tiene acceso al **dashboard de estadísticas** y a la **gestió
 El gerente gestiona los recursos agrícolas:
 
 - **Terrenos**: Crear, editar y dar de baja parcelas de cultivo.
-- **Tareas**: Crear nuevas tareas, asignar capataz responsable.
+- **Tareas**: Crear nuevas tareas, asignar capataz responsable. Cada tarea muestra un indicador 💬 con el número de comentarios.
+- **Comentarios**: Ver y añadir comentarios en las tareas para comunicarse con capataces y trabajadores.
 - **Mi Equipo**: Asociar y desasociar capataces de su equipo.
 
 ### 3.3. Panel CAPATAZ (`/capataz`)
 
 El capataz ejecuta y supervisa las tareas:
 
-- **Mis Tareas**: Ver las tareas asignadas por el gerente, cambiar el estado (Aceptar, En Progreso, Completar).
+- **Campanita de notificaciones 🔔**: En la cabecera se muestra un icono de campana con el contador de notificaciones no leídas. Al pulsar, se abre un modal con el historial de notificaciones donde se pueden marcar como leídas individual o colectivamente.
+- **Mis Tareas**: Ver las tareas asignadas por el gerente, cambiar el estado (Aceptar, En Progreso, Completar). Cada tarea muestra un indicador 💬 con el número de comentarios.
 - **Asignar Trabajadores**: Vincular trabajadores de su equipo a las tareas.
 - **Mi Equipo**: Asociar y desasociar trabajadores.
 - **Comentarios**: Añadir comentarios en las tareas para comunicación con el equipo.
@@ -74,9 +76,10 @@ El capataz ejecuta y supervisa las tareas:
 
 El trabajador tiene el panel más sencillo:
 
-- **Mis Tareas**: Ver las tareas a las que ha sido asignado.
+- **Campanita de notificaciones 🔔**: En la cabecera se muestra un icono de campana con el contador de notificaciones no leídas. Al pulsar, se abre un modal con el historial donde se pueden marcar como leídas.
+- **Mis Tareas**: Ver las tareas a las que ha sido asignado. Cada tarea muestra un indicador 💬 con el número de comentarios.
 - **Aceptar / Rechazar**: Responder a las asignaciones de tareas.
-- **Comentar**: Añadir comentarios en las tareas asignadas.
+- **Comentarios**: Ver y añadir comentarios en las tareas asignadas.
 
 ---
 

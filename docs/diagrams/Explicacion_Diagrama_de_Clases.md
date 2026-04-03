@@ -56,6 +56,7 @@ Representa una tarea agrícola asignada a un terreno, creada por un gerente y op
 | `fecha_baja` | `string \| null` | Soft delete |
 | `created_at` | `string` | Fecha de creación |
 | `updated_at` | `string` | Última modificación |
+| `comentarios_tarea` | `{ count: number }[]` | Contador de comentarios (campo virtual, cargado en la consulta SELECT) |
 
 ### 3.3. Terreno
 
@@ -147,7 +148,7 @@ El repositorio más complejo, gestiona todo el ciclo de vida de las tareas.
 | `assignTrabajador(tarea, trab, cap)` | — | Asigna un trabajador a una tarea |
 | `respondTrabajadorAssignment(...)` | — | El trabajador acepta o rechaza la asignación |
 
-### 5.4. UsuarioRepository (9 métodos)
+### 5.4. UsuarioRepository (10 métodos)
 
 Gestiona las relaciones jerárquicas entre usuarios (equipos).
 
@@ -162,6 +163,7 @@ Gestiona las relaciones jerárquicas entre usuarios (equipos).
 | `getAvailableCapataces()` | `Perfil[]` | Capataces no asignados a ningún gerente |
 | `getAvailableTrabajadores()` | `Perfil[]` | Trabajadores no asignados a ningún capataz |
 | `getNotificaciones(userId)` | `Notificación[]` | Notificaciones del usuario |
+| `markAllNotificacionesLeidas(userId)` | `void` | Marca todas las notificaciones como leídas |
 
 ### 5.5. AdminRepository (7 métodos)
 

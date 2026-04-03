@@ -320,7 +320,7 @@ src/
 | Componente              | Carpeta      | Descripción                                                      |
 |-------------------------|--------------|------------------------------------------------------------------|
 | Layout                  | common       | Estructura base con header, sidebar y área de contenido.         |
-| Header                  | common       | Barra superior con logo, usuario, idioma y cerrar sesión.        |
+| Header                  | common       | Barra superior con logo, usuario, campanita de notificaciones 🔔, idioma y cerrar sesión. |
 | Footer                  | common       | Pie de página con créditos.                                      |
 | Sidebar                 | common       | Menú lateral con enlaces según el rol del usuario.               |
 | Modal                   | common       | Ventana modal para formularios de creación/edición.              |
@@ -328,6 +328,7 @@ src/
 | Alert                   | common       | Componente de mensajes y notificaciones.                         |
 | ThemeToggle             | common       | Selector de tema claro/oscuro.                                   |
 | TareaComentarios        | common       | Hilo de comentarios en una tarea con envío de mensajes.          |
+| NotificationBell        | common       | Campanita 🔔 con contador de notificaciones no leídas y modal con historial. |
 | LanguageSwitcher        | common       | Selector de idioma (español, inglés y rumano).                    |
 | LoginForm               | forms        | Formulario de inicio de sesión.                                  |
 | RegistroForm            | forms        | Formulario de registro de nuevo usuario.                         |
@@ -341,7 +342,7 @@ src/
 | Card                    | cards        | Tarjeta de información reutilizable.                             |
 | MensualChart            | charts       | Gráfico de barras con datos mensuales para visualización.        |
 | RoleDistributionChart   | charts       | Gráfico de distribución de usuarios por rol.                     |
-| Landing                 | home         | Contenido de la página de inicio.                                |
+| Landing                 | home         | Página de inicio con hero (imagen de paisaje de fondo a ancho completo), características y pie de página. |
 | Profile                 | profile      | Vista del perfil de usuario.                                     |
 | AdminDashboard          | admin        | Panel principal del administrador.                               |
 | UserTable               | admin        | Tabla de gestión de usuarios.                                    |
@@ -531,17 +532,23 @@ Se implementó un sistema de comentarios dentro de cada tarea:
 | Componente               | `TareaComentarios` muestra el hilo de comentarios y permite enviar nuevos. |
 | Permisos                 | Pueden comentar todos los participantes de una tarea (gerente, capataz, trabajadores asignados). |
 | Visualización            | Los comentarios se muestran ordenados cronológicamente con el nombre del autor y la fecha. |
+| Indicador 💬             | En las listas de tareas (gerente, capataz y trabajador) se muestra un badge con el número de comentarios junto al nombre de la tarea. |
+| Acceso gerente           | El gerente puede ver y escribir comentarios en sus tareas desde el botón "Comentarios" en la lista de tareas. |
 
 ### 5.13. Sistema de notificaciones
 
-Se implementó un sistema de notificaciones internas automáticas:
+Se implementó un sistema de notificaciones internas automáticas con campanita visual:
 
 | Aspecto                  | Detalle                                                      |
 |--------------------------|--------------------------------------------------------------|
 | Tabla                    | `notificaciones` con campos: tipo, título, mensaje, id_tarea, leída. |
 | Triggers                 | `trg_notif_tarea_asignada_capataz` (notifica al capataz cuando se le asigna tarea) y `trg_notif_trabajador_asignado` (notifica al trabajador cuando se le asigna a una tarea). |
 | Tipos de notificación    | 10 tipos: TAREA_ASIGNADA, TAREA_ACEPTADA, TAREA_RECHAZADA, TAREA_EN_PROGRESO, TAREA_COMPLETADA, TRABAJADOR_ASIGNADO, TRABAJADOR_ACEPTO, TRABAJADOR_RECHAZO, COMENTARIO_NUEVO, ASOCIACION_NUEVA. |
-| Lectura                  | El destinatario puede marcar notificaciones como leídas.     |
+| Componente               | `NotificationBell` — campanita 🔔 en la cabecera con contador rojo de no leídas. |
+| Ubicación                | Visible solo para capataces y trabajadores, al lado del nombre del usuario en el Header. |
+| Modal                    | Al pulsar la campanita se abre un modal con el historial de notificaciones con icono por tipo, título, mensaje y fecha. |
+| Marcar como leída        | Clic en una notificación individual o botón "Marcar todas como leídas". |
+| Actualización automática | Polling cada 30 segundos para refrescar el contador sin recargar la página. |
 | RLS                      | Solo el destinatario puede ver sus propias notificaciones.   |
 
 ### 5.14. Flujo de aceptación/rechazo de trabajadores
@@ -671,7 +678,7 @@ En la fase final del proyecto se elaboraron cuatro documentos:
 | O9       | Documentación completa                                   | ✅ Cumplido |
 | O10      | Despliegue accesible desde Internet                      | ✅ Cumplido |
 | O11      | Internacionalización (i18n) en 3 idiomas                 | ✅ Cumplido |
-| O12      | Comentarios en tareas y notificaciones                   | ✅ Cumplido |
+| O12      | Comentarios en tareas y notificaciones con campanita 🔔  | ✅ Cumplido |
 | O13      | Flujo de aceptación/rechazo de trabajadores              | ✅ Cumplido |
 
 ### Valoración personal

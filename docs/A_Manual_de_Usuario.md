@@ -48,7 +48,7 @@ Al abrir la aplicación en tu navegador, llegarás a la **Landing Page** o pági
 
 - **Logotipo y nombre** de la aplicación: "Agrogestión".
 - **Eslogan** y descripción del propósito de la aplicación.
-- **Sección Hero** con los botones principales de acceso.
+- **Sección Hero** con imagen de paisaje agrícola de fondo y botones de acceso superpuestos.
 - **Sección de características** destacadas de la aplicación.
 - **Botón "Iniciar sesión"**: Te llevará a la pantalla de login.
 - **Botón "Registrarse"**: Te llevará al formulario de registro.
@@ -285,6 +285,8 @@ El gerente puede:
 - **Crear tareas agrícolas** asociadas a un terreno concreto pulsando **"Nueva Tarea"**.
 - **Asignar una tarea** a un capataz de su equipo para que la ejecute.
 - **Ver el estado** de cada tarea (pendiente, en progreso, completada) mediante **badges** de colores.
+- **Ver el indicador 💬** con el número de comentarios en cada tarea.
+- **Ver y escribir comentarios** en las tareas pulsando el botón **“Comentarios”**, para comunicarse con capataces y trabajadores.
 - **Filtrar tareas** por terreno, estado o capataz asignado.
 - **Eliminar tareas** que ya no sean necesarias.
 
@@ -323,20 +325,31 @@ La pantalla principal del capataz muestra:
 
 | Zona                        | Descripción                                                          |
 |-----------------------------|----------------------------------------------------------------------|
-| Cabecera                    | Nombre del usuario, rol, selector de idioma.                         |
+| Cabecera                    | Nombre del usuario, rol, 🔔 campanita de notificaciones, selector de idioma. |
 | Menú lateral (Sidebar)      | Accesos a: Dashboard, Mis Tareas, Mi Equipo, Mi Perfil, Cerrar sesión. |
 | Tarjetas de estadísticas    | Resumen de tareas pendientes, en progreso y completadas.             |
 | Gráfico                     | Evolución mensual de tareas.                                         |
 
-### 9.2. Mis Tareas
+### 9.2. Campanita de notificaciones 🔔
+
+En la cabecera, al lado del nombre del usuario, aparece un **icono de campana** con un **contador rojo** que indica el número de notificaciones no leídas. Al pulsar la campanita se abre un modal con el historial de notificaciones.
+
+- Las **notificaciones no leídas** se destacan con fondo y un punto de color.
+- Al **hacer clic en una notificación** se marca como leída.
+- El botón **“Marcar todas como leídas”** resetea el contador a cero.
+- Las notificaciones se actualizan automáticamente cada 30 segundos.
+
+### 9.3. Mis Tareas
 
 *(Captura: Lista de tareas del capataz)*
 
 El capataz puede:
 
 - **Ver las tareas asignadas** por los gerentes.
-- **Tomar una tarea** pendiente (cambiar su estado a "En progreso").
+- **Ver el indicador 💬** con el número de comentarios en cada tarea.
+- **Tomar una tarea** pendiente (cambiar su estado a “En progreso”).
 - **Marcar una tarea como completada** cuando se haya terminado.
+- **Escribir y leer comentarios** en cada tarea pulsando el botón “Comentarios”.
 - **Asignar trabajadores de apoyo** a una tarea concreta pulsando el botón de asignación.
 
 ### Flujo del estado de una tarea:
@@ -356,7 +369,7 @@ PENDIENTE → ASIGNADA → ACEPTADA → EN PROGRESO → COMPLETADA
 | En progreso   | El capataz está trabajando activamente en la tarea.            | Azul            |
 | Completada    | La tarea se ha finalizado correctamente.                       | Verde           |
 
-### 9.3. Gestión de equipo (Mi Equipo)
+### 9.4. Gestión de equipo (Mi Equipo)
 
 *(Captura: Mi Equipo del capataz)*
 
@@ -379,20 +392,25 @@ El trabajador es el rol con menos permisos. Su función principal es consultar l
 
 | Zona                        | Descripción                                                          |
 |-----------------------------|----------------------------------------------------------------------|
-| Cabecera                    | Nombre del usuario, rol, selector de idioma.                         |
+| Cabecera                    | Nombre del usuario, rol, 🔔 campanita de notificaciones, selector de idioma. |
 | Menú lateral (Sidebar)      | Accesos a: Dashboard, Mis Tareas, Mi Perfil, Cerrar sesión.         |
 | Tarjetas de estadísticas    | Resumen de tareas en las que participa.                              |
 
-### 10.2. Mis Tareas
+### 10.2. Campanita de notificaciones 🔔
+
+Igual que en el panel del capataz, el trabajador dispone de una **campanita de notificaciones** en la cabecera con contador de no leídas. Al pulsarla se abre un modal donde puede ver todas sus notificaciones, marcarlas como leídas individualmente o todas a la vez.
+
+### 10.3. Mis Tareas
 
 *(Captura: Lista de tareas del trabajador)*
 
 El trabajador puede:
 
 - **Ver las tareas** en las que ha sido asignado como apoyo.
+- **Ver el indicador 💬** con el número de comentarios en cada tarea.
 - **Aceptar o rechazar** una tarea que le han asignado (el estado pasa a ACEPTADA o RECHAZADA).
 - **Consultar los detalles** de cada tarea: nombre, descripción, terreno, capataz responsable, fechas y estado actual.
-- **Añadir comentarios** en las tareas en las que participa.
+- **Añadir y leer comentarios** en las tareas pulsando el botón "Comentarios".
 
 > **Nota:** El trabajador no puede modificar el estado general de las tareas, solo aceptar/rechazar su asignación y añadir comentarios.
 
@@ -409,7 +427,7 @@ La Landing Page es la primera pantalla visible al acceder a la URL de la aplicac
 | Elemento                  | Descripción                                                        |
 |---------------------------|--------------------------------------------------------------------|
 | Cabecera                  | Logo, nombre de la app, botones de login/registro, selector de idioma. |
-| Sección Hero              | Logo grande, eslogan, descripción y botones de acceso principal.   |
+| Sección Hero              | Imagen de paisaje agrícola de fondo a ancho completo con el título, eslogan, descripción y botones de acceso superpuestos. |
 | Sección de características| Tarjetas con las funcionalidades principales de la aplicación.     |
 | Pie de página             | Créditos del autor, centro educativo y enlaces legales.            |
 
@@ -445,6 +463,7 @@ La cabecera se muestra en la parte superior de todas las pantallas y contiene:
 
 - **Botón hamburguesa (☰):** Solo visible en móviles. Abre/cierra el menú lateral.
 - **Logo y nombre** de la aplicación (siempre visible).
+- **Campanita de notificaciones 🔔:** Solo visible para capataces y trabajadores. Muestra un contador rojo con las notificaciones no leídas. Al pulsarla se abre un modal con el historial.
 - **Nombre y apellidos** del usuario logueado (oculto en móviles para ahorrar espacio).
 - **Selector de idioma:** Permite cambiar entre español, inglés y rumano.
 
