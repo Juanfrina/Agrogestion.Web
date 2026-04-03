@@ -81,9 +81,9 @@ Si es la primera vez que accedes a Agrogestión, necesitarás crear una cuenta.
 | Nombre              | Tu nombre real.                                              | Sí          |
 | Apellidos           | Tus apellidos.                                               | Sí          |
 | Correo electrónico  | Email válido que usarás para iniciar sesión.                 | Sí          |
-| Teléfono            | Tu número de teléfono de contacto.                           | No          |
-| Dirección           | Tu dirección postal.                                         | No          |
-| DNI                 | Tu documento nacional de identidad.                          | No          |
+| Teléfono            | Tu número de teléfono de contacto.                           | Sí          |
+| Dirección           | Tu dirección postal.                                         | Sí          |
+| DNI                 | Tu documento nacional de identidad.                          | Sí          |
 | Rol                 | Selecciona tu rol: Gerente, Capataz o Trabajador.           | Sí          |
 | Contraseña          | Mínimo 6 caracteres. Se recomienda usar letras y números.   | Sí          |
 | Confirmar contraseña| Repite la contraseña para evitar errores de escritura.       | Sí          |
