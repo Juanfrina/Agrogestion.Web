@@ -282,5 +282,11 @@
     "loadingDashboard": "Loading dashboard...",
     "noTerreno": "No land",
     "errorLoadData": "Error loading data"
+  },
+  "notif": {
+    "title": "Notifications",
+    "empty": "You have no notifications",
+    "markAllRead": "Mark all as read",
+    "markRead": "Click to mark as read"
   }
 }

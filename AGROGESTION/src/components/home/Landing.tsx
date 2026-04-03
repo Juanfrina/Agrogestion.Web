@@ -70,16 +70,19 @@ export default function Landing() {
       {/* ════════════════════ HERO ════════════════════ */}
       <section className="landing-hero">
         <img
-          src="/LogoAgrogestion.png"
-          alt="Agrogestión logo"
-          className="landing-hero__logo"
+          src="/paisaje.jpg"
+          alt="Paisaje agrícola"
+          className="landing-hero__bg"
         />
-        <h1 className="landing-hero__title">{t('app.name')}</h1>
-        <p className="landing-hero__slogan">{t('app.slogan')}</p>
-        <p className="landing-hero__desc">{t('landing.heroDesc')}</p>
-        <div className="landing-hero__cta">
-          <Link to="/registro" className="btn-primary">{t('landing.startFree')}</Link>
-          <a href="#features" className="btn-secondary">{t('landing.discoverMore')}</a>
+        <div className="landing-hero__overlay" />
+        <div className="landing-hero__content">
+          <h1 className="landing-hero__title">{t('app.name')}</h1>
+          <p className="landing-hero__slogan">{t('app.slogan')}</p>
+          <p className="landing-hero__desc">{t('landing.heroDesc')}</p>
+          <div className="landing-hero__cta">
+            <Link to="/registro" className="btn-primary">{t('landing.startFree')}</Link>
+            <a href="#features" className="btn-secondary">{t('landing.discoverMore')}</a>
+          </div>
         </div>
       </section>
 

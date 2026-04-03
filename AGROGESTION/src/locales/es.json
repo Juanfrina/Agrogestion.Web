@@ -282,5 +282,11 @@
     "loadingDashboard": "Cargando dashboard...",
     "noTerreno": "Sin terreno",
     "errorLoadData": "Error al cargar datos"
+  },
+  "notif": {
+    "title": "Notificaciones",
+    "empty": "No tienes notificaciones",
+    "markAllRead": "Marcar todas como leídas",
+    "markRead": "Clic para marcar como leída"
   }
 }

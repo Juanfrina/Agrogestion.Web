@@ -14,6 +14,7 @@ import { AuthRepository } from '../../database/repositories/AuthRepository';
 import { useAuthStore } from '../../store/authStore';
 import Badge from '../ui/Badge';
 import Button from '../ui/Button';
+import NotificationBell from './NotificationBell';
 
 /** Mapeamos el nombre del rol a la variante del badge */
 function rolToBadgeVariant(roleName: string | null) {
@@ -73,6 +74,10 @@ export default function Header({ onToggleSidebar }: HeaderProps) {
       {/* Lado derecho: info del usuario + logout */}
       {isAuthenticated && perfil && (
         <div className="flex items-center gap-2 sm:gap-3">
+          {/* Campanita de notificaciones para capataz y trabajador */}
+          {(perfil.id_rol === 3 || perfil.id_rol === 4) && (
+            <NotificationBell userId={perfil.id} />
+          )}
           <span className="hidden sm:inline text-(--color-text-on-primary)">
             {perfil.nombre} {perfil.apellidos}
           </span>

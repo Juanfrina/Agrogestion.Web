@@ -158,4 +158,16 @@ export const UsuarioRepository = {
       .eq('id_notificacion', notifId);
     if (error) throw error;
   },
+
+  /**
+   * Marca todas las notificaciones no leídas de un usuario como leídas.
+   */
+  async markAllNotificacionesLeidas(userId: string): Promise<void> {
+    const { error } = await supabase
+      .from('notificaciones')
+      .update({ leida: true })
+      .eq('id_destinatario', userId)
+      .eq('leida', false);
+    if (error) throw error;
+  },
 };

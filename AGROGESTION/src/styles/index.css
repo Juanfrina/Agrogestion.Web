@@ -595,25 +595,37 @@ textarea::placeholder {
 
 /* ── Hero ── */
 .landing-hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 520px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.landing-hero__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.landing-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.75);
+}
+
+.landing-hero__content {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
-  padding: 5rem 2rem 4rem;
-  background: linear-gradient(
-    170deg,
-    var(--color-bg-main) 0%,
-    #e8f5e9 40%,
-    var(--color-bg-main) 100%
-  );
-}
-
-.landing-hero__logo {
-  width: 140px;
-  height: 140px;
-  object-fit: contain;
-  margin-bottom: 1.5rem;
-  filter: drop-shadow(0 4px 12px rgba(27, 94, 32, 0.2));
+  padding: 4rem 2rem;
 }
 
 .landing-hero__title {
@@ -898,11 +910,10 @@ textarea::placeholder {
     display: none;
   }
   .landing-hero {
-    padding: 3rem 1.25rem 2.5rem;
+    min-height: 400px;
   }
-  .landing-hero__logo {
-    width: 100px;
-    height: 100px;
+  .landing-hero__content {
+    padding: 3rem 1.25rem 2.5rem;
   }
   .landing-hero__title {
     font-size: 2rem;

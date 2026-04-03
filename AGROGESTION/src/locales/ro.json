@@ -282,5 +282,11 @@
     "loadingDashboard": "Se încarcă panoul...",
     "noTerreno": "Fără teren",
     "errorLoadData": "Eroare la încărcarea datelor"
+  },
+  "notif": {
+    "title": "Notificări",
+    "empty": "Nu ai notificări",
+    "markAllRead": "Marchează toate ca citite",
+    "markRead": "Clic pentru a marca ca citită"
   }
 }
