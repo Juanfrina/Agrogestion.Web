@@ -2,6 +2,7 @@
   <img src="AGROGESTION/public/LogoAgrogestion.png" alt="Agrogestión Logo" width="160" />
   <h1>🌾 Agrogestión</h1>
   <p><strong>Gestión agrícola web — Proyecto final DAW</strong></p>
+  <p>🔗 <a href="https://agrogestion-web.vercel.app/">https://agrogestion-web.vercel.app/</a></p>
   <p>
     <img src="https://img.shields.io/badge/React-19.2.0-61DAFB?logo=react" alt="React" />
     <img src="https://img.shields.io/badge/TypeScript-5.9.3-3178C6?logo=typescript" alt="TypeScript" />
