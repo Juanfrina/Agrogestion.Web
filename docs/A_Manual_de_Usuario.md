@@ -338,6 +338,9 @@ En la cabecera, al lado del nombre del usuario, aparece un **icono de campana** 
 - Al **hacer clic en una notificación** se marca como leída.
 - El botón **“Marcar todas como leídas”** resetea el contador a cero.
 - Las notificaciones se actualizan automáticamente cada 30 segundos.
+- Además, cada notificación genera automáticamente un **email al correo del destinatario** con un botón para acceder directamente a la aplicación.
+
+> **Nota:** Los emails se envían desde `juanfranhp13@gmail.com`. Si no los ves en la bandeja de entrada, revisa la carpeta de **spam**.
 
 ### 9.3. Mis Tareas
 
@@ -398,7 +401,7 @@ El trabajador es el rol con menos permisos. Su función principal es consultar l
 
 ### 10.2. Campanita de notificaciones 🔔
 
-Igual que en el panel del capataz, el trabajador dispone de una **campanita de notificaciones** en la cabecera con contador de no leídas. Al pulsarla se abre un modal donde puede ver todas sus notificaciones, marcarlas como leídas individualmente o todas a la vez.
+Igual que en el panel del capataz, el trabajador dispone de una **campanita de notificaciones** en la cabecera con contador de no leídas. Al pulsarla se abre un modal donde puede ver todas sus notificaciones, marcarlas como leídas individualmente o todas a la vez. También recibe un **email automático** en su correo registrado cada vez que se genera una notificación.
 
 ### 10.3. Mis Tareas
 

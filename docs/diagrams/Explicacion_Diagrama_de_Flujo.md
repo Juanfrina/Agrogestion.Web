@@ -127,9 +127,9 @@ Este flujo describe cómo los capataces asignan trabajadores de su equipo a tare
 
 2. Se realiza un **INSERT en la tabla `tarea_trabajador`** con estado inicial `PENDIENTE`.
 
-3. Un **trigger de PostgreSQL** (`notificar_trabajador_asignado()`) se ejecuta automáticamente y crea una **notificación** en la tabla `notificaciones`, alertando al trabajador de la nueva asignación.
+3. Un **trigger de PostgreSQL** (`notificar_trabajador_asignado()`) se ejecuta automáticamente y crea una **notificación** en la tabla `notificaciones`, alertando al trabajador de la nueva asignación. Además, un segundo trigger (`enviar_email_notificacion()`) envía un **email automático** al correo del trabajador vía la API de Brevo (usando la extensión `pg_net`).
 
-4. El **trabajador** ve la notificación en su panel y **responde**:
+4. El **trabajador** recibe el email y/o ve la notificación en la campanita 🔔 de su panel y **responde**:
    - **Acepta**: El estado de la asignación cambia a `ACEPTADA` en `tarea_trabajador`.
    - **Rechaza**: El estado cambia a `RECHAZADA`, y el capataz deberá asignar otro trabajador.
 
@@ -141,6 +141,9 @@ trabajador y tarea         tarea_trabajador          responde?      →  RECHAZA
                                 ↓
                     Trigger: notificar_trabajador_asignado()
                     → INSERT en notificaciones
+                                ↓
+                    Trigger: enviar_email_notificacion()
+                    → Email vía Brevo (pg_net) al trabajador
 ```
 
 ---
@@ -166,6 +169,7 @@ El diagrama de flujo utiliza la notación estándar:
 | Frontend | React 19 + TypeScript | SPA con enrutamiento por rol (`react-router-dom`) |
 | Autenticación | Supabase Auth | JWT, `signUp()`, `signInWithPassword()` |
 | Base de datos | PostgreSQL (Supabase) | 10 tablas con RLS (Row Level Security) |
-| Triggers | PL/pgSQL | `handle_new_user()`, `notificar_trabajador_asignado()` |
+| Triggers | PL/pgSQL | `handle_new_user()`, `notificar_trabajador_asignado()`, `enviar_email_notificacion()` |
+| Email transaccional | Brevo (pg_net) | Envío automático de emails al crear notificaciones |
 | Estado global | Zustand (`useAuthStore`) | Sesión y perfil del usuario autenticado |
 | Internacionalización | i18next | Soporte para español, inglés y rumano |

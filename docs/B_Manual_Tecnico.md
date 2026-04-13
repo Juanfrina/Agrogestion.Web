@@ -149,6 +149,7 @@ Agrogestión utiliza una arquitectura **cliente-servidor desacoplada**:
 | RF-28 | El trabajador debe poder aceptar o rechazar su asignación a una tarea.                      | Media     |
 | RF-29 | Los capataces y trabajadores deben ver una campanita 🔔 con contador de notificaciones no leídas en la cabecera. | Media     |
 | RF-30 | Los usuarios deben poder marcar notificaciones como leídas (individualmente o todas a la vez). | Media     |
+| RF-31 | El sistema debe enviar un email automático al destinatario cada vez que se genera una notificación. | Media     |
 
 #### 3.1.2. Requisitos no funcionales
 
@@ -452,6 +453,7 @@ La base de datos se implementa en PostgreSQL gestionado por Supabase. Se compone
 | CU-25 | Aceptar/Rechazar asignación | Trabajador         | El trabajador acepta o rechaza su asignación a una tarea.     |
 | CU-26 | Ver notificaciones        | Capataz, Trabajador  | El usuario pulsa la campanita 🔔 en la cabecera para ver sus notificaciones con contador de no leídas. |
 | CU-27 | Marcar notificaciones leídas | Capataz, Trabajador | El usuario marca notificaciones como leídas (individualmente o todas a la vez). |
+| CU-28 | Recibir email de notificación | Capataz, Trabajador | El sistema envía automáticamente un email al destinatario cada vez que se crea una notificación (vía Brevo + pg_net). |
 
 **Diagrama de casos de uso (representación textual):**
 
@@ -757,13 +759,14 @@ VITE_SUPABASE_ANON_KEY=tu_clave_anon_publica
 | Selección de rol en registro         | El usuario elige su rol (Gerente, Capataz, Trabajador) al registrarse, sin intervención del administrador.|
 | Comentarios en tareas                | Tabla `comentarios_tarea` con políticas RLS para que solo participantes de la tarea puedan comentar.      |
 | Notificaciones automáticas           | Triggers en PostgreSQL que generan notificaciones al asignar tareas o trabajadores.                       |
+| Notificaciones por email             | Trigger `enviar_email_notificacion()` que envía emails vía Brevo (API REST con `pg_net`) al crear una notificación. |
 | Flujo de aceptación de trabajadores  | Los trabajadores pueden aceptar o rechazar su asignación a una tarea (estado en `tarea_trabajador`).      |
 
 ### 5.2. Mejoras propuestas para futuras versiones
 
 | Mejora                           | Descripción                                                            |
 |----------------------------------|------------------------------------------------------------------------|
-| Notificaciones en tiempo real    |Usar Supabase Realtime para notificar cambios de estado en tareas.      |
+| Notificaciones en tiempo real    |Usar Supabase Realtime para notificar cambios de estado en tareas sin polling.   |
 | Exportación de informes en PDF   | Generar informes de tareas y terrenos en formato PDF.                  |
 | Geolocalización de terrenos      |Integrar un mapa interactivo (Leaflet/Google Maps) para ubicar terrenos.|
 | Sistema de comentarios en tareas | Permitir que capataces y trabajadores añadan comentarios.              |

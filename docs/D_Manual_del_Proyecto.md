@@ -81,7 +81,7 @@ La aplicación se ha desarrollado a lo largo de dos trimestres académicos, abar
 | O9  | Documentar el proyecto de forma completa (usuario, técnico, despliegue).                         |
 | O10 | Desplegar la aplicación en un entorno accesible desde Internet.                                  |
 | O11 | Implementar internacionalización (i18n) con soporte para español, inglés y rumano.               |
-| O12 | Desarrollar un sistema de comentarios en tareas y notificaciones internas.                       |
+| O12 | Desarrollar un sistema de comentarios en tareas, notificaciones internas y notificaciones por email. |
 | O13 | Implementar un flujo de aceptación/rechazo de tareas por parte de los trabajadores.              |
 
 ---
@@ -138,7 +138,7 @@ Antes de comenzar el desarrollo, se realizó un estudio de viabilidad para valor
 
 Se identificaron los requisitos funcionales y no funcionales del sistema (detallados en el Manual Técnico):
 
-- **28 requisitos funcionales** que cubren: autenticación, gestión de usuarios, terrenos, tareas, relaciones entre roles, filtrado de datos, comentarios en tareas, notificaciones y flujo de aceptación/rechazo de trabajadores.
+- **31 requisitos funcionales** que cubren: autenticación, gestión de usuarios, terrenos, tareas, relaciones entre roles, filtrado de datos, comentarios en tareas, notificaciones internas y por email, y flujo de aceptación/rechazo de trabajadores.
 - **9 requisitos no funcionales** que cubren: usabilidad, rendimiento, seguridad, mantenibilidad, compatibilidad y disponibilidad.
 
 Se identificaron **5 actores** del sistema: Visitante, Admin, Gerente, Capataz y Trabajador.
@@ -550,6 +550,7 @@ Se implementó un sistema de notificaciones internas automáticas con campanita 
 | Marcar como leída        | Clic en una notificación individual o botón "Marcar todas como leídas". |
 | Actualización automática | Polling cada 30 segundos para refrescar el contador sin recargar la página. |
 | RLS                      | Solo el destinatario puede ver sus propias notificaciones.   |
+| Email automático         | Cada INSERT en `notificaciones` dispara el trigger `enviar_email_notificacion()` que envía un email al destinatario vía la API de **Brevo** (ex-Sendinblue) usando la extensión `pg_net` de PostgreSQL. El email incluye cabecera con logo, saludo personalizado, mensaje de la notificación y botón para acceder a la aplicación. |
 
 ### 5.14. Flujo de aceptación/rechazo de trabajadores
 

@@ -44,6 +44,7 @@ Agrogestión digitaliza la organización del trabajo en explotaciones agrícolas
 - **Relaciones entre gerentes y capataces**, y asignación de trabajadores a tareas concretas.
 - **Comentarios en tareas** para comunicación entre participantes, con indicador visual 💬 de número de comentarios.
 - **Notificaciones automáticas** mediante triggers al asignar tareas y trabajadores, con **campanita 🔔 en la cabecera** para capataces y trabajadores (contador de no leídas, modal con historial y marcar como leídas).
+- **Notificaciones por email** automáticas vía Brevo (ex-Sendinblue) al crear una notificación, usando `pg_net` desde PostgreSQL.
 - **Flujo de aceptación/rechazo** de tareas por parte de los trabajadores.
 - **Internacionalización (i18n):** soporte para español, inglés y rumano.
 - **Recuperación de contraseña** mediante Supabase Auth.
@@ -85,6 +86,7 @@ La base de datos se implementa en Supabase (PostgreSQL gestionado) aprovechando:
 | `seed_admin.sql`           | Datos iniciales de administrador                    |
 | `fix_rls_recursion.sql`    | Corrección de recursión en políticas RLS            |
 | `fix_tarea_trabajador.sql` | Corrección de la tabla tarea_trabajador             |
+| `email_notificaciones.sql` | Trigger de envío de email vía Brevo (pg_net)        |
 
 ---
 
@@ -255,6 +257,7 @@ El proyecto incluye un archivo `vercel.json` con la configuración SPA necesaria
 - ✅ Comentarios en tareas entre participantes (gerente, capataz y trabajador) con indicador 💬.
 - ✅ Notificaciones automáticas (asignación de tareas y trabajadores) con campanita 🔔 en la cabecera.
 - ✅ Campanita de notificaciones con contador de no leídas y modal para capataz y trabajador.
+- ✅ Notificaciones por email automáticas al destinatario (vía Brevo + pg_net desde PostgreSQL).
 - ✅ Relaciones gerente-capataz y capataz-trabajador.
 - ✅ Gestión de equipos (gerente → capataces, capataz → trabajadores).
 - ✅ Listados filtrados por terreno, estado y usuario.
