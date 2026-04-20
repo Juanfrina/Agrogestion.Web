@@ -1,14 +1,24 @@
-import Layout from '../components/common/Layout';
+/**
+ * @file ResetPasswordPage.tsx
+ * @description Página donde el usuario establece su nueva contraseña
+ * tras pulsar el enlace de recuperación del email.
+ *
+ * Supabase inyecta tokens en la URL y detectSessionInUrl los procesa.
+ * El AuthContext detecta el evento PASSWORD_RECOVERY y redirige aquí.
+ */
+
+import { useNavigate } from 'react-router-dom';
 import ResetPasswordForm from '../components/forms/ResetPasswordForm';
 
-/** Página de reseteo de contraseña, envuelve el formulario en el layout general */
+/** Página de reseteo de contraseña, centra el formulario como Login */
 export default function ResetPasswordPage() {
+  const navigate = useNavigate();
+
   return (
-    <Layout>
-      <div className="mx-auto max-w-md">
-        <h1 className="mb-6">Cambiar Contraseña</h1>
-        <ResetPasswordForm />
+    <div className="flex min-h-screen items-center justify-center">
+      <div className="w-full max-w-md">
+        <ResetPasswordForm onSuccess={() => navigate('/login')} />
       </div>
-    </Layout>
+    </div>
   );
 }

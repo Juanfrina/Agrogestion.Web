@@ -67,7 +67,13 @@
     "acceptCookiesPrefix": "Am citit și accept",
     "acceptCookiesSuffix": "",
     "errorLogin": "Eroare la autentificare",
-    "errorRegister": "Eroare la înregistrare"
+    "errorRegister": "Eroare la înregistrare",
+    "forgotPasswordTitle": "Recuperare parolă",
+    "forgotPasswordDesc": "Introduceți email-ul și vă vom trimite un link pentru a reseta parola.",
+    "sendResetLink": "Trimite link de recuperare",
+    "resetLinkSent": "Un link de recuperare a fost trimis pe email. Verificați inbox-ul (și folderul spam).",
+    "errorResetPassword": "Nu s-a putut trimite linkul. Verificați email-ul și încercați din nou.",
+    "backToLogin": "Înapoi la autentificare"
   },
   "roles": {
     "admin": "Administrator",

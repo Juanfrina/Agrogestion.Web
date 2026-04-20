@@ -174,6 +174,22 @@ export const AuthRepository = {
   },
 
   /**
+   * Envía un email de recuperación de contraseña al correo indicado.
+   * Supabase genera un enlace mágico que, al pulsarlo, crea una sesión
+   * temporal con evento PASSWORD_RECOVERY.
+   *
+   * @param email      - Email del usuario que quiere recuperar su contraseña
+   * @param redirectTo - URL a la que redirigir tras pulsar el enlace del email
+   * @throws Error si no se puede enviar el email
+   */
+  async resetPasswordForEmail(email: string, redirectTo: string) {
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo,
+    });
+    if (error) throw error;
+  },
+
+  /**
    * Escucha cambios en el estado de autenticación (login, logout, refresh token...).
    * Supabase lanza eventos cuando algo cambia y nosotros reaccionamos actualizando el store.
    *

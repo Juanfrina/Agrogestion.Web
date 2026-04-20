@@ -125,13 +125,18 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
         {t('auth.enter')}
       </Button>
 
-      <div className="flex items-center justify-between text-[0.88rem]">
-        <Link to="/registro" className="text-(--color-primary)">
-          {t('auth.noAccount')}
+      <div className="flex flex-col items-center gap-2 text-[0.88rem]">
+        <Link to="/forgot-password" className="text-(--color-primary)">
+          {t('auth.forgotPassword')}
         </Link>
-        <Link to="/" className="btn-cancel">
-          {t('common.back')}
-        </Link>
+        <div className="flex w-full items-center justify-between">
+          <Link to="/registro" className="text-(--color-primary)">
+            {t('auth.noAccount')}
+          </Link>
+          <Link to="/" className="btn-cancel">
+            {t('common.back')}
+          </Link>
+        </div>
       </div>
     </form>
   );

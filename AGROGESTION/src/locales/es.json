@@ -67,7 +67,13 @@
     "acceptCookiesPrefix": "He leído y acepto la",
     "acceptCookiesSuffix": "",
     "errorLogin": "Error al iniciar sesión",
-    "errorRegister": "Error al registrarse"
+    "errorRegister": "Error al registrarse",
+    "forgotPasswordTitle": "Recuperar contraseña",
+    "forgotPasswordDesc": "Introduce tu email y te enviaremos un enlace para restablecer tu contraseña.",
+    "sendResetLink": "Enviar enlace de recuperación",
+    "resetLinkSent": "Se ha enviado un enlace de recuperación a tu correo. Revisa tu bandeja de entrada (y la carpeta de spam).",
+    "errorResetPassword": "No se pudo enviar el enlace. Comprueba el email e inténtalo de nuevo.",
+    "backToLogin": "Volver al inicio de sesión"
   },
   "roles": {
     "admin": "Administrador",

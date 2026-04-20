@@ -14,6 +14,7 @@
  */
 
 import { useEffect, createContext, useContext, type ReactNode } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
 import { AuthRepository } from '../database/repositories/AuthRepository';
 
@@ -28,6 +29,7 @@ const AuthContext = createContext<null>(null);
  */
 export function AuthProvider({ children }: { children: ReactNode }) {
   const { setSession, setPerfil, setLoading, reset } = useAuthStore();
+  const navigate = useNavigate();
 
   useEffect(() => {
     let mounted = true;
@@ -90,6 +92,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             }
             break;
 
+          // Recuperación de contraseña: el usuario pulsó el enlace del email.
+          // Supabase crea una sesión temporal — redirigimos al formulario.
+          case 'PASSWORD_RECOVERY':
+            if (typedSession) {
+              setSession(typedSession);
+              navigate('/reset-password', { replace: true });
+            }
+            break;
+
           // INITIAL_SESSION y otros: ignorados (ya los manejamos con initAuth)
           default:
             break;
@@ -101,7 +112,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       mounted = false;
       subscription.unsubscribe();
     };
-  }, [setSession, setPerfil, setLoading, reset]);
+  }, [setSession, setPerfil, setLoading, reset, navigate]);
 
   return (
     <AuthContext.Provider value={null}>

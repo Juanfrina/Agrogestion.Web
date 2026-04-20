@@ -15,11 +15,16 @@ import Button from '../ui/Button';
 import Alert from '../common/Alert';
 import { isValidPassword } from '../../utils/validators';
 
+interface ResetPasswordFormProps {
+  onSuccess?: () => void;
+}
+
 /**
  * Formulario de cambio de contraseña.
  * Muestra una alerta de éxito cuando la contraseña se cambia correctamente.
+ * Si se pasa onSuccess, se llama tras cambiar la contraseña (ej: redirigir al login).
  */
-export default function ResetPasswordForm() {
+export default function ResetPasswordForm({ onSuccess }: ResetPasswordFormProps) {
   const { t } = useTranslation();
   /** Estado de los campos */
   const [newPassword, setNewPassword] = useState('');
@@ -50,6 +55,9 @@ export default function ResetPasswordForm() {
       setSuccess(true);
       setNewPassword('');
       setConfirmPassword('');
+      if (onSuccess) {
+        setTimeout(onSuccess, 2000);
+      }
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : t('profile.errorChangePassword');
       setError(msg);

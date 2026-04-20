@@ -22,6 +22,8 @@ import { Rol } from '../lib/types';
 import LandingPage from '../pages/LandigPage';
 import Login from '../pages/Login';
 import Registro from '../pages/Registro';
+import ForgotPasswordPage from '../pages/ForgotPasswordPage';
+import ResetPasswordPage from '../pages/ResetPasswordPage';
 import AdminPage from '../pages/AdminPage';
 import GerentePage from '../pages/GerentePage';
 import CapatazPage from '../pages/CapatazPage';
@@ -86,6 +88,8 @@ export function AppRouter() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
           <Route path="/registro" element={<PublicRoute><Registro /></PublicRoute>} />
+          <Route path="/forgot-password" element={<PublicRoute><ForgotPasswordPage /></PublicRoute>} />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
 
           {/* ── Redirección por rol ── */}
           <Route path="/dashboard" element={<ProtectedRoute><RedirectByRole /></ProtectedRoute>} />

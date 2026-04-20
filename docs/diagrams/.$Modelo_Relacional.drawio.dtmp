@@ -1,6 +1,6 @@
 <mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.6 Chrome/144.0.7559.236 Electron/40.8.4 Safari/537.36" version="29.6.6">
   <diagram name="Modelo Relacional" id="er-diagram">
-    <mxGraphModel dx="3481" dy="626" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2200" pageHeight="1600" math="0" shadow="0">
+    <mxGraphModel dx="4529" dy="1138" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2200" pageHeight="1600" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -252,7 +252,7 @@
         </mxCell>
         <mxCell id="e1_label" connectable="0" parent="e1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontColor=#4a86c8;labelBackgroundColor=#FFFFFF;" value="&lt;b&gt;perfiles.id_rol → rol&lt;/b&gt;" vertex="1">
           <mxGeometry relative="1" x="0.1" as="geometry">
-            <mxPoint x="-2" as="offset" />
+            <mxPoint x="30" as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="e2" edge="1" parent="1" source="t_tar" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=1;strokeColor=#4a86c8;strokeWidth=2.5;fontSize=10;endArrow=ERmandOne;endFill=0;startArrow=ERmany;startFill=0;exitX=1;exitY=0;exitDx=0;exitDy=280;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="t_est" value="">
@@ -266,20 +266,20 @@
         </mxCell>
         <mxCell id="e2_label" connectable="0" parent="e2" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontColor=#4a86c8;labelBackgroundColor=#FFFFFF;" value="&lt;b&gt;tarea.id_estado → estados_tarea&lt;/b&gt;" vertex="1">
           <mxGeometry relative="1" x="0.2" as="geometry">
-            <mxPoint as="offset" />
+            <mxPoint y="-12" as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="e3" edge="1" parent="1" source="t_tar" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=1;strokeColor=#4daa57;strokeWidth=2.5;fontSize=10;endArrow=ERmandOne;endFill=0;startArrow=ERmany;startFill=0;exitX=1;exitY=0;exitDx=0;exitDy=202;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="t_ter" value="">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="1120" y="492" />
-              <mxPoint x="1120" y="430" />
+              <mxPoint x="1160" y="492" />
+              <mxPoint x="1160" y="430" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="e3_label" connectable="0" parent="e3" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontColor=#4daa57;labelBackgroundColor=#FFFFFF;" value="&lt;b&gt;tarea.id_terreno → terreno&lt;/b&gt;" vertex="1">
           <mxGeometry relative="1" x="0.3" as="geometry">
-            <mxPoint x="30" y="-2" as="offset" />
+            <mxPoint y="-12" as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="e4" edge="1" parent="1" source="t_tar" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=1;strokeColor=#4daa57;strokeWidth=2.5;fontSize=10;endArrow=ERmandOne;endFill=0;startArrow=ERmany;startFill=0;exitX=0;exitY=0;exitDx=0;exitDy=228;entryX=1;entryY=0;entryDx=0;entryDy=130;" target="t_per" value="">
@@ -292,7 +292,7 @@
         </mxCell>
         <mxCell id="e4_label" connectable="0" parent="e4" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontColor=#4daa57;labelBackgroundColor=#FFFFFF;" value="&lt;b&gt;tarea.id_gerente → perfiles&lt;/b&gt;" vertex="1">
           <mxGeometry relative="1" x="-0.1" as="geometry">
-            <mxPoint x="70" y="1" as="offset" />
+            <mxPoint y="-12" as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="e5" edge="1" parent="1" source="t_tar" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=1;strokeColor=#4daa57;strokeWidth=2;fontSize=10;endArrow=ERmandOne;endFill=0;startArrow=ERmany;startFill=0;dashed=1;dashPattern=8 4;exitX=0;exitY=0;exitDx=0;exitDy=254;entryX=1;entryY=0;entryDx=0;entryDy=170;" target="t_per" value="">
@@ -305,22 +305,22 @@
         </mxCell>
         <mxCell id="e5_label" connectable="0" parent="e5" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;fontColor=#4daa57;labelBackgroundColor=#FFFFFF;" value="&lt;i&gt;tarea.id_capataz → perfiles&lt;/i&gt;" vertex="1">
           <mxGeometry relative="1" x="-0.2" as="geometry">
-            <mxPoint x="15" y="1" as="offset" />
+            <mxPoint y="12" as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="e6" edge="1" parent="1" source="t_ter" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=1;strokeColor=#4daa57;strokeWidth=2.5;fontSize=10;endArrow=ERmandOne;endFill=0;startArrow=ERmany;startFill=0;exitX=0;exitY=0;exitDx=0;exitDy=202;entryX=1;entryY=0;entryDx=0;entryDy=92;" target="t_per" value="">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="1200" y="512" />
-              <mxPoint x="1200" y="660" />
-              <mxPoint x="440" y="660" />
+              <mxPoint x="1200" y="680" />
+              <mxPoint x="440" y="680" />
               <mxPoint x="440" y="402" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="e6_label" connectable="0" parent="e6" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontColor=#4daa57;labelBackgroundColor=#FFFFFF;" value="&lt;b&gt;terreno.id_gestor → perfiles&lt;/b&gt;" vertex="1">
           <mxGeometry relative="1" x="0.4" as="geometry">
-            <mxPoint x="464" as="offset" />
+            <mxPoint y="-12" as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="e7" edge="1" parent="1" source="t_gc" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=1;strokeColor=#c9a227;strokeWidth=2.5;fontSize=10;endArrow=ERmany;endFill=0;startArrow=ERmany;startFill=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=1;entryDx=0;entryDy=0;" target="t_per" value="">
@@ -334,7 +334,7 @@
         </mxCell>
         <mxCell id="e7_label" connectable="0" parent="e7" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontColor=#c9a227;labelBackgroundColor=#FFFFFF;" value="&lt;b&gt;gerente ↔ capataz&lt;/b&gt;" vertex="1">
           <mxGeometry relative="1" x="0.2" as="geometry">
-            <mxPoint x="78" as="offset" />
+            <mxPoint x="-25" as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="e8" edge="1" parent="1" source="t_ct" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=1;strokeColor=#c9a227;strokeWidth=2.5;fontSize=10;endArrow=ERmany;endFill=0;startArrow=ERmany;startFill=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=1;entryDx=0;entryDy=0;" target="t_per" value="">
@@ -345,12 +345,13 @@
               <mxPoint x="420" y="680" />
               <mxPoint x="420" y="660" />
               <mxPoint x="380" y="660" />
+              <mxPoint x="380" y="600" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="e8_label" connectable="0" parent="e8" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontColor=#c9a227;labelBackgroundColor=#FFFFFF;" value="&lt;b&gt;capataz ↔ trabajador&lt;/b&gt;" vertex="1">
           <mxGeometry relative="1" x="0.55" as="geometry">
-            <mxPoint x="26" as="offset" />
+            <mxPoint y="-12" as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="e9" edge="1" parent="1" source="t_tt" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=1;strokeColor=#c9a227;strokeWidth=2.5;fontSize=10;endArrow=ERmandOne;endFill=0;startArrow=ERmany;startFill=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="t_tar" value="">
@@ -358,35 +359,35 @@
         </mxCell>
         <mxCell id="e9_label" connectable="0" parent="e9" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontColor=#c9a227;labelBackgroundColor=#FFFFFF;" value="&lt;b&gt;tarea_trabajador → tarea&lt;/b&gt;" vertex="1">
           <mxGeometry relative="1" x="0.3" as="geometry">
-            <mxPoint x="-43" as="offset" />
+            <mxPoint x="50" as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="e10" edge="1" parent="1" source="t_tt" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=1;strokeColor=#c9a227;strokeWidth=2;fontSize=10;endArrow=ERmandOne;endFill=0;startArrow=ERmany;startFill=0;dashed=1;dashPattern=8 4;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="t_per" value="">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="420" y="833" />
-              <mxPoint x="420" y="670" />
-              <mxPoint x="220" y="670" />
+              <mxPoint x="420" y="660" />
+              <mxPoint x="220" y="660" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="e10_label" connectable="0" parent="e10" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;fontColor=#c9a227;labelBackgroundColor=#FFFFFF;" value="&lt;i&gt;FK trabajador/capataz&lt;/i&gt;" vertex="1">
           <mxGeometry relative="1" x="0.3" as="geometry">
-            <mxPoint x="-41" as="offset" />
+            <mxPoint x="-20" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="e11" edge="1" parent="1" source="t_com" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=1;strokeColor=#7b5ea7;strokeWidth=2.5;fontSize=10;endArrow=ERmandOne;endFill=0;startArrow=ERmany;startFill=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" target="t_tar_r11" value="">
+        <mxCell id="e11" edge="1" parent="1" source="t_com" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=1;strokeColor=#7b5ea7;strokeWidth=2.5;fontSize=10;endArrow=ERmandOne;endFill=0;startArrow=ERmany;startFill=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=1;entryDx=0;entryDy=0;" target="t_tar" value="">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="470" y="990" />
-              <mxPoint x="520" y="990" />
-              <mxPoint x="520" y="610" />
+              <mxPoint x="630" y="990" />
+              <mxPoint x="630" y="630" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="e11_label" connectable="0" parent="e11" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontColor=#7b5ea7;labelBackgroundColor=#FFFFFF;" value="&lt;b&gt;comentarios → tarea&lt;/b&gt;" vertex="1">
           <mxGeometry relative="1" x="0.4" as="geometry">
-            <mxPoint y="63" as="offset" />
+            <mxPoint x="30" as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="e12" edge="1" parent="1" source="t_com" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=1;strokeColor=#7b5ea7;strokeWidth=2;fontSize=10;endArrow=ERmandOne;endFill=0;startArrow=ERmany;startFill=0;dashed=1;dashPattern=8 4;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=1;entryDx=0;entryDy=0;" target="t_per" value="">
@@ -400,7 +401,7 @@
         </mxCell>
         <mxCell id="e12_label" connectable="0" parent="e12" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;fontColor=#7b5ea7;labelBackgroundColor=#FFFFFF;" value="&lt;i&gt;comentarios.id_autor → perfiles&lt;/i&gt;" vertex="1">
           <mxGeometry relative="1" x="0.5" as="geometry">
-            <mxPoint x="10" y="143" as="offset" />
+            <mxPoint x="-30" as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="e13" edge="1" parent="1" source="t_not" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=1;strokeColor=#7b5ea7;strokeWidth=2.5;fontSize=10;endArrow=ERmandOne;endFill=0;startArrow=ERmany;startFill=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0;entryDx=0;entryDy=250;" target="t_per" value="">
@@ -408,8 +409,8 @@
             <Array as="points">
               <mxPoint x="1230" y="1168" />
               <mxPoint x="1230" y="1350" />
-              <mxPoint x="-50" y="1350" />
-              <mxPoint x="-50" y="680" />
+              <mxPoint x="180" y="1350" />
+              <mxPoint x="180" y="680" />
               <mxPoint x="410" y="680" />
               <mxPoint x="410" y="560" />
             </Array>
@@ -417,7 +418,7 @@
         </mxCell>
         <mxCell id="e13_label" connectable="0" parent="e13" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontColor=#7b5ea7;labelBackgroundColor=#FFFFFF;" value="&lt;b&gt;notificaciones.id_usuario → perfiles&lt;/b&gt;" vertex="1">
           <mxGeometry relative="1" x="0.6" as="geometry">
-            <mxPoint x="147" as="offset" />
+            <mxPoint y="-94" as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="legend_box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fafafa;strokeColor=#999999;strokeWidth=1;shadow=1;" value="" vertex="1">
