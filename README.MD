@@ -78,7 +78,7 @@ La base de datos se implementa en Supabase (PostgreSQL gestionado) aprovechando:
 | comentarios_tarea  | Comentarios de los participantes en cada tarea.                                 |
 | notificaciones     | Notificaciones automáticas generadas por triggers.                              |
 
-**Scripts SQL incluidos** en `src/database/supabase/`:
+**Scripts SQL incluidos** en `docs/Scripts SQL/`:
 
 | Archivo                    | Descripción                                        |
 |----------------------------|----------------------------------------------------|
