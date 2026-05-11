@@ -194,7 +194,7 @@ export default function Landing() {
               <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
                 <FacebookIcon />
               </a>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <a href="https://www.instagram.com/agrogestionova/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
                 <InstagramIcon />
               </a>
               <a href="https://github.com/Juanfrina/Agrogestion.Web" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
