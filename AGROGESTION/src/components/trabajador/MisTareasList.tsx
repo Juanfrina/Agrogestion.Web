@@ -175,7 +175,7 @@ export default function MisTareasList() {
       key: 'acciones',
       header: t('tarea.actions'),
       render: (row: TareaConAsignacion) => (
-        <div className="flex gap-2 flex-wrap">
+        <div className="flex gap-4 flex-wrap py-2">
           {/* Asignación pendiente: Aceptar / Rechazar */}
           {row.estadoAsignacion === 'PENDIENTE' && (
             <>
@@ -202,7 +202,7 @@ export default function MisTareasList() {
   if (error) return <Alert type="error" message={error} />;
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-10 px-6 py-8">
       <h2 className="text-2xl font-bold">{t('tarea.myTasks')}</h2>
 
       {mensaje && <Alert type={mensaje.tipo} message={mensaje.texto} onClose={() => setMensaje(null)} />}

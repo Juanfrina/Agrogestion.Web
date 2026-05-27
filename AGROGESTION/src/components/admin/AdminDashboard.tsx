@@ -62,7 +62,7 @@ export default function AdminDashboard() {
   }, []);
 
   return (
-    <div>
+    <div className="space-y-10 px-6 py-8">
       <h2 className="text-2xl font-bold text-(--color-primary-dark) mb-6">
         {t('admin.panelTitle')}
       </h2>
@@ -80,7 +80,7 @@ export default function AdminDashboard() {
       {!loading && !error && stats && (
         <>
           {/* Tarjetas con las estadísticas */}
-          <div className="grid grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-4 mb-10">
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-8 mb-14">
             <Card className="bg-[#E8F5E9]">
               <p className="stat-label">
                 {t('admin.totalUsers')}
@@ -124,7 +124,7 @@ export default function AdminDashboard() {
           </div>
 
           {/* Gráficas */}
-          <div className="grid grid-cols-1 gap-6 mb-8 lg:grid-cols-2">
+          <div className="grid grid-cols-1 gap-10 mb-12 lg:grid-cols-2">
             <Card title={t('admin.roleDistribution')}>
               <RoleDistributionChart
                 data={[
@@ -144,7 +144,7 @@ export default function AdminDashboard() {
           <h3 className="text-lg font-semibold text-(--color-text-primary) mb-4">
             {t('admin.quickActions')}
           </h3>
-          <div className="flex gap-4 flex-wrap">
+          <div className="flex gap-6 flex-wrap">
             <Button variant="primary" onClick={() => navigate('/admin/usuarios')}>
               {t('admin.manageUsers')}
             </Button>

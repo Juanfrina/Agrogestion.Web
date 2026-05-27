@@ -65,9 +65,10 @@ export interface RegistroData {
  * - CAPATAZ (3):    Acepta/rechaza tareas, asigna trabajadores
  * - TRABAJADOR (4): Ejecuta las tareas asignadas
  */
-export enum Rol {
-  ADMIN = 1,
-  GERENTE = 2,
-  CAPATAZ = 3,
-  TRABAJADOR = 4,
-}
+export const Rol = {
+  ADMIN: 1,
+  GERENTE: 2,
+  CAPATAZ: 3,
+  TRABAJADOR: 4,
+} as const;
+export type Rol = typeof Rol[keyof typeof Rol];

@@ -66,11 +66,11 @@ export default function CapatazDashboard() {
   const tareasPendientes = tareas.filter((t) => t.estado?.nombre === 'ASIGNADA');
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-10 px-6 py-8">
       <h2 className="text-2xl font-bold">Dashboard Capataz</h2>
 
       {/* Estadísticas */}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
         <Card title="Total Asignadas">
           <p className="text-3xl font-bold">{tareas.length}</p>
         </Card>
@@ -92,9 +92,9 @@ export default function CapatazDashboard() {
 
       {/* Tareas pendientes de aceptar */}
       {tareasPendientes.length > 0 && (
-        <div>
-          <h3 className="mb-3 text-xl font-semibold">Tareas por Aceptar</h3>
-          <div className="space-y-2">
+        <div className="mt-8">
+          <h3 className="mb-4 text-xl font-semibold">Tareas por Aceptar</h3>
+          <div className="space-y-4 px-2 py-2">
             {tareasPendientes.map((t) => (
               <Card key={t.id_tarea}>
                 <div className="flex items-center justify-between">

@@ -82,11 +82,11 @@ export default function GerenteDashboard() {
     .slice(0, 5);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-10 px-6 py-8">
       <h2 className="text-2xl font-bold">{t('dashboard.title')}</h2>
 
       {/* Estadísticas */}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
         <Card title={t('dashboard.terrenos')}>
           <p className="text-3xl font-bold">{terrenos.length}</p>
         </Card>
@@ -102,7 +102,7 @@ export default function GerenteDashboard() {
       </div>
 
       {/* Acciones rápidas */}
-      <div className="flex gap-3">
+      <div className="flex gap-6 py-2">
         <Button variant="primary" onClick={() => navigate('/gerente/terrenos')}>
           {t('terreno.newTerreno')}
         </Button>
@@ -117,7 +117,7 @@ export default function GerenteDashboard() {
         {tareasRecientes.length === 0 ? (
           <p className="text-(--color-text-muted)">{t('dashboard.noTasks')}</p>
         ) : (
-          <div className="space-y-2">
+          <div className="space-y-4 px-2 py-2">
             {tareasRecientes.map((tarea) => (
               <Card key={tarea.id_tarea}>
                 <div className="flex items-center justify-between">
