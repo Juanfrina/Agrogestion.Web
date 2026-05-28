@@ -71,16 +71,16 @@ export default function CapatazDashboard() {
 
       {/* Estadísticas */}
       <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-        <Card title="Total Asignadas">
+        <Card className="card--stat" title="Total Asignadas">
           <p className="text-3xl font-bold">{tareas.length}</p>
         </Card>
-        <Card title="Pendientes">
+        <Card className="card--stat" title="Pendientes">
           <p className="text-3xl font-bold">{contar('ASIGNADA')}</p>
         </Card>
-        <Card title="En Progreso">
+        <Card className="card--stat" title="En Progreso">
           <p className="text-3xl font-bold">{contar('EN_PROGRESO')}</p>
         </Card>
-        <Card title="Completadas">
+        <Card className="card--stat" title="Completadas">
           <p className="text-3xl font-bold">{contar('COMPLETADA')}</p>
         </Card>
       </div>

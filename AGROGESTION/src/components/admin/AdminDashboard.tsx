@@ -81,7 +81,7 @@ export default function AdminDashboard() {
         <>
           {/* Tarjetas con las estadísticas */}
           <div className="grid grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-8 mb-14">
-            <Card className="bg-[#E8F5E9]">
+            <Card className="card--stat bg-[#E8F5E9]">
               <p className="stat-label">
                 {t('admin.totalUsers')}
               </p>
@@ -89,7 +89,7 @@ export default function AdminDashboard() {
                 {stats.total}
               </p>
             </Card>
-            <Card className="bg-[#E8EAF6]">
+            <Card className="card--stat bg-[#E8EAF6]">
               <p className="stat-label">
                 {t('roles.admin')}
               </p>
@@ -97,7 +97,7 @@ export default function AdminDashboard() {
                 {stats.admins}
               </p>
             </Card>
-            <Card className="bg-[#F1F8E9]">
+            <Card className="card--stat bg-[#F1F8E9]">
               <p className="stat-label">
                 {t('roles.gerente')}
               </p>
@@ -105,7 +105,7 @@ export default function AdminDashboard() {
                 {stats.gerentes}
               </p>
             </Card>
-            <Card className="bg-[#FFF8E1]">
+            <Card className="card--stat bg-[#FFF8E1]">
               <p className="stat-label">
                 {t('roles.capataz')}
               </p>
@@ -113,7 +113,7 @@ export default function AdminDashboard() {
                 {stats.capataces}
               </p>
             </Card>
-            <Card className="bg-[#EFEBE9]">
+            <Card className="card--stat bg-[#EFEBE9]">
               <p className="stat-label">
                 {t('roles.trabajador')}
               </p>

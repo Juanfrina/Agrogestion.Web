@@ -87,16 +87,16 @@ export default function GerenteDashboard() {
 
       {/* Estadísticas */}
       <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-        <Card title={t('dashboard.terrenos')}>
+        <Card className="card--stat" title={t('dashboard.terrenos')}>
           <p className="text-3xl font-bold">{terrenos.length}</p>
         </Card>
-        <Card title={t('dashboard.totalTareas')}>
+        <Card className="card--stat" title={t('dashboard.totalTareas')}>
           <p className="text-3xl font-bold">{tareas.length}</p>
         </Card>
-        <Card title={t('dashboard.inProgress')}>
+        <Card className="card--stat" title={t('dashboard.inProgress')}>
           <p className="text-3xl font-bold">{tareasEstado('EN_PROGRESO')}</p>
         </Card>
-        <Card title={t('dashboard.completed')}>
+        <Card className="card--stat" title={t('dashboard.completed')}>
           <p className="text-3xl font-bold">{tareasEstado('COMPLETADA')}</p>
         </Card>
       </div>

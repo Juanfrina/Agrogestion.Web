@@ -67,7 +67,7 @@ export default function Table<T extends object>({
             {columns.map((col) => (
               <th
                 key={col.key}
-                className="text-left p-3 font-semibold text-(--color-text-secondary) whitespace-nowrap"
+                className="text-left p-4 font-semibold text-(--color-text-secondary) whitespace-nowrap"
               >
                 {col.header}
               </th>
@@ -81,7 +81,7 @@ export default function Table<T extends object>({
               className="border-b border-(--color-border)"
             >
               {columns.map((col) => (
-                <td key={col.key} className="p-3">
+                <td key={col.key} className="p-4">
                   {col.render
                     ? col.render(row)
                     : ((row as Record<string, unknown>)[col.key] as ReactNode)}

@@ -173,7 +173,7 @@ textarea::placeholder {
 .btn-primary {
   background-color: var(--color-primary);
   color: var(--color-text-on-primary);
-  padding: 0.65rem 1.5rem;
+  padding: 0.45rem 1rem;
   border-radius: var(--radius-md);
   font-size: 0.95rem;
 }
@@ -190,7 +190,7 @@ textarea::placeholder {
 .btn-secondary {
   background-color: transparent;
   color: var(--color-primary);
-  padding: 0.65rem 1.5rem;
+  padding: 0.45rem 1rem;
   border: 2px solid var(--color-primary);
   border-radius: var(--radius-md);
   font-size: 0.95rem;
@@ -204,7 +204,7 @@ textarea::placeholder {
 .btn-danger {
   background-color: var(--color-error);
   color: white;
-  padding: 0.5rem 1rem;
+  padding: 0.45rem 0.95rem;
   border-radius: var(--radius-md);
   font-size: 0.875rem;
 }
@@ -216,7 +216,7 @@ textarea::placeholder {
 .btn-accent {
   background-color: var(--color-accent);
   color: white;
-  padding: 0.65rem 1.5rem;
+  padding: 0.45rem 1rem;
   border-radius: var(--radius-md);
   font-size: 0.95rem;
 }
@@ -225,17 +225,42 @@ textarea::placeholder {
   color: var(--color-primary-dark);
 }
 
-/* Tarjeta genérica */
+/* Tarjeta genérica: ajuste para menos "gorda" y mejor legibilidad */
 .card {
   background-color: var(--color-bg-card);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-card);
-  padding: 1.5rem;
-  transition: box-shadow var(--transition-normal);
+  padding: 1rem;
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  justify-content: space-between;
+  min-height: 2.5rem;
+  margin-bottom: 0.75rem;
 }
 .card:hover {
+  transform: translateY(-3px);
   box-shadow: var(--shadow-card-hover);
+}
+
+/* Variantes compactas para tarjetas pequeñas (estadísticas, indicadores) */
+.card--compact {
+  padding: 0.6rem 0.9rem;
+  min-height: 2rem;
+}
+.card--stat {
+  padding: 0.8rem 1rem;
+  min-height: 2.2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Separación entre botones adyacentes */
+.btn + .btn {
+  margin-left: 0.5rem;
 }
 
 /* Contenedor de formularios (login, registro) */
